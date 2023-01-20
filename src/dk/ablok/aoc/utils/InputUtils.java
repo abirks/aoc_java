@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class InputUtils {
@@ -51,5 +51,14 @@ public class InputUtils {
 
     public static List<Integer> convertStringListToIntegers(List<String> strings) {
         return strings.stream().map(Integer::parseInt).toList();
+    }
+
+
+    public static List<Integer> readIntegerList(String filename) throws IOException {
+        return Arrays.stream(readFirstLine(filename).split(",")).map(Integer::parseInt).toList();
+    }
+
+    public static List<Long> readLongList(String filename) throws IOException {
+        return Arrays.stream(readFirstLine(filename).split(",")).map(Long::parseLong).toList();
     }
 }

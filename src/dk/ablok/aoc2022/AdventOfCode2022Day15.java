@@ -184,9 +184,5 @@ public class AdventOfCode2022Day15 extends AocPuzzle {
             }
             return Math.abs((int) x) + Math.abs((int) y);
         }
-
-        public boolean isInSearchArea() {
-            return 0 <= x && x <= X_LIMIT && 0 <= y && y <= Y_LIMIT;
-        }
     }
 }

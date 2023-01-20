@@ -1,14 +1,14 @@
 package dk.ablok;
 
 import dk.ablok.aoc.AocPuzzle;
-import dk.ablok.aoc2021.AdventOfCode2021Day10;
+import dk.ablok.aoc2019.AdventOfCode2019Day13;
 
 import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        AocPuzzle puzzle = new AdventOfCode2021Day10("input/aoc2021/input10.txt");
+        AocPuzzle puzzle = new AdventOfCode2019Day13("input/aoc2019/input13.txt");
 
         System.out.println("\n" + puzzle.getClass().getName());
         puzzle.load();
