@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 class Blocks extends JComponent {
-    int res_x, res_y, size_x, size_y;
+    int res_x;
+    int res_y;
+    int size_x;
+    int size_y;
     DisplayBlock.Shape[][] shapes;
     DisplayBlock.Color[][] fronts, backs;
     DisplayBlock.Color def_color;
@@ -52,6 +55,7 @@ class Blocks extends JComponent {
         }
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
 

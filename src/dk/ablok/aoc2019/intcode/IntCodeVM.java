@@ -132,12 +132,12 @@ public class IntCodeVM extends Thread {
     }
 
     // Read a specific position in the VMs memory
-    public long readFromMemory(long addr) {
+    public long readFromMemory(long addr) throws IntCodeException {
         return readRaw(addr);
     }
 
     // Write to a specific position in the VMs memory
-    public void writeToMemory(long addr, long val) {
+    public void writeToMemory(long addr, long val) throws IntCodeException {
         writeRaw(addr, val);
     }
 
@@ -150,7 +150,7 @@ public class IntCodeVM extends Thread {
     }
 
     // Read/return value depending on parameter mode (wrapper for r())
-    private long readValue(long val, Mode mod) {
+    private long readValue(long val, Mode mod) throws IntCodeException {
         return switch (mod) {
             case POSITION -> readRaw(readRaw(val));
             case IMMEDIATE -> readRaw(val);
@@ -168,38 +168,37 @@ public class IntCodeVM extends Thread {
     }
 
     // Read value from memory
-    private long readRaw(long address) {
-        try {
-            // Negative addresses are not allowed
-            if (address < 0) {
-                throw new IntCodeException("Illegal address", position, address);
-            }
+    private long readRaw(long address) throws IntCodeException {
+        // Negative addresses are not allowed
+        if (address < 0) {
+            throw new IntCodeException("Illegal address", position, address);
+        }
 
-            // Uninitialized addresses start as 0
-            if (address >= memory.size()) {
-                return 0;
-            }
-
-            // Read and return value
-            return memory.get((int) address);
-        } catch (Exception e) {
-
-            state = State.HALTED;
+        // Uninitialized addresses start as 0
+        if (address >= memory.size()) {
             return 0;
         }
+
+        // Read and return value
+        return memory.get((int) address);
     }
 
     // Write single value to memory
-    private void writeRaw(long addr, long val) {
+    private void writeRaw(long address, long val) throws IntCodeException {
+        // Negative addresses are not allowed
+        if (address < 0) {
+            throw new IntCodeException("Illegal address", position, address);
+        }
+
         // If we're writing to an address outside the current memory, pad the memory with zeroes
-        if (addr >= memory.size()) {
-            for (int i = memory.size() - 1; i < addr; i++) {
+        if (address >= memory.size()) {
+            for (int i = memory.size() - 1; i < address; i++) {
                 memory.add((long) 0);
             }
         }
 
         // Write value
-        memory.set((int) addr, val);
+        memory.set((int) address, val);
     }
 
     private void doNextOperation() throws IntCodeException {
@@ -253,11 +252,12 @@ public class IntCodeVM extends Thread {
 
     private void operationHalt() {
         // Stop VM
+        System.out.println("Halt?!");
         state = State.HALTED;
         position += 1;
     }
 
-    private void operationBase(List<Mode> modes) {
+    private void operationBase(List<Mode> modes) throws IntCodeException {
         // Change relative base
         relativeBase += readValue(position + 1, modes.get(1));
         position += 2;
@@ -283,7 +283,7 @@ public class IntCodeVM extends Thread {
         position += 4;
     }
 
-    private void operationJff(List<Mode> modes) {
+    private void operationJff(List<Mode> modes) throws IntCodeException {
         // Jump to (2) if (1) == 0
         if (readValue(position + 1, modes.get(1)) == 0) {
             position = readValue(position + 2, modes.get(2));
@@ -292,7 +292,7 @@ public class IntCodeVM extends Thread {
         }
     }
 
-    private void operationJft(List<Mode> modes) {
+    private void operationJft(List<Mode> modes) throws IntCodeException {
         // Jump to (2) if (1) != 0
         if (readValue(position + 1, modes.get(1)) != 0) {
             position = readValue(position + 2, modes.get(2));
@@ -302,6 +302,11 @@ public class IntCodeVM extends Thread {
     }
 
     private void operationOutput(List<Mode> modes) throws IntCodeException {
+        // Output
+        long out = readValue(position + 1, modes.get(1));
+        output.add(out);
+        position += 2;
+
         // Delay to reduce execution speed
         if (outputDelay > 0) {
             try {
@@ -311,11 +316,6 @@ public class IntCodeVM extends Thread {
                 throw new IntCodeException("Thread interrupted during outputDelay", e);
             }
         }
-
-        // Output
-        long out = readValue(position + 1, modes.get(1));
-        output.add(out);
-        position += 2;
 
         // Delay after a set End of Frame trigger
         if (frameDelay > 0) {
@@ -335,9 +335,7 @@ public class IntCodeVM extends Thread {
     private void operationInput(List<Mode> modes) throws IntCodeException {
         // Input
         // Wait for input
-        while (input.isEmpty()) {
-            assert true;
-        }
+        while (input.isEmpty()) ;
 
         // Delay to reduce execution speed
         if (inputDelay > 0) {

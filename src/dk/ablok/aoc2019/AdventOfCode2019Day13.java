@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
@@ -27,6 +28,9 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
     private IntCodeDisplay display;
 
     private boolean enableDisplay = true;
+    private long score;
+    private long paddleX;
+    private long ballX;
 
     public AdventOfCode2019Day13(String filename) {
         super(filename);
@@ -42,10 +46,14 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         vm.load(program);
 
         // Set (0)=2 to play game
-        vm.writeToMemory(0, 2);
+        try {
+            vm.writeToMemory(0, 2);
+        } catch (IntCodeException e) {
+            throw new IllegalAccessError("Error during write to VM memory");
+        }
 
         // Reduce execution speed
-        vm.setInputDelay(1);
+        vm.setInputDelay(5);
 
         // Display
         if (enableDisplay) {
@@ -73,9 +81,7 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         vm.start();
 
         // Wait for VM to start before starting display
-        while (!vm.isRunning()) {
-            assert true;
-        }
+        while (!vm.isRunning());
 
         if (enableDisplay) {
             display.setState(vm.getVMState());
@@ -83,39 +89,27 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         }
 
         // VM -> main -> display
-        Long x;
-        Long y;
-        Long c;
         int blocks = 0;
 
         while (vm.isRunning()) {
             // Get display elements from VM
             if (vmOut.size() >= 3) {
-                x = vmOut.poll();
-                y = vmOut.poll();
-                c = vmOut.poll();
+                BreakOutBlock t = BreakOutBlock.fromQueue(vmOut);
+                playGame(t);
 
-                // Save score
-                if (x != -1L || y != 0L) {
-                    // Only pass visible blocks to the display
-                    if (enableDisplay) {
-                        addToDisplay(x, y, c);
-                    }
-                }
-
-                // Part 1
                 // Count blocks in first frame only
-                if (c == BLOCK_TILE) {
+                if (t.isBlock()) {
                     blocks++;
                 }
-                if (blocks > 0 && x == -1) {
+
+                // Stop after first frame is drawn
+                if (blocks > 0 && t.isScore()) {
                     vm.setVMState(IntCodeVM.State.PAUSED);
-                    return Integer.toString(blocks);
                 }
             }
         }
 
-        return null;
+        return Integer.toString(blocks);
     }
 
     @Override
@@ -123,65 +117,79 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         // Resume VM
         vm.setVMState(IntCodeVM.State.RUNNING);
 
-        // VM -> main -> display
-        Long x, y, c;
-        Long score = 0L;
-        long oldscore = -1;
-        long paddleX = 0;
-        long ballX = 0;
-
         while (vm.isRunning()) {
             // Get display elements from VM
             if (vmOut.size() >= 3) {
-                x = vmOut.poll();
-                y = vmOut.poll();
-                c = vmOut.poll();
-
-                // Save score
-                if (x == -1L && y == 0L) {
-                    score = c;
-                    if (score != oldscore) {
-                        oldscore = score;
-                    }
-                } else {
-                    // Only pass visible blocks to the display
-                    if (enableDisplay) {
-                        addToDisplay(x, y, c);
-                    }
-                }
-
-                // Auto-play
-                if (c == PADDLE_TILE || c == BALL_TILE) {
-                    // Save ball and paddle positions
-                    if (c == PADDLE_TILE) {
-                        paddleX = x;
-                    }
-                    if (c == BALL_TILE) {
-                        ballX = x;
-                    }
-
-                    if (ballX < paddleX) {
-                        joystickQueue.add(LEFT);
-                    } else if (ballX > paddleX) {
-                        joystickQueue.add(RIGHT);
-                    } else {
-                        joystickQueue.add(NEUTRAL);
-                    }
-                }
+                BreakOutBlock t = BreakOutBlock.fromQueue(vmOut);
+                playGame(t);
             }
         }
 
         return Long.toString(score);
     }
 
-    private void addToDisplay(Long x, Long y, Long c) {
-        switch (c.intValue()) {
-            case 0 -> displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
-            case 1 -> displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE));
-            case 2 -> displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.GREEN));
-            case 3 -> displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
-            case 4 -> displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
-            default -> displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.WHITE, DisplayBlock.Color.RED));
+    private void playGame(BreakOutBlock t) {
+        // Save score
+        if (t.isScore()) {
+            score = t.value;
+        } else {
+            // Only pass visible blocks to the display
+            if (enableDisplay) {
+                addToDisplay(t);
+            }
+        }
+
+        // Auto-play
+        if (t.isPaddle()) {
+            paddleX = t.x;
+        }
+
+        if (t.isBall()) {
+            ballX = t.x;
+        }
+
+        if (ballX < paddleX) {
+            joystickQueue.add(LEFT);
+        } else if (ballX > paddleX) {
+            joystickQueue.add(RIGHT);
+        } else {
+            joystickQueue.add(NEUTRAL);
+        }
+    }
+
+    private void addToDisplay(BreakOutBlock t) {
+        switch ((int) t.value) {
+            case 0 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
+            case 1 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE));
+            case 2 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.GREEN));
+            case 3 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
+            case 4 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
+            default -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.WHITE, DisplayBlock.Color.RED));
+        }
+    }
+
+    private record BreakOutBlock(long x, long y, long value) {
+        public static BreakOutBlock fromQueue(Queue<Long> outputQueue) {
+            long x = outputQueue.poll();
+            long y = outputQueue.poll();
+            long c = outputQueue.poll();
+            return new BreakOutBlock(x, y, c);
+        }
+
+        public boolean isScore() {
+            return x == -1L && y == 0L;
+        }
+
+        public boolean isBlock() {
+            return value == BLOCK_TILE;
+        }
+
+        public boolean isBall() {
+            return value == BALL_TILE;
+        }
+
+        public boolean isPaddle() {
+            return value == PADDLE_TILE;
         }
     }
 }

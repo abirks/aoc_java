@@ -44,10 +44,12 @@ public class IntCodeDisplay extends Thread {
     // Run display
     public void run() {
         // Loop while machine is running
-        while ( state == IntCodeVM.State.RUNNING || input.size()>0 ) {
+        while ( state == IntCodeVM.State.RUNNING || !input.isEmpty() ) {
             if (!input.isEmpty()) { frame.draw( input.poll() ); }
         }
 
+        // Close window after halting display
+        frame.dispose();
     }
 }
 
