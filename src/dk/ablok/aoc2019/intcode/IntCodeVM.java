@@ -1,14 +1,17 @@
 package dk.ablok.aoc2019.intcode;
 
-import dk.ablok.aoc2019.intcode.queues.FrameTriggerQueue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class IntCodeVM extends Thread {
+public class IntCodeVM implements Runnable {
+    // Thread stuff
+    private final AtomicBoolean running = new AtomicBoolean(false);
+    private Thread worker;
+
     // Operations
     private static final int OPCODE_ADD = 1;
     private static final int OPCODE_MULT = 2;
@@ -21,17 +24,6 @@ public class IntCodeVM extends Thread {
     private static final int OPCODE_BASE = 9;
     private static final int OPCODE_HALT = 99;
 
-    // Execution state
-    private State state = State.NOT_LOADED;
-
-    public enum State {
-        NOT_LOADED,
-        READY,
-        RUNNING,
-        PAUSED,
-        HALTED
-    }
-
     private enum Mode {
         POSITION,
         IMMEDIATE,
@@ -39,7 +31,7 @@ public class IntCodeVM extends Thread {
     }
 
     // Memory
-    private final ArrayList<Long> memory = new ArrayList<>();
+    private List<Long> memory;
 
     // Input/output queues
     private Queue<Long> input = new ConcurrentLinkedQueue<>();
@@ -55,19 +47,6 @@ public class IntCodeVM extends Thread {
     private int inputDelay = 0;
     private int outputDelay = 0;
 
-    // Getter and setter for machine state
-    public State getVMState() {
-        return state;
-    }
-
-    public void setVMState(State vmState) {
-        state = vmState;
-    }
-
-    public boolean isRunning() {
-        return state == State.RUNNING;
-    }
-
     // Getters and setters for input and output queues
     public Queue<Long> getInput() {
         return input;
@@ -77,68 +56,46 @@ public class IntCodeVM extends Thread {
         return output;
     }
 
-    public void setInput(Queue<Long> in) {
-        input = in;
+    public static VmBuilder getBuilder() {
+        return new VmBuilder();
     }
 
-    public void setOutput(Queue<Long> out) {
-        output = out;
+    public void start() {
+        if (memory == null) {
+            throw new IllegalThreadStateException("No program was loaded!");
+        }
+
+        worker = new Thread(this);
+        worker.start();
     }
 
-    // Setters for input and output delays (slows down execution)
-    public void setInputDelay(int d) {
-        inputDelay = d;
+    public void stop() {
+        running.set(false);
     }
 
-    public void setOutputDelay(int d) {
-        outputDelay = d;
+    public boolean isRunning() {
+        return worker.isAlive();
     }
 
-    // Set a delay after a specific out sequence has been added to the output buffer
-    int frameDelay = 0;
-    Queue<Long> frameTrigger;
-    Queue<Long> triggerBuffer;
-
-    public void setFrameDelay(int d, List<Long> identifier) {
-        frameTrigger = new FrameTriggerQueue(identifier.size());
-        triggerBuffer = new FrameTriggerQueue(identifier.size());
-        frameDelay = d;
-        frameTrigger.addAll(identifier);
-    }
-
-    // Load program from file
-    public void load(List<Long> program) {
-        // Load program into memory
-        memory.addAll(program);
-    }
-
-    // Run vm
-    @Override
     public void run() {
-        // Run the computer
-        // Start at position 0:
-        position = 0;
-        state = State.RUNNING;
-
-        while (state == State.RUNNING || state == State.PAUSED) {
-            if (state == State.PAUSED) continue;
+        running.set(true);
+        while (running.get()) {
             try {
                 doNextOperation();
             } catch (IntCodeException e) {
-                state = State.HALTED;
                 throw new IllegalStateException("Exception occurred in IntCodeVM", e);
             }
         }
     }
 
     // Read a specific position in the VMs memory
-    public long readFromMemory(long addr) throws IntCodeException {
-        return readRaw(addr);
+    public long readFromMemory(long address) throws IntCodeException {
+        return readRaw(address);
     }
 
     // Write to a specific position in the VMs memory
-    public void writeToMemory(long addr, long val) throws IntCodeException {
-        writeRaw(addr, val);
+    public void writeToMemory(long address, long value) throws IntCodeException {
+        writeRaw(address, value);
     }
 
     public Optional<Long> pollOutput() {
@@ -149,21 +106,31 @@ public class IntCodeVM extends Thread {
         input.add(in);
     }
 
+    private IntCodeVM(VmBuilder vmBuilder) {
+        this.memory = vmBuilder.memory;
+
+        this.input = vmBuilder.input;
+        this.output = vmBuilder.output;
+
+        this.inputDelay = vmBuilder.inputDelay;
+        this.outputDelay = vmBuilder.outputDelay;
+    }
+
     // Read/return value depending on parameter mode (wrapper for r())
-    private long readValue(long val, Mode mod) throws IntCodeException {
-        return switch (mod) {
-            case POSITION -> readRaw(readRaw(val));
-            case IMMEDIATE -> readRaw(val);
-            case RELATIVE -> readRaw(readRaw(val) + relativeBase);
+    private long readValue(long value, Mode mode) throws IntCodeException {
+        return switch (mode) {
+            case POSITION -> readRaw(readRaw(value));
+            case IMMEDIATE -> readRaw(value);
+            case RELATIVE -> readRaw(readRaw(value) + relativeBase);
         };
     }
 
     // Write value depending on parameter mode (wrapper for r())
-    private void writeValue(long addr, long val, Mode mod) throws IntCodeException {
-        switch (mod) {
-            case POSITION -> writeRaw(readRaw(addr), val);
+    private void writeValue(long address, long value, Mode mode) throws IntCodeException {
+        switch (mode) {
+            case POSITION -> writeRaw(readRaw(address), value);
             case IMMEDIATE -> throw new IntCodeException("Cannot write argument in IMMEDIATE mode");
-            case RELATIVE -> writeRaw(readRaw(addr) + relativeBase, val);
+            case RELATIVE -> writeRaw(readRaw(address) + relativeBase, value);
         }
     }
 
@@ -184,7 +151,7 @@ public class IntCodeVM extends Thread {
     }
 
     // Write single value to memory
-    private void writeRaw(long address, long val) throws IntCodeException {
+    private void writeRaw(long address, long value) throws IntCodeException {
         // Negative addresses are not allowed
         if (address < 0) {
             throw new IntCodeException("Illegal address", position, address);
@@ -198,7 +165,7 @@ public class IntCodeVM extends Thread {
         }
 
         // Write value
-        memory.set((int) address, val);
+        memory.set((int) address, value);
     }
 
     private void doNextOperation() throws IntCodeException {
@@ -251,9 +218,7 @@ public class IntCodeVM extends Thread {
     }
 
     private void operationHalt() {
-        // Stop VM
-        System.out.println("Halt?!");
-        state = State.HALTED;
+        stop();
         position += 1;
     }
 
@@ -309,42 +274,18 @@ public class IntCodeVM extends Thread {
 
         // Delay to reduce execution speed
         if (outputDelay > 0) {
-            try {
-                sleep(outputDelay);
-            } catch (InterruptedException e) {
-                currentThread().interrupt();
-                throw new IntCodeException("Thread interrupted during outputDelay", e);
-            }
-        }
-
-        // Delay after a set End of Frame trigger
-        if (frameDelay > 0) {
-            // Add the output character to the trigger buffer. Delay of the buffer matches the trigger.
-            triggerBuffer.add(out);
-            if (frameTrigger.equals(triggerBuffer)) {
-                try {
-                    sleep(frameDelay);
-                } catch (InterruptedException e) {
-                    currentThread().interrupt();
-                    throw new IntCodeException("Thread interrupted during frameDelay", e);
-                }
-            }
+            sleep(outputDelay);
         }
     }
 
     private void operationInput(List<Mode> modes) throws IntCodeException {
         // Input
         // Wait for input
-        while (input.isEmpty()) ;
+        while (isRunning() && input.isEmpty()) ;
 
         // Delay to reduce execution speed
         if (inputDelay > 0) {
-            try {
-                sleep(inputDelay);
-            } catch (InterruptedException e) {
-                currentThread().interrupt();
-                throw new IntCodeException("Thread interrupted during inputDelay", e);
-            }
+            sleep(inputDelay);
         }
 
         // Read from buffer
@@ -365,5 +306,58 @@ public class IntCodeVM extends Thread {
         // (1) + (2) -> (3)
         writeValue(position + 3, readValue(position + 1, modes.get(1)) + readValue(position + 2, modes.get(2)), modes.get(3));
         position += 4;
+    }
+
+    private void sleep(int delay) throws IntCodeException {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IntCodeException("Thread interrupted during IO delay", e);
+        }
+    }
+
+    public static class VmBuilder {
+        // Memory
+        public List<Long> memory;
+
+        // Input/output queues
+        public Queue<Long> input = new ConcurrentLinkedQueue<>();
+        public Queue<Long> output = new ConcurrentLinkedQueue<>();
+
+        // Execution delay
+        public int inputDelay = 0;
+        public int outputDelay = 0;
+
+        public VmBuilder setProgram(List<Long> program) {
+            // Load program into memory
+            memory = new ArrayList<>();
+            memory.addAll(program);
+            return this;
+        }
+
+        public VmBuilder setInput(Queue<Long> input) {
+            this.input = input;
+            return this;
+        }
+
+        public VmBuilder setOutput(Queue<Long> output) {
+            this.output = output;
+            return this;
+        }
+
+        public VmBuilder setInputDelay(int inputDelay) {
+            this.inputDelay = inputDelay;
+            return this;
+        }
+
+        public VmBuilder setOutputDelay(int outputDelay) {
+            this.outputDelay = outputDelay;
+            return this;
+        }
+
+        public IntCodeVM build() {
+            return new IntCodeVM(this);
+        }
     }
 }

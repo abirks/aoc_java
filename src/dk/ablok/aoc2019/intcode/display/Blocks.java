@@ -4,40 +4,40 @@ import javax.swing.*;
 import java.awt.*;
 
 class Blocks extends JComponent {
-    int res_x;
-    int res_y;
-    int size_x;
-    int size_y;
+    int resolutionX;
+    int resolutionY;
+    int sizeX;
+    int sizeY;
     DisplayBlock.Shape[][] shapes;
-    DisplayBlock.Color[][] fronts, backs;
-    DisplayBlock.Color def_color;
+    DisplayBlock.Color[][] frontColors, backColors;
+    DisplayBlock.Color defaultColor;
 
-    public Blocks(int res_x, int res_y, int size_x, int size_y, DisplayBlock.Shape defaultShape, DisplayBlock.Color defaultColor) {
-        this.res_x = res_x;
-        this.res_y = res_y;
-        this.size_x = size_x;
-        this.size_y = size_y;
+    public Blocks(int resolutionX, int resolutionY, int sizeX, int sizeY, DisplayBlock.Shape defaultShape, DisplayBlock.Color defaultColor) {
+        this.resolutionX = resolutionX;
+        this.resolutionY = resolutionY;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
-        def_color = defaultColor;
+        this.defaultColor = defaultColor;
 
-        fronts = new DisplayBlock.Color[res_x][res_y];
-        backs = new DisplayBlock.Color[res_x][res_y];
-        shapes = new DisplayBlock.Shape[res_x][res_y];
+        frontColors = new DisplayBlock.Color[resolutionX][resolutionY];
+        backColors = new DisplayBlock.Color[resolutionX][resolutionY];
+        shapes = new DisplayBlock.Shape[resolutionX][resolutionY];
 
-        for (int y = 0; y < res_y; y++) {
-            for (int x = 0; x < res_x; x++) {
+        for (int y = 0; y < resolutionY; y++) {
+            for (int x = 0; x < resolutionX; x++) {
                 shapes[x][y] = defaultShape;
-                fronts[x][y] = defaultColor;
-                backs[x][y] = defaultColor;
+                frontColors[x][y] = defaultColor;
+                backColors[x][y] = defaultColor;
             }
         }
     }
 
-    public void change(int x, int y, DisplayBlock.Shape shape, DisplayBlock.Color front_color, DisplayBlock.Color back_color) {
-        if (0 <= x && x < res_x && 0 <= y && y < res_y) {
+    public void change(int x, int y, DisplayBlock.Shape shape, DisplayBlock.Color frontColor, DisplayBlock.Color backColor) {
+        if (0 <= x && x < resolutionX && 0 <= y && y < resolutionY) {
             shapes[x][y] = shape;
-            fronts[x][y] = front_color;
-            backs[x][y] = back_color;
+            frontColors[x][y] = frontColor;
+            backColors[x][y] = backColor;
         }
     }
 
@@ -59,57 +59,57 @@ class Blocks extends JComponent {
     public void paint(Graphics g) {
         super.paint(g);
 
-        for (int y = 0; y < res_y; y++) {
-            for (int x = 0; x < res_x; x++) {
+        for (int y = 0; y < resolutionY; y++) {
+            for (int x = 0; x < resolutionX; x++) {
                 // Set shape and color
                 switch (shapes[x][y]) {
                     case RECTANGLE -> {
-                        setColor(g, fronts[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
+                        setColor(g, frontColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
                     }
                     case EMPTY_RECTANGLE -> {
-                        setColor(g, fronts[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
-                        setColor(g, backs[x][y]);
-                        g.fillRect(x * size_x + 1, y * size_y + 1, size_x - 2, size_y - 2);
+                        setColor(g, frontColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
+                        setColor(g, backColors[x][y]);
+                        g.fillRect(x * sizeX + 1, y * sizeY + 1, sizeX - 2, sizeY - 2);
 
                     }
                     case CIRCLE -> {
-                        setColor(g, backs[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
-                        setColor(g, fronts[x][y]);
-                        g.fillOval(x * size_x, y * size_y, size_x, size_y);
+                        setColor(g, backColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
+                        setColor(g, frontColors[x][y]);
+                        g.fillOval(x * sizeX, y * sizeY, sizeX, sizeY);
                     }
                     case ARROW_UP -> {
-                        int[] xs = new int[]{x * size_x, x * size_x + (size_x / 2), (x + 1) * size_x - 1};
-                        int[] ys = new int[]{(y + 1) * size_y - 1, y * size_y, (y + 1) * size_y - 1};
-                        setColor(g, backs[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
-                        setColor(g, fronts[x][y]);
+                        int[] xs = new int[]{x * sizeX, x * sizeX + (sizeX / 2), (x + 1) * sizeX - 1};
+                        int[] ys = new int[]{(y + 1) * sizeY - 1, y * sizeY, (y + 1) * sizeY - 1};
+                        setColor(g, backColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
+                        setColor(g, frontColors[x][y]);
                         g.fillPolygon(xs, ys, 3);
                     }
                     case ARROW_RIGHT -> {
-                        int[] xs = new int[]{x * size_x, (x + 1) * size_x - 1, x * size_x};
-                        int[] ys = new int[]{y * size_y, y * size_y + (size_y / 2), (y + 1) * size_y - 1};
-                        setColor(g, backs[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
-                        setColor(g, fronts[x][y]);
+                        int[] xs = new int[]{x * sizeX, (x + 1) * sizeX - 1, x * sizeX};
+                        int[] ys = new int[]{y * sizeY, y * sizeY + (sizeY / 2), (y + 1) * sizeY - 1};
+                        setColor(g, backColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
+                        setColor(g, frontColors[x][y]);
                         g.fillPolygon(xs, ys, 3);
                     }
                     case ARROW_DOWN -> {
-                        int[] xs = new int[]{(x + 1) * size_x - 1, x * size_x + (size_x / 2), x * size_x};
-                        int[] ys = new int[]{y * size_y, (y + 1) * size_y - 1, y * size_y};
-                        setColor(g, backs[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
-                        setColor(g, fronts[x][y]);
+                        int[] xs = new int[]{(x + 1) * sizeX - 1, x * sizeX + (sizeX / 2), x * sizeX};
+                        int[] ys = new int[]{y * sizeY, (y + 1) * sizeY - 1, y * sizeY};
+                        setColor(g, backColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
+                        setColor(g, frontColors[x][y]);
                         g.fillPolygon(xs, ys, 3);
                     }
                     case ARROW_LEFT -> {
-                        int[] xs = new int[]{(x + 1) * size_x - 1, x * size_x, (x + 1) * size_x - 1};
-                        int[] ys = new int[]{(y + 1) * size_y - 1, y * size_y + (size_y / 2), y * size_y};
-                        setColor(g, backs[x][y]);
-                        g.fillRect(x * size_x, y * size_y, size_x, size_y);
-                        setColor(g, fronts[x][y]);
+                        int[] xs = new int[]{(x + 1) * sizeX - 1, x * sizeX, (x + 1) * sizeX - 1};
+                        int[] ys = new int[]{(y + 1) * sizeY - 1, y * sizeY + (sizeY / 2), y * sizeY};
+                        setColor(g, backColors[x][y]);
+                        g.fillRect(x * sizeX, y * sizeY, sizeX, sizeY);
+                        setColor(g, frontColors[x][y]);
                         g.fillPolygon(xs, ys, 3);
                     }
                 }

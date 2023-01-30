@@ -6,10 +6,8 @@ import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static dk.ablok.aoc.utils.InputUtils.readLongList;
 
@@ -25,13 +23,17 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
     private static final int MAP_WALL = -2;
     private static final int MAP_UNCHARTED = -1;
 
+    private static final Location START_LOCATION = new Location(0, 0);
+    private static final Direction START_DIRECTION = new Direction(EAST);
+
     private IntCodeVM vm;
+    private Queue<Long> vmout;
+
     private IntCodeDisplay display;
+    private Queue<DisplayBlock> displayInput;
     private boolean enableDisplay = true;
 
-    // Map of tiles
     private final Map<Location, Integer> map = new HashMap<>();
-    private Queue<DisplayBlock> displayInput;
 
     public AdventOfCode2019Day15(String filename) {
         super(filename);
@@ -39,16 +41,15 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
 
     @Override
     public void load() throws IOException {
-        // Input
-        List<Long> program = readLongList(filename);
-
-        vm = new IntCodeVM();
-        vm.load(program);
-
+        // Setup VM
+        vm = IntCodeVM.getBuilder()
+                .setOutputDelay(enableDisplay ? 1 : 0)
+                .setProgram(readLongList(filename))
+                .build();
+        vmout = vm.getOutput();
 
         // Display
         if (enableDisplay) {
-            vm.setOutputDelay(5);
             display = new IntCodeDisplay("Repair Droid",
                     43, 43,
                     20, 20,
@@ -59,123 +60,129 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
 
     @Override
     public String part1() {
-        // Queues
-        Queue<Long> vmin = new ConcurrentLinkedQueue<>();
-        vm.setInput(vmin);
-        Queue<Long> vmout = vm.getOutput();
+        if (enableDisplay) {
+            display.start();
+        }
 
-        // Start
+        // Map using droid
+        Droid droid = new Droid(START_LOCATION, START_DIRECTION, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED);
+        Location oxygen = mapWithDroid(droid);
+
+        // Fill hallways in map with the distance to the oxygen generator
+        fillMap(droid, oxygen);
+
+        // Find the distance from the oxygen generator to the starting point
+        return Integer.toString(map.get(new Location(0, 0)));
+    }
+
+    @Override
+    public String part2() {
+        if (enableDisplay) {
+            display.stop();
+        }
+
+        // Find biggest distance in map
+        return Integer.toString(map.values().stream().max(Integer::compareTo).orElseThrow());
+    }
+
+    private Location mapWithDroid(Droid droid) {
         vm.start();
 
         // Wait for VM to start before starting display
         while (!vm.isRunning()) {
             assert true;
         }
-        if (enableDisplay) {
-            display.setState(vm.getVMState());
-            display.start();
-        }
-
-        // Sent command
-        long c;
-
-        // Response
-        int out = 0;
-
-        // Oxygen location
-        Location oxygen = null;
-
-        // Droid
-        Droid droid = new Droid(new Location(0, 0), new Direction(0, 0), DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED);
-        droid.direction.fromCardinal(EAST);
 
         // Draw droid at starting location
         if (enableDisplay) {
             displayInput.add(new DisplayBlock(droid.location.x, droid.location.y, droid.shape, droid.color, DisplayBlock.Color.BLACK));
         }
 
+        // Output from VM. Start facing a wall (doesn't matter)
+        int output = WALL;
+        Location oxygen = null;
         while (vm.isRunning()) {
-            // Automatic control
-            // 1. If last was not a wall, turn right. Else, turn left
-            if (out != WALL) {
-                droid.direction.turnRight();
-            } else {
-                droid.direction.turnLeft();
-            }
-            // 2. Move forward
-            c = droid.direction.toCardinal();
+            // Control droid. Visualize map is enabled
+            output = controlDroid(droid, output);
 
-            // Send to the VM
-            vmin.add(c);
-
-            // Set direction variables according to the command sent
-            droid.direction.fromCardinal(Math.toIntExact(c));
-
-            // Wait for the VM to return something
-            while (vmout.isEmpty()) {
-                assert true;
-            }
-
-            //Report on the status of the repair droid via an output instruction.
-            // VM -> main -> display
-            out = vmout.poll().intValue();
-            switch (out) {
-                case WALL -> {
-                    // Wall
-                    if (enableDisplay) {
-                        // Update display
-                        displayInput.add(new DisplayBlock(droid.location.x + droid.direction.x, droid.location.y + droid.direction.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
-                    }
-
-                    // Save to map
-                    map.put(new Location(droid.location.x + droid.direction.x, droid.location.y + droid.direction.y), MAP_WALL);
-                }
-                case MOVED, OXYGEN -> {
-                    // Moved in step direction
-
-                    if (enableDisplay) {
-                        // Repaint previous tile white
-                        displayInput.add(new DisplayBlock(droid.location.x, droid.location.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE)); //White
-                    }
-
-                    // Add tile to map
-                    map.put(new Location(droid.location), MAP_UNCHARTED);
-
-                    // Update droid position
-                    droid.move();
-                }
-                default -> throw new IllegalArgumentException("Unknown output value");
-            }
-
-            // Set droid color
-            // Red if moved, green if Oxygen is found
-            if (out == OXYGEN) {
-                droid.color = DisplayBlock.Color.GREEN;
-
-                // Print Oxygen coords if found
+            // Keep Oxygen coords if found
+            if (output == OXYGEN) {
                 oxygen = new Location(droid.location);
-            } else {
-                droid.color = DisplayBlock.Color.RED;
-            }
-
-            // Stop when droid returns to the original location after finding the oxygen
-            if (droid.location.x == 0 && droid.location.y == 0 && droid.direction.toCardinal() == NORTH && oxygen != null) {
-                vm.setVMState(IntCodeVM.State.HALTED);
-            }
-
-            // Print oxygen location after leaving
-            if (enableDisplay && droid.location != oxygen && oxygen != null) {
-                displayInput.add(new DisplayBlock(oxygen.x, oxygen.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.GREEN, DisplayBlock.Color.WHITE));
             }
 
             if (enableDisplay) {
                 // Print droid at new location
                 displayInput.add(new DisplayBlock(droid.location.x, droid.location.y, droid.shape, droid.color, DisplayBlock.Color.WHITE));
             }
+
+            // Stop when droid returns to the original location after finding the oxygen
+            if (droid.location.x == 0 && droid.location.y == 0 && droid.direction.toCardinal() == NORTH && oxygen != null) {
+                vm.stop();
+                break;
+            }
+
+            // Print oxygen location after leaving
+            if (enableDisplay && droid.location != oxygen && oxygen != null) {
+                displayInput.add(new DisplayBlock(oxygen.x, oxygen.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.GREEN, DisplayBlock.Color.WHITE));
+            }
         }
 
+        return oxygen;
+    }
 
-        // Fill hallways in map with the distance to the oxygen generator
+    private int controlDroid(Droid droid, int lastOutput) {
+        // Automatic control
+        // This will make the droid follow the right-hand wall of the map until it reaches it's starting position again
+        // 1. If last output was a wall, turn left. Else, turn right
+        if (lastOutput == WALL) {
+            droid.direction.turnLeft();
+        } else {
+            droid.direction.turnRight();
+        }
+        // 2. Move forward
+        long command = droid.direction.toCardinal();
+
+        // Send command to the VM
+        vm.addToInput(command);
+
+        // Wait for the VM to return something
+        while (vmout.isEmpty()) ;
+
+        // Report on the status of the repair droid via an output instruction.
+        int output = vmout.poll().intValue();
+        switch (output) {
+            case WALL -> {
+                // Wall
+                if (enableDisplay) {
+                    // Update display
+                    displayInput.add(new DisplayBlock(droid.location.x + droid.direction.x, droid.location.y + droid.direction.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
+                }
+
+                // Save to map
+                map.put(new Location(droid.location.x + droid.direction.x, droid.location.y + droid.direction.y), MAP_WALL);
+            }
+            case MOVED, OXYGEN -> {
+                // Moved in step direction
+
+                if (enableDisplay) {
+                    // Repaint previous tile white
+                    displayInput.add(new DisplayBlock(droid.location.x, droid.location.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE)); //White
+                }
+
+                // Add tile to map
+                map.put(new Location(droid.location), MAP_UNCHARTED);
+
+                // Update droid position
+                droid.move();
+            }
+            default -> throw new IllegalArgumentException("Unknown output value");
+        }
+
+        return output;
+    }
+
+    private void fillMap(Droid droid, Location oxygen) {
+        // TODO refactor
         // Count how many tiles we're missing
         int missing = Integer.MAX_VALUE;
         Location loc;
@@ -233,19 +240,6 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
                 }
             }
         }
-
-        // Find the distance from the oxygen generator to the starting point
-        return Integer.toString(map.get(new Location(0, 0)));
-    }
-
-    @Override
-    public String part2() {
-        if (enableDisplay) {
-            display.setState(IntCodeVM.State.HALTED);
-        }
-
-        // Find biggest distance in map
-        return Integer.toString(map.values().stream().max(Integer::compareTo).orElseThrow());
     }
 
     @Override
@@ -253,7 +247,7 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
         enableDisplay = !disableDisplay;
     }
 
-    class Location {
+    static class Location {
         int x;
         int y;
 
@@ -290,11 +284,6 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
     static class Direction {
         int x = 0;
         int y = 0;
-
-        public Direction(int dirX, int dirY) {
-            this.x = dirX;
-            this.y = dirY;
-        }
 
         public Direction(long cardinal) {
             this.fromCardinal(cardinal);

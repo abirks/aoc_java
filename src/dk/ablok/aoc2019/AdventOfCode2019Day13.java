@@ -7,6 +7,7 @@ import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 import dk.ablok.aoc2019.intcode.queues.JoystickQueue;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -17,9 +18,13 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
     private static final long LEFT = -1;
     private static final long NEUTRAL = 0;
     private static final long RIGHT = 1;
-    public static final int PADDLE_TILE = 3;
-    public static final int BALL_TILE = 4;
-    public static final int BLOCK_TILE = 2;
+    private static final long BACKGROUND = 0;
+    private static final long WALL = 1;
+    private static final long BLOCK_TILE = 2;
+    private static final long PADDLE_TILE = 3;
+    private static final long BALL_TILE = 4;
+
+    private static final int OUTPUT_LENGTH = 3;
 
     private IntCodeVM vm;
     private Queue<Long> vmOut;
@@ -32,18 +37,22 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
     private long paddleX;
     private long ballX;
 
+    int blocks = 0;
+
     public AdventOfCode2019Day13(String filename) {
         super(filename);
     }
 
     @Override
     public void load() throws IOException {
-        // Input
-        List<Long> program = readLongList("input/aoc2019/input13.txt");
+        joystickQueue = new JoystickQueue();
 
         // VM
-        vm = new IntCodeVM();
-        vm.load(program);
+        vm = IntCodeVM.getBuilder()
+                .setProgram(readLongList(filename))
+                .setInput(joystickQueue)
+                .setInputDelay(enableDisplay ? 3 : 1)
+                .build();
 
         // Set (0)=2 to play game
         try {
@@ -51,9 +60,6 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         } catch (IntCodeException e) {
             throw new IllegalAccessError("Error during write to VM memory");
         }
-
-        // Reduce execution speed
-        vm.setInputDelay(5);
 
         // Display
         if (enableDisplay) {
@@ -66,8 +72,6 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
         // Queueing
         vmOut = vm.getOutput();
-        joystickQueue = new JoystickQueue();
-        vm.setInput(joystickQueue);
     }
 
     @Override
@@ -77,23 +81,18 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
     @Override
     public String part1() {
-        // Start
         vm.start();
 
-        // Wait for VM to start before starting display
-        while (!vm.isRunning());
+        // Wait for VM to start
+        while (!vm.isRunning()) ;
 
         if (enableDisplay) {
-            display.setState(vm.getVMState());
             display.start();
         }
 
-        // VM -> main -> display
-        int blocks = 0;
-
         while (vm.isRunning()) {
             // Get display elements from VM
-            if (vmOut.size() >= 3) {
+            if (vmOut.size() >= OUTPUT_LENGTH) {
                 BreakOutBlock t = BreakOutBlock.fromQueue(vmOut);
                 playGame(t);
 
@@ -104,7 +103,8 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
                 // Stop after first frame is drawn
                 if (blocks > 0 && t.isScore()) {
-                    vm.setVMState(IntCodeVM.State.PAUSED);
+                    vm.stop();
+                    break;
                 }
             }
         }
@@ -115,14 +115,29 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
     @Override
     public String part2() {
         // Resume VM
-        vm.setVMState(IntCodeVM.State.RUNNING);
+        vm.start();
+
+        List<BreakOutBlock> history = new ArrayList<>();
 
         while (vm.isRunning()) {
             // Get display elements from VM
-            if (vmOut.size() >= 3) {
+            if (vmOut.size() >= OUTPUT_LENGTH) {
                 BreakOutBlock t = BreakOutBlock.fromQueue(vmOut);
+                history.add(t);
                 playGame(t);
+
+                if (t.isScore()) {
+                    blocks--;
+                    if (blocks == 0) {
+                        vm.stop();
+                        break;
+                    }
+                }
             }
+        }
+
+        if (enableDisplay) {
+            display.stop();
         }
 
         return Long.toString(score);
@@ -159,11 +174,11 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
     private void addToDisplay(BreakOutBlock t) {
         switch ((int) t.value) {
-            case 0 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
-            case 1 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE));
-            case 2 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.GREEN));
-            case 3 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
-            case 4 -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
+            case (int) BACKGROUND -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
+            case (int) WALL -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE));
+            case (int) BLOCK_TILE -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.GREEN));
+            case (int) PADDLE_TILE -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
+            case (int) BALL_TILE -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
             default -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.WHITE, DisplayBlock.Color.RED));
         }
     }
@@ -180,16 +195,41 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
             return x == -1L && y == 0L;
         }
 
+        public boolean isBackground() {
+            return value == BACKGROUND;
+        }
+
+        public boolean isWall() {
+            return value == WALL;
+        }
+
         public boolean isBlock() {
             return value == BLOCK_TILE;
+        }
+
+        public boolean isPaddle() {
+            return value == PADDLE_TILE;
         }
 
         public boolean isBall() {
             return value == BALL_TILE;
         }
 
-        public boolean isPaddle() {
-            return value == PADDLE_TILE;
+        @Override
+        public String toString() {
+            if (isScore()) {
+                return "SCORE";
+            } else if (isBackground()) {
+                return "BACKGROUND";
+            } else if (isWall()) {
+                return "WALL";
+            } else if (isBlock()) {
+                return "BLOCK";
+            } else if (isPaddle()) {
+                return "PADDLE";
+            } else if (isBall()) {
+                return "BALL";
+            } else return "Unknown block type";
         }
     }
 }

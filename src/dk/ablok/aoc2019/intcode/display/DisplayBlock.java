@@ -1,10 +1,13 @@
 package dk.ablok.aoc2019.intcode.display;
 
+// TODO implement a custom interface instead
 public class DisplayBlock {
     // Values
-    int x, y;
+    int x;
+    int y;
     Shape shape;
-    Color front_color, back_color;
+    Color frontColor;
+    Color backColor;
 
     // Shape constants
     public enum Shape {
@@ -30,36 +33,36 @@ public class DisplayBlock {
     }
 
     // Constructor with background
-    public DisplayBlock(int x, int y, Shape s, Color front_color, Color back_color) {
+    public DisplayBlock(int x, int y, Shape s, Color frontColor, Color backColor) {
         this.x = x;
         this.y = y;
         this.shape = s;
-        this.front_color = front_color;
-        this.back_color = back_color;
+        this.frontColor = frontColor;
+        this.backColor = backColor;
     }
 
     // Same, but for longs
-    public DisplayBlock(long x, long y, Shape s, Color front_color, Color back_color) {
+    public DisplayBlock(long x, long y, Shape s, Color frontColor, Color backColor) {
         this.x = Math.toIntExact(x);
         this.y = Math.toIntExact(y);
         this.shape = s;
-        this.front_color = front_color;
-        this.back_color = back_color;
+        this.frontColor = frontColor;
+        this.backColor = backColor;
     }
 
     // Constructor without background
-    public DisplayBlock(int x, int y, Shape s, Color front_color) {
+    public DisplayBlock(int x, int y, Shape s, Color frontColor) {
         this.x = x;
         this.y = y;
         this.shape = s;
-        this.front_color = front_color;
+        this.frontColor = frontColor;
     }
 
     // Same, but for longs
-    public DisplayBlock(long x, long y, Shape s, Color front_color) {
+    public DisplayBlock(long x, long y, Shape s, Color frontColor) {
         this.x = Math.toIntExact(x);
         this.y = Math.toIntExact(y);
         this.shape = s;
-        this.front_color = front_color;
+        this.frontColor = frontColor;
     }
 }
