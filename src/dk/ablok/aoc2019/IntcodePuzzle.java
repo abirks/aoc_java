@@ -7,5 +7,7 @@ public abstract class IntcodePuzzle extends AocPuzzle {
         super(filename);
     }
 
-    public abstract void disableDisplay(boolean disableDisplay);
+    public void disableDisplay(boolean disableDisplay) {
+        // Do nothing
+    }
 }

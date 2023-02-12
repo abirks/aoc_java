@@ -31,7 +31,7 @@ public class GraphUtils {
             }
 
             // Get edges to neighbors
-            Set<GraphEdge> edges = here.getFrom();
+            Set<GraphEdge> edges = here.getEdgesFrom();
 
             // Update neighbors' weights and paths
             for (GraphEdge edge : edges) {

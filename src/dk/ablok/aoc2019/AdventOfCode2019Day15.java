@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-import static dk.ablok.aoc.utils.InputUtils.readLongList;
+import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
 
 public class AdventOfCode2019Day15 extends IntcodePuzzle {
 
@@ -44,7 +44,7 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
         // Setup VM
         vm = IntCodeVM.getBuilder()
                 .setOutputDelay(enableDisplay ? 1 : 0)
-                .setProgram(readLongList(filename))
+                .setProgram(readCommaSeparatedLongList(filename))
                 .build();
         vmout = vm.getOutput();
 

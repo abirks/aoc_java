@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-import static dk.ablok.aoc.utils.InputUtils.readLongList;
+import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
 
 public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
@@ -49,7 +49,7 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
         // VM
         vm = IntCodeVM.getBuilder()
-                .setProgram(readLongList(filename))
+                .setProgram(readCommaSeparatedLongList(filename))
                 .setInput(joystickQueue)
                 .setInputDelay(enableDisplay ? 3 : 1)
                 .build();

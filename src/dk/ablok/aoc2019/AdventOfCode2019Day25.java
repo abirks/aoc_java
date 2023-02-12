@@ -13,7 +13,7 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dk.ablok.aoc.utils.InputUtils.readLongList;
+import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
 
 public class AdventOfCode2019Day25 extends IntcodePuzzle {
 
@@ -48,7 +48,7 @@ public class AdventOfCode2019Day25 extends IntcodePuzzle {
     @Override
     public void load() throws IOException {
         vm = IntCodeVM.getBuilder()
-                .setProgram(readLongList(filename))
+                .setProgram(readCommaSeparatedLongList(filename))
                 .build();
         vmout = vm.getOutput();
         vmin = vm.getInput();

@@ -6,8 +6,7 @@ import dk.ablok.aoc.buffers.RingBuffer;
 import java.io.IOException;
 import java.util.List;
 
-import static dk.ablok.aoc.utils.InputUtils.convertStringListToIntegers;
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.utils.InputUtils.*;
 
 public class AdventOfCode2021Day01 extends AocPuzzle {
 
@@ -19,7 +18,7 @@ public class AdventOfCode2021Day01 extends AocPuzzle {
 
     @Override
     public void load() throws IOException {
-        input = convertStringListToIntegers(readInputAsList(filename));
+        input = readCommaSeparatedIntegerList(filename);
     }
 
     @Override
