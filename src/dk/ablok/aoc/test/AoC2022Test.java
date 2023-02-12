@@ -93,10 +93,10 @@ public class AoC2022Test {
         assertAocDay(new AdventOfCode2022Day15("input/aoc2022/input15.txt"), "4717631", "13197439355220");
     }
 
-/*    @Test
+    @Test
     public void test2022day16() throws IOException {
         assertAocDay(new AdventOfCode2022Day16("input/aoc2022/input16.txt"), "", "");
-    }*/
+    }
 
     @Test
     public void test2022day17() throws IOException {
@@ -108,10 +108,10 @@ public class AoC2022Test {
         assertAocDay(new AdventOfCode2022Day18("input/aoc2022/input18.txt"), "4300", "2490");
     }
 
-/*    @Test
+    @Test
     public void test2022day19() throws IOException {
         assertAocDay(new AdventOfCode2022Day19("input/aoc2022/input19.txt"), "", "");
-    }*/
+    }
 
     @Test
     public void test2022day20() throws IOException {
@@ -123,20 +123,20 @@ public class AoC2022Test {
         assertAocDay(new AdventOfCode2022Day21("input/aoc2022/input21.txt"), "232974643455000", "3740214169961");
     }
 
-/*    @Test
+    @Test
     public void test2022day22() throws IOException {
         assertAocDay(new AdventOfCode2022Day22("input/aoc2022/input22.txt"), "", "");
-    }*/
+    }
 
     @Test
     public void test2022day23() throws IOException {
         assertAocDay(new AdventOfCode2022Day23("input/aoc2022/input23.txt"), "4116", "984");
     }
 
-/*    @Test
+    @Test
     public void test2022day24() throws IOException {
         assertAocDay(new AdventOfCode2022Day24("input/aoc2022/input24.txt"), "", "");
-    }*/
+    }
 
     @Test
     public void test2022day25() throws IOException {

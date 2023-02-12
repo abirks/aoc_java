@@ -49,6 +49,37 @@ public class AoC2019Test {
     }
 
     @Test
+    public void test2019day08() throws IOException {
+        final String ACKPZ = """
+                 ##   ##  #  # ###  ####\s
+                #  # #  # # #  #  #    #\s
+                #  # #    ##   #  #   # \s
+                #### #    # #  ###   #  \s
+                #  # #  # # #  #    #   \s
+                #  #  ##  #  # #    ####\s
+                """;
+        assertAocDay(new AdventOfCode2019Day08("input/aoc2019/input08.txt"), "1905", ACKPZ);
+    }
+
+    @Test
+    public void test2019day09() throws IOException {
+        assertIntcodePuzzle(new AdventOfCode2019Day09("input/aoc2019/input09.txt"), "2745604242", "51135");
+    }
+
+    @Test
+    public void test2019day11() throws IOException {
+        final String KRZEAJHB = """
+                 #  # ###  #### ####  ##    ## #  # ###   \s
+                 # #  #  #    # #    #  #    # #  # #  #  \s
+                 ##   #  #   #  ###  #  #    # #### ###   \s
+                 # #  ###   #   #    ####    # #  # #  #  \s
+                 # #  # #  #    #    #  # #  # #  # #  #  \s
+                 #  # #  # #### #### #  #  ##  #  # ###   \s
+                """;
+        assertIntcodePuzzle(new AdventOfCode2019Day11("input/aoc2019/input11.txt"), "2054", KRZEAJHB);
+    }
+
+    @Test
     public void test2019day13() throws IOException {
         assertIntcodePuzzle(new AdventOfCode2019Day13("input/aoc2019/input13.txt"), "318", "16309");
     }

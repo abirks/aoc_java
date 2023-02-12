@@ -34,8 +34,8 @@ public class IntCodeVM implements Runnable {
     private List<Long> memory;
 
     // Input/output queues
-    private Queue<Long> input = new ConcurrentLinkedQueue<>();
-    private Queue<Long> output = new ConcurrentLinkedQueue<>();
+    private Queue<Long> input;
+    private Queue<Long> output;
 
     // Execution pointer
     private long position = 0;
@@ -54,6 +54,14 @@ public class IntCodeVM implements Runnable {
 
     public Queue<Long> getOutput() {
         return output;
+    }
+
+    public void setInput(Queue<Long> input) {
+        this.input = input;
+    }
+
+    public void setOutput(Queue<Long> output) {
+        this.output = output;
     }
 
     public static VmBuilder getBuilder() {
