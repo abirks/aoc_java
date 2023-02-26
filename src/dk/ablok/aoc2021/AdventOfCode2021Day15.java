@@ -1,23 +1,19 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2021Day15 extends AocPuzzle {
+public class AdventOfCode2021Day15 implements AocTestable {
     private HashMap<Position, Integer> map;
     private int yMax;
     private int xMax;
 
-    public AdventOfCode2021Day15(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         File f = new File(filename);
         try (Scanner sc = new Scanner(f)) {
             map = new HashMap<>();
@@ -71,6 +67,7 @@ public class AdventOfCode2021Day15 extends AocPuzzle {
         return input > 9 ? input - 9 : input;
     }
 
+    //TODO replace with utils implementation
     int fillSearch(Map<Position, Integer> map, Position origin, Position destination) {
         Set<Position> visited = new HashSet<>(); // We're done with these
         Map<Position, Integer> dangerLevel = new HashMap<>(); // Current best value for each position

@@ -1,11 +1,11 @@
 
 I
-java:S1121[".Extract the assignment out of this expression.(…ùÿÿÿÿ
+java:S1121W".Extract the assignment out of this expression.(…ùÿÿÿÿ
 D
-java:S1121g".Extract the assignment out of this expression.(ôú›é
+java:S1121c".Extract the assignment out of this expression.(ôú›é
 D
-java:S1121q".Extract the assignment out of this expression.(¨ÕĞŒ
+java:S1121m".Extract the assignment out of this expression.(¨ÕĞŒ
 \
-java:S2184’"ECast one of the operands of this subtraction operation to a "double".(İ„›§
+java:S2184"ECast one of the operands of this subtraction operation to a "double".(İ„›§
 m
-java:S3776M"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(æª¾‘ÿÿÿÿÿ
+java:S3776I"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(æª¾‘ÿÿÿÿÿ

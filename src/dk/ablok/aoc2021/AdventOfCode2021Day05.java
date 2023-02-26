@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.*;
@@ -8,21 +8,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2021Day05 extends AocPuzzle {
+public class AdventOfCode2021Day05 implements AocTestable {
 
     private static final String regex = "^(?<x1>\\d+),(?<y1>\\d+) -> (?<x2>\\d+),(?<y2>\\d+)$";
     private static final Pattern pattern = Pattern.compile(regex);
     private final Map<Vector<Integer>, AtomicInteger> map = new HashMap<>();
     private List<String> input;
 
-    public AdventOfCode2021Day05(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         input = readInputAsList(filename);
     }
 

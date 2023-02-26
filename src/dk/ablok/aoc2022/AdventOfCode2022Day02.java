@@ -1,12 +1,12 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day02 extends AocPuzzle {
+public class AdventOfCode2022Day02 implements AocTestable {
 
     private static final int WIN = 6;
     private static final int LOSE = 0;
@@ -18,12 +18,8 @@ public class AdventOfCode2022Day02 extends AocPuzzle {
     private int sum1 = 0;
     private int sum2 = 0;
 
-    public AdventOfCode2022Day02(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         for (String line : readInputAsList(filename)) {
             int opponent = parseShape(line.charAt(0));
             int me = parseShape(line.charAt(2));

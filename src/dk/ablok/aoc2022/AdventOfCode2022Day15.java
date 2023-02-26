@@ -1,6 +1,6 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day15 extends AocPuzzle {
+public class AdventOfCode2022Day15 implements AocTestable {
 
     private static final Pattern pattern = Pattern.compile(
             "^Sensor at x=(.*), y=(.*): closest beacon is at x=(.*), y=(.*)$");
@@ -24,12 +24,8 @@ public class AdventOfCode2022Day15 extends AocPuzzle {
 
     private static final Set<Sensor> sensors = new HashSet<>();
 
-    public AdventOfCode2022Day15(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
 

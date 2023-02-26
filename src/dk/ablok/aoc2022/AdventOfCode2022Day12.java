@@ -1,24 +1,16 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc.utils.OutputUtils.ANSI_BLACK_BACKGROUND;
-import static dk.ablok.aoc.utils.OutputUtils.ANSI_BLUE_BACKGROUND;
-import static dk.ablok.aoc.utils.OutputUtils.ANSI_RESET;
+import static dk.ablok.aoc.io.OutputUtils.*;
 
-public class AdventOfCode2022Day12 extends AocPuzzle {
+public class AdventOfCode2022Day12 implements AocTestable {
 
     private final Set<Position> directions = new HashSet<>();
 
@@ -29,9 +21,7 @@ public class AdventOfCode2022Day12 extends AocPuzzle {
     private Position start;
     private Position end;
 
-    public AdventOfCode2022Day12(String filename) {
-        super(filename);
-
+    public AdventOfCode2022Day12() {
         directions.add(new Position(1, 0));
         directions.add(new Position(-1, 0));
         directions.add(new Position(0, 1));
@@ -39,7 +29,7 @@ public class AdventOfCode2022Day12 extends AocPuzzle {
     }
 
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
             int y = 0;

@@ -1,25 +1,21 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day18 extends AocPuzzle {
+public class AdventOfCode2022Day18 implements AocTestable {
 
     private final Set<Cube> lava = new HashSet<>();
     private final Set<Cube> air = new HashSet<>();
 
-    public AdventOfCode2022Day18(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         for (String line : readInputAsList(filename)) {
             lava.add(new Cube(line));
         }

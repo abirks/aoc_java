@@ -1,14 +1,14 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day22 extends AocPuzzle {
+public class AdventOfCode2019Day22 implements AocTestable {
 
     private static final String DEAL_INTO_NEW_STACK = "deal into new stack";
     private static final String CUT = "cut";
@@ -26,12 +26,8 @@ public class AdventOfCode2019Day22 extends AocPuzzle {
     private BigInteger a;
     private BigInteger b;
 
-    public AdventOfCode2019Day22(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         input = readInputAsList(filename);
     }
 

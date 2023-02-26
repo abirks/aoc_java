@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.test.AocIntcodeTestable;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.io.IOException;
@@ -7,17 +8,13 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
-import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
+import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day07 extends IntcodePuzzle {
+public class AdventOfCode2019Day07 implements AocIntcodeTestable {
     private List<Long> input;
 
-    public AdventOfCode2019Day07(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         input = readCommaSeparatedLongList(filename);
     }
 
@@ -114,5 +111,10 @@ public class AdventOfCode2019Day07 extends IntcodePuzzle {
             }
         }
         return output;
+    }
+
+    @Override
+    public void disableDisplay(boolean disableDisplay) {
+        // Do nothing
     }
 }

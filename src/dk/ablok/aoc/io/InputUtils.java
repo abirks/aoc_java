@@ -1,4 +1,4 @@
-package dk.ablok.aoc.utils;
+package dk.ablok.aoc.io;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -61,6 +61,10 @@ public class InputUtils {
 
     public static List<Integer> readNewlineSeparatedIntegerList(String filename) throws IOException {
         return readInputAsList(filename).stream().map(Integer::parseInt).toList();
+    }
+
+    public static char[][] read2dArray(String filename) throws IOException {
+        return read2dArray(filename, (char) 0);
     }
 
     public static char[][] read2dArray(String filename, char defaultValue) throws IOException {

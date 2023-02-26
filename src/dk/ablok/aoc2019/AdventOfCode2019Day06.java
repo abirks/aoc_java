@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,20 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day06 extends AocPuzzle {
+public class AdventOfCode2019Day06 implements AocTestable {
     public static final String COM = "COM";
     public static final String SAN = "SAN";
     public static final String YOU = "YOU";
     private final Map<String, String> map = new HashMap<>();
 
-    public AdventOfCode2019Day06(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         for (String orbit : readInputAsList(filename)) {
             String[] objects = orbit.split("\\)");
             // Map: objects[1] orbits objects[0]

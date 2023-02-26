@@ -1,29 +1,26 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.*;
 
-import static dk.ablok.aoc.utils.InputUtils.readFirstLine;
+import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
-public class AdventOfCode2019Day04 extends AocPuzzle {
+public class AdventOfCode2019Day04 implements AocTestable {
     private int lowerLimit;
     private int upperLimit;
     private final Set<List<Integer>> codes = new HashSet<>();
 
-    public AdventOfCode2019Day04(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         String input = readFirstLine(filename);
         lowerLimit = Integer.parseInt(input.split("-")[0]);
         upperLimit = Integer.parseInt(input.split("-")[1]);
     }
 
     @Override
+    // TODO Refactor. Maybe use an iterator to generate candidates in range?
     public String part1() {
         for (int i = 0; i <= 9; i++) {
             for (int j = i; j <= 9; j++) {

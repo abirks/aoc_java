@@ -1,26 +1,22 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
-import dk.ablok.aoc.utils.InputUtils;
+import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.InputUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class AdventOfCode2022Day21 extends AocPuzzle {
+public class AdventOfCode2022Day21 implements AocTestable {
 
     private final Map<String, Expression> part1expressions = new HashMap<>();
     private final Map<String, Long> part1values = new HashMap<>();
     private final Map<String, Expression> part2expressions = new HashMap<>();
     private final Map<String, Long> part2values = new HashMap<>();
 
-    public AdventOfCode2022Day21(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         for (String line : InputUtils.readInputAsList(filename)) {
             String[] parts = line.split(" ");
             String monkey = parts[0].substring(0, parts[0].length() - 1);

@@ -1,17 +1,17 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.graph.GraphEdge;
 import dk.ablok.aoc.graph.GraphNode;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.graph.GraphUtils.dijkstra;
-import static dk.ablok.aoc.utils.InputUtils.read2dArray;
+import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
-public class AdventOfCode2019Day20 extends AocPuzzle {
+public class AdventOfCode2019Day20 implements AocTestable {
 
     private static final char EMPTY = ' ';
     private static final char FLOOR = '.';
@@ -48,12 +48,8 @@ public class AdventOfCode2019Day20 extends AocPuzzle {
                     {LETTER, LETTER, FLOOR},
                     {EMPTY, EMPTY, WALL}}};
 
-    public AdventOfCode2019Day20(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         char[][] input = read2dArray(filename, EMPTY);
         portals = findPortals(input);
         edges = createEdges(input);

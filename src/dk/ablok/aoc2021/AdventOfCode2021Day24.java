@@ -1,16 +1,12 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 
-public class AdventOfCode2021Day24 extends AocPuzzle {
-    public AdventOfCode2021Day24(String filename) {
-        super(filename);
-    }
-
+public class AdventOfCode2021Day24 implements AocTestable {
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
 
     }
 

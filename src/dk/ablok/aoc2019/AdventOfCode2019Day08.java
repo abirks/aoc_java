@@ -1,13 +1,13 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-import static dk.ablok.aoc.utils.InputUtils.readFirstLine;
+import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
-public class AdventOfCode2019Day08 extends AocPuzzle {
+public class AdventOfCode2019Day08 implements AocTestable {
     private static final int WHITE = 1;
     private static final int TRANSPARENT = 2;
 
@@ -15,12 +15,8 @@ public class AdventOfCode2019Day08 extends AocPuzzle {
     private static final int HEIGHT = 6;
     private Integer[][][] layers;
 
-    public AdventOfCode2019Day08(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         char[] input = readFirstLine(filename).toCharArray();
         int depth = input.length / (WIDTH * HEIGHT);
         layers = new Integer[depth][HEIGHT][WIDTH];

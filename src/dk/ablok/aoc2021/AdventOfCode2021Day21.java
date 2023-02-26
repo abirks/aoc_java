@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AdventOfCode2021Day21 extends AocPuzzle {
+public class AdventOfCode2021Day21 implements AocTestable {
 
     private long player1Wins = 0;
     private Map<Universe, AtomicLong> universes = new HashMap<>();
@@ -16,12 +16,8 @@ public class AdventOfCode2021Day21 extends AocPuzzle {
     private int startPlayer1;
     private int startPlayer2;
 
-    public AdventOfCode2021Day21(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         // TODO: Read these from file instead
         // Starting positions
         startPlayer1 = 10;

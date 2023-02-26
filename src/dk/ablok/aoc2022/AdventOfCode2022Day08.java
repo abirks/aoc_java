@@ -1,30 +1,21 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day08 extends AocPuzzle {
+public class AdventOfCode2022Day08 implements AocTestable {
 
     private static final int DIM_X = 99;
     private static final int DIM_Y = 99;
 
     private final int[][] map = new int[DIM_X][DIM_Y];
 
-    public AdventOfCode2022Day08(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         int y = 0;
         for (String line : readInputAsList(filename)) {
             map[y] = Arrays.stream(line.split("")).mapToInt(Integer::parseInt).toArray();

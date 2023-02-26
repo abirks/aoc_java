@@ -1,15 +1,15 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day10 extends AocPuzzle {
+public class AdventOfCode2022Day10 implements AocTestable {
 
     private List<String> input;
 
@@ -17,12 +17,8 @@ public class AdventOfCode2022Day10 extends AocPuzzle {
 
     private final List<Integer> reg = new ArrayList<>();
 
-    public AdventOfCode2022Day10(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         input = readInputAsList(filename);
         reg.add(1);
     }

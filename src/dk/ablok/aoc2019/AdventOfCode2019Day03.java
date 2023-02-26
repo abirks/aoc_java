@@ -1,22 +1,18 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.*;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day03 extends AocPuzzle {
-    private List<List<Position>> wires = new ArrayList<>();
-    private HashSet<Position> intersections = new HashSet<>();
-
-    public AdventOfCode2019Day03(String filename) {
-        super(filename);
-    }
+public class AdventOfCode2019Day03 implements AocTestable {
+    private final List<List<Position>> wires = new ArrayList<>();
+    private final HashSet<Position> intersections = new HashSet<>();
 
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         List<String> input = readInputAsList(filename);
 
         for (String wire : input) {

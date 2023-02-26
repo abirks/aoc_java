@@ -1,23 +1,19 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2021Day03 extends AocPuzzle {
+public class AdventOfCode2021Day03 implements AocTestable {
     private List<String> input;
     private int length;
 
-    public AdventOfCode2021Day03(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         input = readInputAsList(filename);
         length = input.stream().mapToInt(String::length).max().orElseThrow();
     }

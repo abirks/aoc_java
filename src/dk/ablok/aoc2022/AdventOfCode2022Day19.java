@@ -1,29 +1,18 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.ORE;
-import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.CLAY;
-import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.OBSIDIAN;
-import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.GEODE;
+import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.*;
 
-public class AdventOfCode2022Day19 extends AocPuzzle {
+public class AdventOfCode2022Day19 implements AocTestable {
 
     private static final int MINUTES = 24;
     private final List<Blueprint> input = new ArrayList<>();
@@ -60,12 +49,8 @@ public class AdventOfCode2022Day19 extends AocPuzzle {
             "Each obsidian robot costs (.*) ore and (.*) clay. " +
             "Each geode robot costs (.*) ore and (.*) obsidian.$");
 
-    public AdventOfCode2022Day19(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
 

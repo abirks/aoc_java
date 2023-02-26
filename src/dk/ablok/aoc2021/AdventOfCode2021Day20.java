@@ -1,22 +1,18 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day20 extends AocPuzzle {
+public class AdventOfCode2021Day20 implements AocTestable {
 
     private final List<Boolean> pattern = new ArrayList<>();
     private Map<Position, Boolean> image = new HashMap<>();
 
-    public AdventOfCode2021Day20(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         // Open file
         File f = new File(filename);
         try (Scanner sc = new Scanner(f)) {

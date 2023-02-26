@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,17 +8,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day13 extends AocPuzzle {
+public class AdventOfCode2021Day13 implements AocTestable {
 
     private Set<Vect> points = new HashSet<>();
     private final List<String> instructions = new ArrayList<>();
 
-    public AdventOfCode2021Day13(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         File file = new File(filename);
 
         try (FileReader fr = new FileReader(file);

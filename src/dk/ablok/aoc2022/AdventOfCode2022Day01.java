@@ -1,24 +1,20 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day01 extends AocPuzzle {
+public class AdventOfCode2022Day01 implements AocTestable {
 
     private final List<Integer> elves = new ArrayList<>();
 
-    public AdventOfCode2022Day01(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         int sum = 0;
         for (String line : readInputAsList(filename)) {
             if (!line.isEmpty()) {

@@ -1,28 +1,28 @@
 
-s	java:S135S"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
+s	java:S135O"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
 h
-java:S1104@"RMake parent a static final constant or non-public and provide accessors if needed.(ÆĞí¿
-m
-java:S1104"QMake value a static final constant or non-public and provide accessors if needed.(‚¯¥ùÿÿÿÿ
+java:S1104<"RMake parent a static final constant or non-public and provide accessors if needed.(ÆĞí¿
+l
+java:S1104}"QMake value a static final constant or non-public and provide accessors if needed.(‚¯¥ùÿÿÿÿ
 g
-java:S1104§"PMake left a static final constant or non-public and provide accessors if needed.(›Áğ
+java:S1104£"PMake left a static final constant or non-public and provide accessors if needed.(›Áğ
 g
-java:S1104¨"QMake right a static final constant or non-public and provide accessors if needed.(‚Òá
+java:S1104¤"QMake right a static final constant or non-public and provide accessors if needed.(‚Òá
 n
-java:S2975B"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ÒØ‚æûÿÿÿÿ
+java:S2975>"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ÒØ‚æûÿÿÿÿ
 `
-java:S1124}"EReorder the modifiers to comply with the Java Language Specification.(ä¶›Æüÿÿÿÿ
+java:S1124y"EReorder the modifiers to comply with the Java Language Specification.(ä¶›Æüÿÿÿÿ
 o
-java:S2975¡"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(÷İƒ•øÿÿÿÿ
+java:S2975"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(÷İƒ•øÿÿÿÿ
 d
-java:S1182¡"HUse super.clone() to create and seed the cloned instance to be returned.(÷İƒ•øÿÿÿÿ
+java:S1182"HUse super.clone() to create and seed the cloned instance to be returned.(÷İƒ•øÿÿÿÿ
 j
-java:S1858Ñ"N"rightString" is already a string, there's no need to call "toString()" on it.(­€Àšıÿÿÿÿ
+java:S1858Í"N"rightString" is already a string, there's no need to call "toString()" on it.(­€Àšıÿÿÿÿ
 j
-java:S1858Ó"N"rightString" is already a string, there's no need to call "toString()" on it.(ä¾»‘ıÿÿÿÿ
+java:S1858Ï"N"rightString" is already a string, there's no need to call "toString()" on it.(ä¾»‘ıÿÿÿÿ
 ]
-java:S1126"AReplace this if-then-else statement by a single return statement.(½¿Ñÿúÿÿÿÿ
+java:S1126‰"AReplace this if-then-else statement by a single return statement.(½¿Ñÿúÿÿÿÿ
 i
-java:S2975˜"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(Á¿†l
+java:S2975”"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(Á¿†l
 ^
-java:S1182˜"HUse super.clone() to create and seed the cloned instance to be returned.(Á¿†l
+java:S1182”"HUse super.clone() to create and seed the cloned instance to be returned.(Á¿†l

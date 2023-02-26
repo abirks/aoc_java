@@ -1,13 +1,13 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.*;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2021Day10 extends AocPuzzle {
+public class AdventOfCode2021Day10 implements AocTestable {
     private static final Map<Character, Character> matches = new HashMap<>();
     private static final Map<Character, Long> valuesA = new HashMap<>();
     private static final Map<Character, Long> valuesB = new HashMap<>();
@@ -15,8 +15,7 @@ public class AdventOfCode2021Day10 extends AocPuzzle {
     private List<String> input;
     private final List<Deque<Character>> incomplete = new ArrayList<>();
 
-    public AdventOfCode2021Day10(String filename) {
-        super(filename);
+    public AdventOfCode2021Day10() {
         matches.put('(', ')');
         matches.put('[', ']');
         matches.put('{', '}');
@@ -32,7 +31,7 @@ public class AdventOfCode2021Day10 extends AocPuzzle {
     }
 
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         input = readInputAsList(filename);
     }
 

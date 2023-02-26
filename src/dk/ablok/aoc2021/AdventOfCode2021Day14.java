@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,18 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AdventOfCode2021Day14 extends AocPuzzle {
+public class AdventOfCode2021Day14 implements AocTestable {
 
     private final Map<String, String> patterns = new HashMap<>();
     private Map<String, AtomicLong> pairs = new HashMap<>();
     private String template;
 
-    public AdventOfCode2021Day14(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         File file = new File(filename);
 
         try (FileReader fr = new FileReader(file);

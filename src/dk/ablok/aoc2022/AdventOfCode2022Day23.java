@@ -1,20 +1,15 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day23 extends AocPuzzle {
+public class AdventOfCode2022Day23 implements AocTestable {
 
     private static final Position NORTH = new Position(0, -1);
     private static final Position SOUTH = new Position(0, 1);
@@ -27,12 +22,8 @@ public class AdventOfCode2022Day23 extends AocPuzzle {
     private final Map<Position, Elf> elves = new HashMap<>();
     private Map<Position, AtomicInteger> plannedMoves;
 
-    public AdventOfCode2022Day23(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
 

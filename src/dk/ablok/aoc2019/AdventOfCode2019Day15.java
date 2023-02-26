@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.test.AocIntcodeTestable;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
@@ -9,9 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
+import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day15 extends IntcodePuzzle {
+public class AdventOfCode2019Day15 implements AocIntcodeTestable {
 
     private static final long NORTH = 1;
     private static final long SOUTH = 2;
@@ -35,12 +36,8 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
 
     private final Map<Location, Integer> map = new HashMap<>();
 
-    public AdventOfCode2019Day15(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         // Setup VM
         vm = IntCodeVM.getBuilder()
                 .setOutputDelay(enableDisplay ? 1 : 0)
@@ -83,6 +80,11 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
 
         // Find biggest distance in map
         return Integer.toString(map.values().stream().max(Integer::compareTo).orElseThrow());
+    }
+
+    @Override
+    public void disableDisplay(boolean disableDisplay) {
+        enableDisplay = !disableDisplay;
     }
 
     private Location mapWithDroid(Droid droid) {
@@ -242,11 +244,6 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
         }
     }
 
-    @Override
-    public void disableDisplay(boolean disableDisplay) {
-        enableDisplay = !disableDisplay;
-    }
-
     static class Location {
         int x;
         int y;
@@ -332,7 +329,7 @@ public class AdventOfCode2019Day15 extends IntcodePuzzle {
         }
     }
 
-    public class Droid {
+    public static class Droid {
         // Repair droid variables
         Location location;
         Direction direction;

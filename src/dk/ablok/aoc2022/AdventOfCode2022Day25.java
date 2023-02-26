@@ -1,23 +1,19 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day25 extends AocPuzzle {
+public class AdventOfCode2022Day25 implements AocTestable {
 
     private final List<Long> input = new ArrayList<>();
 
-    public AdventOfCode2022Day25(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         for (String line : readInputAsList(filename)) {
             input.add(fromSnafuToDecimal(line));
         }

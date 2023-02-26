@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,20 +9,16 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static dk.ablok.aoc.utils.InputUtils.readFirstLine;
+import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
-public class AdventOfCode2021Day06 extends AocPuzzle {
+public class AdventOfCode2021Day06 implements AocTestable {
 
     private static final int PART1_DAYS = 80;
     private static final int PART2_DAYS = 256;
     private Map<Integer, Long> fishes;
 
-    public AdventOfCode2021Day06(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         fishes = Arrays.stream(readFirstLine(filename).split(","))
                 .map(Integer::parseInt)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));

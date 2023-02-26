@@ -1,28 +1,20 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day05 extends AocPuzzle {
+public class AdventOfCode2022Day05 implements AocTestable {
 
-    private Map<Character, List<Character>> crates = new HashMap<>();
-    private List<String> moves = new ArrayList<>();
-
-    public AdventOfCode2022Day05(String filename) {
-        super(filename);
-    }
+    private final Map<Character, List<Character>> crates = new HashMap<>();
+    private final List<String> moves = new ArrayList<>();
 
     @Override
-    public void load() {
+    public void load(String filename) {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
 

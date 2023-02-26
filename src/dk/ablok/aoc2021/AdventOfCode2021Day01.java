@@ -1,24 +1,20 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.buffers.RingBuffer;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.List;
 
-import static dk.ablok.aoc.utils.InputUtils.*;
+import static dk.ablok.aoc.io.InputUtils.readNewlineSeparatedIntegerList;
 
-public class AdventOfCode2021Day01 extends AocPuzzle {
+public class AdventOfCode2021Day01 implements AocTestable {
 
-    private static List<Integer> input;
-
-    public AdventOfCode2021Day01(String filename) {
-        super(filename);
-    }
+    private List<Integer> input;
 
     @Override
-    public void load() throws IOException {
-        input = readCommaSeparatedIntegerList(filename);
+    public void load(String filename) throws IOException {
+        input = readNewlineSeparatedIntegerList(filename);
     }
 
     @Override

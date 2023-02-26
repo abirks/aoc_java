@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.utils.OutputUtils;
+import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.io.OutputUtils;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.io.BufferedReader;
@@ -13,9 +14,9 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
+import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day25 extends IntcodePuzzle {
+public class AdventOfCode2019Day25 implements AocIntcodeTestable {
 
     public static final String COMMAND = "Command?\n";
     public static final String AIRLOCK = "keypad at the main airlock.\"";
@@ -31,22 +32,16 @@ public class AdventOfCode2019Day25 extends IntcodePuzzle {
     private boolean autoplay = false;
     private boolean enableDisplay = true;
 
-    public AdventOfCode2019Day25(String filename) {
-        super(filename);
-    }
-
     public void setAutoplay(List<String> steps) {
         this.steps = steps;
         autoplay = true;
     }
 
-    @Override
     public void disableDisplay(boolean disableDisplay) {
         enableDisplay = !disableDisplay;
     }
 
-    @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         vm = IntCodeVM.getBuilder()
                 .setProgram(readCommaSeparatedLongList(filename))
                 .build();
@@ -54,7 +49,6 @@ public class AdventOfCode2019Day25 extends IntcodePuzzle {
         vmin = vm.getInput();
     }
 
-    @Override
     public String part1() {
         vm.start();
 
@@ -151,7 +145,6 @@ public class AdventOfCode2019Day25 extends IntcodePuzzle {
         }
     }
 
-    @Override
     public String part2() {
         return null;
     }

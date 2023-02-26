@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,18 +9,14 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2021Day04 extends AocPuzzle {
+public class AdventOfCode2021Day04 implements AocTestable {
     private Map<Integer, Number> numbers = new HashMap<>();
     private List<Integer> draws = new ArrayList<>();
     private Set<Board> boards = new HashSet<>();
     private Iterator<Integer> drawsIterator;
 
-    public AdventOfCode2021Day04(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         File file = new File(filename);
 
         try (FileReader fr = new FileReader(file);
@@ -113,7 +109,7 @@ public class AdventOfCode2021Day04 extends AocPuzzle {
     }
 
     // Represents a board
-    class Board {
+    static class Board {
         Set<Line> lines = new HashSet<>();
 
         public int getSum() {
@@ -147,7 +143,7 @@ public class AdventOfCode2021Day04 extends AocPuzzle {
     }
 
     // Represents a row or column within a board
-    class Line {
+    static class Line {
         Set<Number> numbers = new HashSet<>();
 
         public boolean add(Number number) {
@@ -168,7 +164,7 @@ public class AdventOfCode2021Day04 extends AocPuzzle {
     }
 
     // Represents a single number
-    class Number {
+    static class Number {
         int value;
         boolean drawn;
 
@@ -186,6 +182,4 @@ public class AdventOfCode2021Day04 extends AocPuzzle {
             this.drawn = true;
         }
     }
-
-
 }

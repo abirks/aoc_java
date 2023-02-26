@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class IntCodeVM implements Runnable {
     // Thread stuff
     private final AtomicBoolean running = new AtomicBoolean(false);
+    private final AtomicBoolean paused = new AtomicBoolean(false);
     private Thread worker;
 
     // Operations
@@ -31,7 +32,7 @@ public class IntCodeVM implements Runnable {
     }
 
     // Memory
-    private List<Long> memory;
+    private final List<Long> memory;
 
     // Input/output queues
     private Queue<Long> input;
@@ -70,11 +71,23 @@ public class IntCodeVM implements Runnable {
 
     public void start() {
         if (memory == null) {
-            throw new IllegalThreadStateException("No program was loaded!");
+            throw new IllegalStateException("No program was loaded!");
+        }
+
+        if (position != 0) {
+            throw new IllegalStateException("VM is not at position=0");
         }
 
         worker = new Thread(this);
         worker.start();
+    }
+
+    public void pause() {
+        paused.set(true);
+    }
+
+    public void unPause() {
+        paused.set(false);
     }
 
     public void stop() {
@@ -88,10 +101,12 @@ public class IntCodeVM implements Runnable {
     public void run() {
         running.set(true);
         while (running.get()) {
-            try {
-                doNextOperation();
-            } catch (IntCodeException e) {
-                throw new IllegalStateException("Exception occurred in IntCodeVM", e);
+            if (!paused.get()) {
+                try {
+                    doNextOperation();
+                } catch (IntCodeException e) {
+                    throw new IllegalStateException("Exception occurred in IntCodeVM", e);
+                }
             }
         }
     }

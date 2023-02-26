@@ -1,25 +1,21 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dk.ablok.aoc.utils.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day20 extends AocPuzzle {
+public class AdventOfCode2022Day20 implements AocTestable {
 
     private static final long KEY = 811589153L;
     private final List<Number> inputWithoutKey = new ArrayList<>();
     private final List<Number> inputWithKey = new ArrayList<>();
 
-    public AdventOfCode2022Day20(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         // Create elements
         for (String line : readInputAsList(filename)) {
             inputWithoutKey.add(new Number(Long.parseLong(line)));

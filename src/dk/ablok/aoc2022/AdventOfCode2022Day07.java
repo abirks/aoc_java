@@ -1,6 +1,6 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day07 extends AocPuzzle {
+public class AdventOfCode2022Day07 implements AocTestable {
 
     public static final int PART1_LIMIT = 100_000;
     public static final int PART2_NEEDED = 30_000_000;
@@ -19,12 +19,8 @@ public class AdventOfCode2022Day07 extends AocPuzzle {
     private final Node root = new Node(null, "/", 0);
     private final List<Long> sizes = new ArrayList<>();
 
-    public AdventOfCode2022Day07(String filename) {
-        super(filename);
-    }
-
     @Override
-    public void load() {
+    public void load(String filename) {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
 
             Node here = root;

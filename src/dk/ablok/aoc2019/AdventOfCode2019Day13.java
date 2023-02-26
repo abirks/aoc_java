@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.test.AocIntcodeTestable;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -7,13 +8,11 @@ import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 import dk.ablok.aoc2019.intcode.queues.JoystickQueue;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 
-import static dk.ablok.aoc.utils.InputUtils.readCommaSeparatedLongList;
+import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day13 extends IntcodePuzzle {
+public class AdventOfCode2019Day13 implements AocIntcodeTestable {
 
     private static final long LEFT = -1;
     private static final long NEUTRAL = 0;
@@ -39,19 +38,14 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
     int blocks = 0;
 
-    public AdventOfCode2019Day13(String filename) {
-        super(filename);
-    }
-
-    @Override
-    public void load() throws IOException {
+    public void load(String filename) throws IOException {
         joystickQueue = new JoystickQueue();
 
         // VM
         vm = IntCodeVM.getBuilder()
                 .setProgram(readCommaSeparatedLongList(filename))
                 .setInput(joystickQueue)
-                .setInputDelay(enableDisplay ? 3 : 1)
+                .setInputDelay(enableDisplay ? 5 : 1)
                 .build();
 
         // Set (0)=2 to play game
@@ -74,12 +68,10 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         vmOut = vm.getOutput();
     }
 
-    @Override
     public void disableDisplay(boolean disableDisplay) {
         enableDisplay = !disableDisplay;
     }
 
-    @Override
     public String part1() {
         vm.start();
 
@@ -103,7 +95,7 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
 
                 // Stop after first frame is drawn
                 if (blocks > 0 && t.isScore()) {
-                    vm.stop();
+                    vm.pause();
                     break;
                 }
             }
@@ -112,18 +104,14 @@ public class AdventOfCode2019Day13 extends IntcodePuzzle {
         return Integer.toString(blocks);
     }
 
-    @Override
     public String part2() {
         // Resume VM
-        vm.start();
-
-        List<BreakOutBlock> history = new ArrayList<>();
+        vm.unPause();
 
         while (vm.isRunning()) {
             // Get display elements from VM
             if (vmOut.size() >= OUTPUT_LENGTH) {
                 BreakOutBlock t = BreakOutBlock.fromQueue(vmOut);
-                history.add(t);
                 playGame(t);
 
                 if (t.isScore()) {
