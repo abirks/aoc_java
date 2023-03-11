@@ -89,12 +89,8 @@ public class AdventOfCode2022Day19 implements AocTestable {
     private void depthFirstSearch(int minute, Factory state, Blueprint blueprint) {
         if (minute == MINUTES) {
             finished++;
-            if (finished % 1_000_000 == 0) {
-                System.out.println("Finished " + finished);
-            }
             if (state.resources.get(GEODE) > blueprint.best) {
                 blueprint.best = state.resources.get(GEODE);
-                System.out.println("best=" + blueprint.best);
             }
         } else {
             for (Robots move : state.possibleMoves(blueprint)) {
@@ -353,20 +349,14 @@ public class AdventOfCode2022Day19 implements AocTestable {
 
                 // Build bots
                 resources = resources.subtract(cost);
-
-                //System.out.println("Spend " + cost + " to build " + buildOrder);
             }
 
             // Existing bots collect ore
             resources = resources.add(robots.collect());
 
-            //System.out.println("You now have " + resources);
-
             // Add new bots to pool
             if (buildOrder != null) {
                 robots = robots.add(buildOrder);
-
-                //System.out.println(buildOrder + " is ready");
             }
         }
 

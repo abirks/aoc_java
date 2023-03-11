@@ -97,7 +97,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 12)
     public void testDay12() throws IOException {
-                                                                                                               //3793220229463048874
+        //3793220229463048874
         assertAocDay(new AdventOfCode2019Day12(), "input/aoc2019/input12.txt", "5937", "376203951569712");
     }
 
@@ -128,7 +128,17 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 17)
     public void testDay17() throws IOException {
-        assertIntcodePuzzle(new AdventOfCode2019Day17(), "input/aoc2019/input17.txt", "", "");
+        String mainSequence = "B,A,B,C,A,B,A,C,C,A";
+        String sequenceA = "R,10,R,6,R,4,R,4";
+        String sequenceB = "L,12,L,12,R,4";
+        String sequenceC = "R,6,L,12,L,12";
+
+        AdventOfCode2019Day17 puzzle = new AdventOfCode2019Day17();
+        puzzle.disableDisplay(true);
+        puzzle.inputSequences(mainSequence, sequenceA, sequenceB, sequenceC);
+        puzzle.load("input/aoc2019/input17.txt");
+        assertEquals("5724", puzzle.part1());
+        assertEquals("732985", puzzle.part2());
     }
 
     @Test
