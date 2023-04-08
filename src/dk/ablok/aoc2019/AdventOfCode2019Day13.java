@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -8,12 +8,14 @@ import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 import dk.ablok.aoc2019.intcode.queues.JoystickQueue;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Queue;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day13 implements AocIntcodeTestable {
-
+public class AdventOfCode2019Day13 implements AocTestableWithDisplay {
     private static final long LEFT = -1;
     private static final long NEUTRAL = 0;
     private static final long RIGHT = 1;
@@ -25,6 +27,7 @@ public class AdventOfCode2019Day13 implements AocIntcodeTestable {
 
     private static final int OUTPUT_LENGTH = 3;
 
+    private List<Long> input;
     private IntCodeVM vm;
     private Queue<Long> vmOut;
     private JoystickQueue joystickQueue;
@@ -39,13 +42,18 @@ public class AdventOfCode2019Day13 implements AocIntcodeTestable {
     int blocks = 0;
 
     public void load(String filename) throws IOException {
-        joystickQueue = new JoystickQueue();
+        input = readCommaSeparatedLongList(filename);
 
-        // VM
+        // If not visualizing, replace the bottom row with all wall blocks
+        if (!enableDisplay) {
+            createBottomWall();
+        }
+
+        joystickQueue = new JoystickQueue();
         vm = IntCodeVM.getBuilder()
-                .setProgram(readCommaSeparatedLongList(filename))
+                .setProgram(input)
                 .setInput(joystickQueue)
-                .setInputDelay(enableDisplay ? 5 : 1)
+                .setInputDelay(enableDisplay ? 5 : 0) // Only add a delay if visualization is enabled
                 .build();
 
         // Set (0)=2 to play game
@@ -55,12 +63,12 @@ public class AdventOfCode2019Day13 implements AocIntcodeTestable {
             throw new IllegalAccessError("Error during write to VM memory");
         }
 
-        // Display
         if (enableDisplay) {
-            display = new IntCodeDisplay("Breakout",
-                    44, 20,
-                    30, 30,
-                    0, 0);
+            display = IntCodeDisplay.getBuilder()
+                    .setTitle("Breakout")
+                    .setResolution(44, 20)
+                    .setSize(30, 30)
+                    .build();
             displayIn = display.getInput();
         }
 
@@ -68,8 +76,35 @@ public class AdventOfCode2019Day13 implements AocIntcodeTestable {
         vmOut = vm.getOutput();
     }
 
-    public void disableDisplay(boolean disableDisplay) {
-        enableDisplay = !disableDisplay;
+    private void createBottomWall() {
+        // Mask matching an empty line with a wall segment on either side
+        List<Long> bottomLine = Arrays.asList(
+                WALL, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND,
+                BACKGROUND, WALL);
+
+        // Find the last occurrence of a row with a wall on either side and 22 empty spaces in between
+        int position = input.size() - bottomLine.size();
+        while (!input.subList(position, position + bottomLine.size()).equals(bottomLine)) {
+            position--;
+        }
+
+        // Replace it with 24 wall segments to make the game un-losable
+        List<Long> newList = new ArrayList<>(input);
+        for (int i = 0; i < bottomLine.size(); i++) {
+            newList.set(position + i, WALL);
+        }
+        input = newList;
+    }
+
+    @Override
+    public void enableDisplay(boolean enableDisplay) {
+        this.enableDisplay = enableDisplay;
     }
 
     public String part1() {
@@ -151,23 +186,32 @@ public class AdventOfCode2019Day13 implements AocIntcodeTestable {
             ballX = t.x;
         }
 
-        if (ballX < paddleX) {
-            joystickQueue.add(LEFT);
-        } else if (ballX > paddleX) {
-            joystickQueue.add(RIGHT);
-        } else {
-            joystickQueue.add(NEUTRAL);
+        // Only do autoplay if visualization is enabled
+        if (enableDisplay||true) {
+            if (ballX < paddleX) {
+                joystickQueue.add(LEFT);
+            } else if (ballX > paddleX) {
+                joystickQueue.add(RIGHT);
+            } else {
+                joystickQueue.add(NEUTRAL);
+            }
         }
     }
 
     private void addToDisplay(BreakOutBlock t) {
         switch ((int) t.value) {
-            case (int) BACKGROUND -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
-            case (int) WALL -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE));
-            case (int) BLOCK_TILE -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.GREEN));
-            case (int) PADDLE_TILE -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
-            case (int) BALL_TILE -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
-            default -> displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.WHITE, DisplayBlock.Color.RED));
+            case (int) BACKGROUND ->
+                    displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
+            case (int) WALL ->
+                    displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.WHITE));
+            case (int) BLOCK_TILE ->
+                    displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.GREEN));
+            case (int) PADDLE_TILE ->
+                    displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLUE));
+            case (int) BALL_TILE ->
+                    displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
+            default ->
+                    displayIn.add(new DisplayBlock(t.x, t.y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.WHITE, DisplayBlock.Color.RED));
         }
     }
 

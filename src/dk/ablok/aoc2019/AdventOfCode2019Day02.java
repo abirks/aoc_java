@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.test.AocTestable;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day02 implements AocIntcodeTestable {
+public class AdventOfCode2019Day02 implements AocTestable {
     public static final int EXPECTED = 19690720;
     private IntCodeVM vm;
     private List<Long> input;
@@ -17,7 +18,10 @@ public class AdventOfCode2019Day02 implements AocIntcodeTestable {
     @Override
     public void load(String filename) throws IOException {
         input = readCommaSeparatedLongList(filename);
-        // VM
+    }
+
+    @Override
+    public String part1() {
         vm = IntCodeVM.getBuilder()
                 .setProgram(input)
                 .build();
@@ -27,19 +31,16 @@ public class AdventOfCode2019Day02 implements AocIntcodeTestable {
             vm.writeToMemory(1, 12);
             vm.writeToMemory(2, 2);
         } catch (IntCodeException e) {
-            throw new IllegalAccessError("Error during write to VM memory");
+            throw new AocSolveException("Error during write to VM memory");
         }
 
-    }
-
-    @Override
-    public String part1() {
         vm.start();
+
         while (vm.isRunning()) ;
         try {
             return Long.toString(vm.readFromMemory(0));
         } catch (IntCodeException e) {
-            throw new IllegalAccessError("Error during write to VM memory");
+            throw new AocSolveException("Error during read from VM memory");
         }
     }
 
@@ -57,7 +58,7 @@ public class AdventOfCode2019Day02 implements AocIntcodeTestable {
                     vm.writeToMemory(1, noun);
                     vm.writeToMemory(2, verb);
                 } catch (IntCodeException e) {
-                    throw new IllegalAccessError("Error during write to VM memory");
+                    throw new AocSolveException("Error during write to VM memory");
                 }
 
                 // Run VM until it halts
@@ -72,16 +73,11 @@ public class AdventOfCode2019Day02 implements AocIntcodeTestable {
                         return Long.toString(100 * noun + verb);
                     }
                 } catch (IntCodeException e) {
-                    e.printStackTrace();
+                    throw new AocSolveException(e);
                 }
             }
         }
 
-        throw new IllegalStateException("No solution was found!");
-    }
-
-    @Override
-    public void disableDisplay(boolean disableDisplay) {
-        // Do nothing
+        throw new AocSolveException("No solution was found!");
     }
 }

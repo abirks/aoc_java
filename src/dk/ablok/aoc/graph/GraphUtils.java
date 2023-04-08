@@ -16,7 +16,7 @@ public class GraphUtils {
         paths.put(from, new ArrayList<>());
 
         while (true) {
-            // Find unvisited Node with smallest weight
+            // Find the unvisited Node with the smallest weight
             GraphNode here = weights.entrySet().stream()
                     .filter(e -> !visited.contains(e.getKey()))
                     .min(Map.Entry.comparingByValue())

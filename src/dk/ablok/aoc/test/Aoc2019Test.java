@@ -11,7 +11,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Aoc2019Test {
-
     @Test
     @AocCoverage(year = 2019, day = 1)
     public void testDay01() throws IOException {
@@ -21,7 +20,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 2)
     public void testDay02() throws IOException {
-        assertIntcodePuzzle(new AdventOfCode2019Day02(), "input/aoc2019/input02.txt", "4023471", "8051");
+        assertAocDay(new AdventOfCode2019Day02(), "input/aoc2019/input02.txt", "4023471", "8051");
     }
 
     @Test
@@ -39,7 +38,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 5)
     public void testDay05() throws IOException {
-        assertIntcodePuzzle(new AdventOfCode2019Day05(), "input/aoc2019/input05.txt", "9961446", "742621");
+        assertAocDay(new AdventOfCode2019Day05(), "input/aoc2019/input05.txt", "9961446", "742621");
     }
 
     @Test
@@ -51,7 +50,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 7)
     public void testDay07() throws IOException {
-        assertIntcodePuzzle(new AdventOfCode2019Day07(), "input/aoc2019/input07.txt", "262086", "5371621");
+        assertAocDay(new AdventOfCode2019Day07(), "input/aoc2019/input07.txt", "262086", "5371621");
     }
 
     @Test
@@ -71,7 +70,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 9)
     public void testDay09() throws IOException {
-        assertIntcodePuzzle(new AdventOfCode2019Day09(), "input/aoc2019/input09.txt", "2745604242", "51135");
+        assertAocDay(new AdventOfCode2019Day09(), "input/aoc2019/input09.txt", "2745604242", "51135");
     }
 
     @Test
@@ -91,7 +90,7 @@ public class Aoc2019Test {
                  # #  # #  #    #    #  # #  # #  # #  #  \s
                  #  # #  # #### #### #  #  ##  #  # ###   \s
                 """;
-        assertIntcodePuzzle(new AdventOfCode2019Day11(), "input/aoc2019/input11.txt", "2054", KRZEAJHB);
+        assertAocDay(new AdventOfCode2019Day11(), "input/aoc2019/input11.txt", "2054", KRZEAJHB);
     }
 
     @Test
@@ -122,29 +121,26 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 16)
     public void testDay16() throws IOException {
-        assertAocDay(new AdventOfCode2019Day16(), "input/aoc2019/input16.txt", "", "");
+        assertAocDay(new AdventOfCode2019Day16(), "input/aoc2019/input16.txt", "61149209", "16178430");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 17)
     public void testDay17() throws IOException {
-        String mainSequence = "B,A,B,C,A,B,A,C,C,A";
-        String sequenceA = "R,10,R,6,R,4,R,4";
-        String sequenceB = "L,12,L,12,R,4";
-        String sequenceC = "R,6,L,12,L,12";
+        final String mainSequence = "B,A,B,C,A,B,A,C,C,A";
+        final String sequenceA = "R,10,R,6,R,4,R,4";
+        final String sequenceB = "L,12,L,12,R,4";
+        final String sequenceC = "R,6,L,12,L,12";
 
         AdventOfCode2019Day17 puzzle = new AdventOfCode2019Day17();
-        puzzle.disableDisplay(true);
         puzzle.inputSequences(mainSequence, sequenceA, sequenceB, sequenceC);
-        puzzle.load("input/aoc2019/input17.txt");
-        assertEquals("5724", puzzle.part1());
-        assertEquals("732985", puzzle.part2());
+        assertIntcodePuzzle(puzzle, "input/aoc2019/input17.txt", "5724", "732985");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 18)
     public void testDay18() throws IOException {
-        assertAocDay(new AdventOfCode2019Day18(), "input/aoc2019/input18.txt", "", "");
+        assertAocDay(new AdventOfCode2019Day18(), "input/aoc2019/input18.txt", "4042", "2014");
     }
 
     @Test
@@ -162,7 +158,32 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 21)
     public void testDay21() throws IOException {
-        assertIntcodePuzzle(new AdventOfCode2019Day21(), "input/aoc2019/input21.txt", "", "");
+        final String PART1_SCRIPT = """
+                NOT A J
+                NOT B T
+                OR T J
+                NOT C T
+                OR T J
+                AND D J
+                WALK
+                """;
+
+        final String PART2_SCRIPT = """
+                NOT C J
+                AND D J
+                AND H J
+                NOT B T
+                AND D T
+                AND H T
+                OR T J
+                NOT A T
+                OR T J
+                RUN
+                """;
+
+        AdventOfCode2019Day21 puzzle = new AdventOfCode2019Day21();
+        puzzle.setScripts(PART1_SCRIPT, PART2_SCRIPT);
+        assertAocDay(puzzle, "input/aoc2019/input21.txt", "19354464", "1143198454");
     }
 
     @Test
@@ -186,7 +207,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 25)
     public void testDay25() throws IOException {
-        List<String> steps = new ArrayList<>(Arrays.asList(
+        final List<String> steps = new ArrayList<>(Arrays.asList(
                 "north",
                 "east",
                 "take astrolabe",
@@ -206,10 +227,13 @@ public class Aoc2019Test {
         ));
 
         AdventOfCode2019Day25 puzzle = new AdventOfCode2019Day25();
-        puzzle.disableDisplay(true);
         puzzle.setAutoplay(steps);
-        puzzle.load("input/aoc2019/input25.txt");
-        assertEquals("229384", puzzle.part1());
+        assertIntcodePuzzle(puzzle, "input/aoc2019/input25.txt", "229384", null);
+    }
+
+    private void assertIntcodePuzzle(AocTestableWithDisplay puzzle, String filename, String expected1, String expected2) throws IOException {
+        puzzle.enableDisplay(false);
+        assertAocDay(puzzle, filename, expected1, expected2);
     }
 
     private void assertAocDay(AocTestable puzzle, String filename, String expected1, String expected2) throws IOException {
@@ -217,12 +241,4 @@ public class Aoc2019Test {
         assertEquals(expected1, puzzle.part1());
         assertEquals(expected2, puzzle.part2());
     }
-
-    private void assertIntcodePuzzle(AocIntcodeTestable puzzle, String filename, String expected1, String expected2) throws IOException {
-        puzzle.disableDisplay(true);
-        puzzle.load(filename);
-        assertEquals(expected1, puzzle.part1());
-        assertEquals(expected2, puzzle.part2());
-    }
-
 }

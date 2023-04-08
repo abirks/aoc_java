@@ -88,4 +88,13 @@ public class InputUtils {
 
         return output;
     }
+
+    public static char[] read1dArray(String filename) throws IOException {
+        byte[] bytes = readFirstLine(filename).getBytes(StandardCharsets.UTF_8);
+        char[] output = new char[bytes.length];
+        for (int i = 0; i < bytes.length; i++) {
+            output[i] = (char) bytes[i];
+        }
+        return output;
+    }
 }

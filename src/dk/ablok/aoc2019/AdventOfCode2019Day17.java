@@ -1,6 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -11,7 +13,7 @@ import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day17 implements AocIntcodeTestable {
+public class AdventOfCode2019Day17 implements AocTestableWithDisplay {
     private static final int NEWLINE = '\n';
     private static final int WALKWAY = '#';
     private static final int SPACE = '.';
@@ -32,7 +34,6 @@ public class AdventOfCode2019Day17 implements AocIntcodeTestable {
 
     private IntCodeVM vm;
     private final StringBuilder outputBuffer = new StringBuilder();
-    private boolean firstFrame = true;
 
     private IntCodeDisplay display;
     private Queue<DisplayBlock> displayIn;
@@ -43,6 +44,11 @@ public class AdventOfCode2019Day17 implements AocIntcodeTestable {
     private String sequenceA;
     private String sequenceB;
     private String sequenceC;
+
+    private int x = 0;
+    private int y = 0;
+    private long lastOutput = 0;
+
 
     public void inputSequences(String mainSequence, String sequenceA, String sequenceB, String sequenceC) {
         this.mainSequence = mainSequence;
@@ -58,31 +64,25 @@ public class AdventOfCode2019Day17 implements AocIntcodeTestable {
                 .build();
 
         if (enableDisplay) {
-            display = new IntCodeDisplay("Scaffolds", RES_X, RES_Y, 15, 15, 0, 0);
-            char[] trigger = {NEWLINE, NEWLINE};
-            //vm.setFrameDelay(10, String.valueOf(trigger));
+            display = IntCodeDisplay.getBuilder()
+                    .setTitle("Scaffolds")
+                    .setResolution(RES_X, RES_Y)
+                    .setSize(15, 15)
+                    .build();
             displayIn = display.getInput();
         }
 
         try {
             vm.writeToMemory(0, 2);
         } catch (IntCodeException e) {
-            throw new IllegalArgumentException();// TODO Implement AdventOfCodeException
+            throw new AocLoadException(e);
         }
     }
 
     @Override
     public String part1() {
-        return part2();
-    }
-
-    @Override
-    public String part2() {
         vm.start();
-
-        if (enableDisplay) {
-            display.start();
-        }
+        if (enableDisplay) display.start();
 
         // Keep running until the VM stops
         while (vm.isRunning()) {
@@ -90,113 +90,118 @@ public class AdventOfCode2019Day17 implements AocIntcodeTestable {
             Optional<Long> c = vm.pollOutput();
 
             if (c.isPresent()) {
-                // Update display and map
-                updateMap(c.get());
-
-                // Input programs when prompted
-                sendInputs(outputBuffer);
+                if (c.get() == NEWLINE && lastOutput == NEWLINE) {
+                    vm.pause();
+                    return Long.toString(analyzeFirstFrame(map));
+                } else {
+                    map.put(new Coords(x, y), c.get());
+                    handleOutputCharacter(c.get());
+                }
             }
         }
-        return null;
+
+        throw new AocSolveException("VM finished without reaching a solution!");
     }
 
-    private void sendInputs(StringBuilder output) {
-        boolean clear = switch (output.toString()) {
-            case MAIN -> sendString(mainSequence);
-            case FUNCTION_A -> sendString(sequenceA);
-            case FUNCTION_B -> sendString(sequenceB);
-            case FUNCTION_C -> sendString(sequenceC);
-            case VIDEO_FEED -> sendString(enableDisplay ? "y" : "n");
-            default -> false;
-        };
+    @Override
+    public String part2() {
+        vm.unPause();
 
-        if (clear) {
-            output.setLength(0);
+        // Keep looping until the VM stops and all output has been processed
+        while (vm.isRunning() || vm.outputReady()) {
+            // Input programs when prompted
+            sendInputs(outputBuffer.toString());
+
+            // Read output character
+            Optional<Long> c = vm.pollOutput();
+
+            if (c.isPresent()) {
+                // Update display and map
+                if (c.get() <= 255) {
+                    handleOutputCharacter(c.get());
+                } else {
+                    vm.stop();
+                    if (enableDisplay) display.stop();
+                    return Long.toString(c.get());
+                }
+            }
         }
+
+        throw new AocSolveException("VM finished without reaching a solution!");
     }
 
-    private boolean sendString(String sequence) {
+    private void sendInputs(String output) {
+        if (output.endsWith(MAIN)) sendString(mainSequence);
+        if (output.endsWith(FUNCTION_A)) sendString(sequenceA);
+        if (output.endsWith(FUNCTION_B)) sendString(sequenceB);
+        if (output.endsWith(FUNCTION_C)) sendString(sequenceC);
+        if (output.endsWith(VIDEO_FEED)) sendString(enableDisplay ? "y" : "n");
+    }
+
+    private void sendString(String sequence) {
         for (long ch : sequence.toCharArray()) {
             vm.addToInput(ch);
         }
         vm.addToInput(NEWLINE);
-        return true;
     }
 
-    private void updateMap(long c) {
-        // Output character
-        int x = 0, y = 0;
-        long last = 0;
-
-        switch ((int) c) {
-            case NEWLINE -> {
-                y = last == NEWLINE ? 0 : y + 1; // Each frame ends with a double newline
-                x = 0;
-
-                // Part 1
-                if (last == NEWLINE && firstFrame) {
-                    firstFrame = false;
-                    System.out.println("17-1: " + analyzeFirstFrame(map));
-                    // Result is 5724
+    private void handleOutputCharacter(long c) {
+        if (c == NEWLINE) {
+            x = 0;
+            y = lastOutput == NEWLINE ? 0 : y + 1; // Each frame ends with a double newline
+        } else {
+            if (enableDisplay) {
+                switch ((int) c) {
+                    case WALKWAY -> drawWalkway(x, y);
+                    case SPACE -> drawSpace(x, y);
+                    case LEFT -> drawLeftfacing(x, y);
+                    case RIGHT -> drawRightfacing(x, y);
+                    case UP -> drawUpfacing(x, y);
+                    case DOWN -> drawDownfacing(x, y);
+                    case FALLING -> drawFalling(x, y);
+                    default -> {
+                        // Do nothing
+                    }
                 }
             }
-            case WALKWAY -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.EMPTY_RECTANGLE, DisplayBlock.Color.RED, DisplayBlock.Color.WHITE));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            case SPACE -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            case LEFT -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_LEFT, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            case RIGHT -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_RIGHT, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            case UP -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_UP, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            case DOWN -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_DOWN, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            case FALLING -> {
-                if (enableDisplay)
-                    displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
-                if (firstFrame) map.put(new Coords(x, y), c);
-                x++;
-            }
-            default -> {
-                if (c <= 255) {
-                    outputBuffer.append((char) c);
-                } else {
-                    // Print the result
-                    System.out.print("17-2: " + c);
-                    // Should be 732985
-                }
-            }
+            x++;
         }
+
+        lastOutput = c;
+        outputBuffer.append((char) c);
+    }
+
+    private void drawRightfacing(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_RIGHT, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
+    }
+
+    private void drawUpfacing(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_UP, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
+    }
+
+    private void drawDownfacing(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_DOWN, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
+    }
+
+    private void drawFalling(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.CIRCLE, DisplayBlock.Color.RED, DisplayBlock.Color.BLACK));
+    }
+
+    private void drawLeftfacing(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.ARROW_LEFT, DisplayBlock.Color.BLUE, DisplayBlock.Color.WHITE));
+    }
+
+    private void drawSpace(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.RECTANGLE, DisplayBlock.Color.BLACK));
+    }
+
+    private void drawWalkway(int x, int y) {
+        displayIn.add(new DisplayBlock(x, y, DisplayBlock.Shape.EMPTY_RECTANGLE, DisplayBlock.Color.RED, DisplayBlock.Color.WHITE));
     }
 
     @Override
-    public void disableDisplay(boolean disableDisplay) {
-        enableDisplay = !disableDisplay;
+    public void enableDisplay(boolean enableDisplay) {
+        this.enableDisplay = enableDisplay;
     }
 
     private long analyzeFirstFrame(Map<Coords, Long> map) {

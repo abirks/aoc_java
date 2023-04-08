@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
@@ -12,7 +12,7 @@ import java.util.Queue;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day15 implements AocIntcodeTestable {
+public class AdventOfCode2019Day15 implements AocTestableWithDisplay {
 
     private static final long NORTH = 1;
     private static final long SOUTH = 2;
@@ -47,10 +47,12 @@ public class AdventOfCode2019Day15 implements AocIntcodeTestable {
 
         // Display
         if (enableDisplay) {
-            display = new IntCodeDisplay("Repair Droid",
-                    43, 43,
-                    20, 20,
-                    22, 22);
+            display = IntCodeDisplay.getBuilder()
+                    .setTitle("Repair Droid")
+                    .setResolution(43, 43)
+                    .setSize(20, 20)
+                    .setOffset(22, 22)
+                    .build();
             displayInput = display.getInput();
         }
     }
@@ -83,8 +85,8 @@ public class AdventOfCode2019Day15 implements AocIntcodeTestable {
     }
 
     @Override
-    public void disableDisplay(boolean disableDisplay) {
-        enableDisplay = !disableDisplay;
+    public void enableDisplay(boolean enableDisplay) {
+        this.enableDisplay = enableDisplay;
     }
 
     private Location mapWithDroid(Droid droid) {

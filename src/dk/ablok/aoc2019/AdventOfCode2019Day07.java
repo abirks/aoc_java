@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day07 implements AocIntcodeTestable {
+public class AdventOfCode2019Day07 implements AocTestable {
     private List<Long> input;
 
     @Override
@@ -111,10 +112,5 @@ public class AdventOfCode2019Day07 implements AocIntcodeTestable {
             }
         }
         return output;
-    }
-
-    @Override
-    public void disableDisplay(boolean disableDisplay) {
-        // Do nothing
     }
 }

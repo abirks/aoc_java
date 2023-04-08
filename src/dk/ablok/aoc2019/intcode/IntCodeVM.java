@@ -125,6 +125,10 @@ public class IntCodeVM implements Runnable {
         return Optional.ofNullable(output.poll());
     }
 
+    public boolean outputReady() {
+        return !output.isEmpty();
+    }
+
     public void addToInput(long in) {
         input.add(in);
     }
@@ -351,6 +355,10 @@ public class IntCodeVM implements Runnable {
         // Execution delay
         public int inputDelay = 0;
         public int outputDelay = 0;
+
+        private VmBuilder(){
+            // Hide public constructor
+        }
 
         public VmBuilder setProgram(List<Long> program) {
             // Load program into memory

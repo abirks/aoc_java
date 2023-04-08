@@ -2,6 +2,7 @@ package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.graph.GraphEdge;
 import dk.ablok.aoc.graph.GraphNode;
+import dk.ablok.aoc.graph.GraphUtils;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;

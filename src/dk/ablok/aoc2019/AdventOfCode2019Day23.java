@@ -1,10 +1,12 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 
 import java.io.IOException;
 
-public class AdventOfCode2019Day23 implements AocIntcodeTestable {
+public class AdventOfCode2019Day23 implements AocTestableWithDisplay {
+
+    private boolean enableDisplay;
 
     @Override
     public void load(String filename) throws IOException {
@@ -22,7 +24,7 @@ public class AdventOfCode2019Day23 implements AocIntcodeTestable {
     }
 
     @Override
-    public void disableDisplay(boolean disableDisplay) {
-
+    public void enableDisplay(boolean enableDisplay) {
+        this.enableDisplay = enableDisplay;
     }
 }

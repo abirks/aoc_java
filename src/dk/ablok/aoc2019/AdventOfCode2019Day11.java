@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day11 implements AocIntcodeTestable {
+public class AdventOfCode2019Day11 implements AocTestable {
     private static final long BLACK = 0;
     private static final long WHITE = 1;
     private List<Long> input;
@@ -37,11 +38,6 @@ public class AdventOfCode2019Day11 implements AocIntcodeTestable {
         Robot robot = new Robot(WHITE);
         robot.paint();
         return robot.getIdentifier();
-    }
-
-    @Override
-    public void disableDisplay(boolean disableDisplay) {
-        // Do nothing
     }
 
     class Robot {

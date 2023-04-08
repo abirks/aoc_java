@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.test.AocIntcodeTestable;
+import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc.io.OutputUtils;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day25 implements AocIntcodeTestable {
+public class AdventOfCode2019Day25 implements AocTestableWithDisplay {
 
     public static final String COMMAND = "Command?\n";
     public static final String AIRLOCK = "keypad at the main airlock.\"";
@@ -37,8 +38,9 @@ public class AdventOfCode2019Day25 implements AocIntcodeTestable {
         autoplay = true;
     }
 
-    public void disableDisplay(boolean disableDisplay) {
-        enableDisplay = !disableDisplay;
+    @Override
+    public void enableDisplay(boolean enableDisplay) {
+        this.enableDisplay = enableDisplay;
     }
 
     public void load(String filename) throws IOException {
@@ -74,7 +76,7 @@ public class AdventOfCode2019Day25 implements AocIntcodeTestable {
             }
         }
 
-        return null;
+        throw new AocSolveException("VM finished without finding a solution!");
     }
 
     private String extractResult(String output) {
@@ -146,6 +148,7 @@ public class AdventOfCode2019Day25 implements AocIntcodeTestable {
     }
 
     public String part2() {
+        // No part 2 on this day
         return null;
     }
 }

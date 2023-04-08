@@ -12,6 +12,7 @@ class Blocks extends JComponent {
     DisplayBlock.Color[][] frontColors, backColors;
     DisplayBlock.Color defaultColor;
 
+    @Deprecated
     public Blocks(int resolutionX, int resolutionY, int sizeX, int sizeY, DisplayBlock.Shape defaultShape, DisplayBlock.Color defaultColor) {
         this.resolutionX = resolutionX;
         this.resolutionY = resolutionY;
