@@ -187,7 +187,7 @@ public class AdventOfCode2019Day13 implements AocTestableWithDisplay {
         }
 
         // Only do autoplay if visualization is enabled
-        if (enableDisplay||true) {
+        if (enableDisplay) {
             if (ballX < paddleX) {
                 joystickQueue.add(LEFT);
             } else if (ballX > paddleX) {

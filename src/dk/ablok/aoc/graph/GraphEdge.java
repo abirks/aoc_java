@@ -1,8 +1,9 @@
 package dk.ablok.aoc.graph;
 
-import dk.ablok.aoc.exceptions.AocSolveException;
-
 public interface GraphEdge {
+    GraphNode getFrom();
+
     GraphNode getTo();
+
     long getWeight();
 }
