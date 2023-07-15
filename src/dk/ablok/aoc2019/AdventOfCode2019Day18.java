@@ -15,10 +15,8 @@ public class AdventOfCode2019Day18 implements AocTestable {
     private static final char WALL = '#';
     private static final char FLOOR = '.';
     private static final char START = '@';
-    private Set<Position> input = new HashSet<>();
-    private Set<Path> map = new HashSet<>();
+    private final Set<Position> input = new HashSet<>();
     private Set<Character> allKeys;
-    private Position startLocation;
 
     @Override
     public void load(String filename) throws IOException {
@@ -29,118 +27,149 @@ public class AdventOfCode2019Day18 implements AocTestable {
                 if (inputArray[y][x] != WALL) {
                     Position newPosition = new Position(x, y, inputArray[y][x]);
                     input.add(newPosition);
-
-                    if (inputArray[y][x] == START) {
-                        startLocation = newPosition;
-                    }
                 }
             }
         }
-
-        buildGraph();
-        findAllKeys();
     }
 
     @Override
     public String part1() {
-        GraphState start = new GraphState();
+        // Build map for part 1
+        buildMap();
+
+        // Starting conditions
+        Set<Position> startLocations = input.stream().filter(Position::isStart).collect(Collectors.toSet());
+        GraphState start = new GraphState(startLocations);
         GraphState end = new GraphState(allKeys, null);
+
+        // Pathfinding
         List<GraphEdge> path = dijkstra(start, end);
         return Long.toString(path.stream().mapToLong(GraphEdge::getWeight).sum());
     }
 
     @Override
     public String part2() {
+        // Modify input for part 2
+
+        // Build map for part 2
+
+        // Starting conditions
+
+        // Pathfinding
+
         return null;
     }
 
+    private void buildMap() {
+        input.forEach(Position::storeNeighbors);
+        findPaths();
+        findAllKeys();
+    }
+
     private void findAllKeys() {
-        allKeys = map.stream()
-                .map(Path::getTo)
+        allKeys = input.stream()
                 .filter(Position::isKey)
-                .map(n -> n.type)
+                .map(Position::getKey)
                 .collect(Collectors.toSet());
     }
 
-    private void buildGraph() {
+    private void findPaths() {
         Set<Position> nodes = input.stream()
                 .filter(n -> !n.isFloor())
                 .collect(Collectors.toSet());
 
-        for (Position position : nodes) {
-            Map<Position, Integer> distances = new HashMap<>();
-            Set<Position> foundPositions = new HashSet<>();
-            distances.put(position, 0);
-            int thisDistance = 0;
-
-            System.out.println("Mapping from "+position);
-
-            boolean run = true;
-            while (run) {
-                run = false;
-                thisDistance++;
-
-                Set<Position> unvisitedNeighbors = distances.keySet().stream()
-                        .flatMap(n -> n.getNeighbors().stream())
-                        .filter(n -> !distances.containsKey(n) && !foundPositions.contains(n))
-                        .collect(Collectors.toSet());
-
-                for (Position neighbor : unvisitedNeighbors) {
-                    if (neighbor.isFloor()) {
-                        distances.put(neighbor, thisDistance);
-                    } else {
-                        map.add(new Path(position, neighbor, thisDistance));
-                        foundPositions.add(neighbor);
-                    }
-                    run = true;
-                }
-            }
-        }
+        nodes.parallelStream()
+                .map(AdventOfCode2019Day18::findEdgesFrom)
+                .flatMap(Collection::stream)
+                .forEach(path -> path.from.addNeighborPath(path));
     }
 
-    private class GraphState implements GraphNode {
+    private static Set<Path> findEdgesFrom(Position position) {
+        Set<Path> output = new HashSet<>();
+
+        Map<Position, Integer> distances = new HashMap<>();
+        Set<Position> foundPositions = new HashSet<>();
+        distances.put(position, 0);
+        int thisDistance = 0;
+
+        boolean run = true;
+        while (run) {
+            run = false;
+            thisDistance++;
+
+            Set<Position> unvisitedNeighbors = distances.keySet().stream()
+                    .flatMap(n -> n.getNeighbors().stream())
+                    .filter(n -> !distances.containsKey(n) && !foundPositions.contains(n))
+                    .collect(Collectors.toSet());
+
+            for (Position neighbor : unvisitedNeighbors) {
+                if (neighbor.isFloor()) {
+                    distances.put(neighbor, thisDistance);
+                } else {
+                    output.add(new Path(position, neighbor, thisDistance));
+                    foundPositions.add(neighbor);
+                }
+                run = true;
+            }
+        }
+
+        return output;
+    }
+
+    public class GraphState implements GraphNode {
         private final Set<Character> keys;
-        private final Position position;
-        private static int best = 0;
+        private final Set<Position> positions;
+        private static int best = 0;// TODO remove after optimizations
+        private static int iterationsAtBest = 0;// TODO remove after optimizations
+        private long weight;
 
-        public GraphState() {
+        public GraphState(Set<Position> startLocations) {
             this.keys = new HashSet<>();
-            this.position = startLocation;
+            this.positions = startLocations;
         }
 
-        public GraphState(GraphState previous, Position next) {
-            this(previous.keys, next);
-            if (next.isKey()) {
-                keys.add(next.type);
-            }
-            if (keys.size() > best) {
+        private GraphState(Set<Character> keys, Set<Position> positions) {
+            this.keys = new HashSet<>(keys);
+            this.positions = positions;
+
+            iterationsAtBest++;
+            if (keys.size() > best && keys.size()<26) {
                 best = keys.size();
-                System.out.println("New best: " + best);
+                System.out.println("Found " + best + " keys after " + iterationsAtBest + " iterations");
+                //System.out.printf(keys.toString());
+                iterationsAtBest = 0;
             }
-        }
-
-        private GraphState(Set<Character> keys, Position position) {
-            this.keys = new HashSet<>();
-            this.keys.addAll(keys);
-            this.position = position;
         }
 
         @Override
         public Set<GraphEdge> getEdgesFrom() {
             Set<GraphEdge> output = new HashSet<>();
-            Set<Path> allFrom = map.stream()
-                    .filter(n -> n.from == this.position)
-                    .collect(Collectors.toSet());
-            for (Path path : allFrom) {
-                if (path.to.isKey() || path.to.isStart() || (path.to.isDoor() && this.keys.contains(path.to.getKey()))) {
-                    output.add(new GraphStateEdge(
-                            this,
-                            new GraphState(this, path.to),
-                            path.length));
+
+            for (Position position : positions) {
+                Set<Position> otherBots = positions.stream().filter(p -> p != position).collect(Collectors.toSet());
+                List<Path> paths = position.getNeighborPaths().stream()
+                        .filter(path -> path.to.isKey()
+                                || path.to.isStart()
+                                || (path.to.isDoor() && this.keys.contains(path.to.getKey())))
+                        .toList();
+
+                for (Path path : paths) {
+                    Set<Position> newPositions = new HashSet<>(otherBots);
+                    newPositions.add(path.to());
+                    GraphState newState = new GraphState(keys, newPositions);
+                    output.add(new GraphStateEdge(this, newState, path.length));
+
+                    if (path.to().isKey()) {
+                        newState.addKey(path.to.getKey());
+                    }
                 }
             }
 
             return output;
+        }
+
+        public boolean addKey(Character key) {
+            return this.keys.add(key);
         }
 
         @Override
@@ -151,7 +180,7 @@ public class AdventOfCode2019Day18 implements AocTestable {
             if (keys.size() == allKeys.size()) {
                 return true;
             } else {
-                return Objects.equals(keys, that.keys) && Objects.equals(position, that.position);
+                return Objects.equals(keys, that.keys) && Objects.equals(positions, that.positions);
             }
         }
 
@@ -160,7 +189,7 @@ public class AdventOfCode2019Day18 implements AocTestable {
             if (keys.size() == allKeys.size()) {
                 return Objects.hash(keys);
             } else {
-                return Objects.hash(keys, position);
+                return Objects.hash(keys, positions);
             }
         }
     }
@@ -192,10 +221,27 @@ public class AdventOfCode2019Day18 implements AocTestable {
         private final int y;
         private final char type;
 
+        private Set<Position> neighbors;
+        private final Set<Path> neighborPaths = new HashSet<>();
+
         public Position(int x, int y, char type) {
             this.x = x;
             this.y = y;
             this.type = type;
+        }
+
+        public void storeNeighbors() {
+            neighbors = input.stream()
+                    .filter(n -> n.distanceTo(this) == 1)
+                    .collect(Collectors.toSet());
+        }
+
+        public void addNeighborPath(Path path) {
+            neighborPaths.add(path);
+        }
+
+        public Set<Path> getNeighborPaths() {
+            return neighborPaths;
         }
 
         public int distanceTo(Position other) {
@@ -214,12 +260,14 @@ public class AdventOfCode2019Day18 implements AocTestable {
             return 'A' <= type && type <= 'Z';
         }
 
-        public char getDoor() {
-            return (char) (type - 'a' + 'A');
-        }
-
         public char getKey() {
-            return (char) (type - 'A' + 'a');
+            if (isDoor()) {
+                return (char) (type + 'a' - 'A');
+            } else if (isKey()) {
+                return type;
+            } else {
+                throw new RuntimeException("No key for this position!");
+            }
         }
 
         public boolean isFloor() {
@@ -227,9 +275,10 @@ public class AdventOfCode2019Day18 implements AocTestable {
         }
 
         public Set<Position> getNeighbors() {
-            return input.stream()
-                    .filter(n -> n.distanceTo(this) == 1)
-                    .collect(Collectors.toSet());
+            if (neighbors == null) {
+                throw new IllegalStateException("No neighbors mapped!");
+            }
+            return neighbors;
         }
 
         @Override
@@ -238,28 +287,6 @@ public class AdventOfCode2019Day18 implements AocTestable {
         }
     }
 
-    private class Path {
-        private final Position from;
-        private final Position to;
-        private final int length;
-
-        public Path(Position from, Position to, int length) {
-            this.from = from;
-            this.to = to;
-            this.length = length;
-        }
-
-        public Position getTo() {
-            return to;
-        }
-
-        public long getWeight() {
-            return length;
-        }
-
-        @Override
-        public String toString() {
-            return from + " --(" + length + ")--> " + to;
-        }
+    private record Path(Position from, Position to, int length) {
     }
 }

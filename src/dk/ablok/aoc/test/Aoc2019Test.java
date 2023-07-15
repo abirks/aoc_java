@@ -96,7 +96,6 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 12)
     public void testDay12() throws IOException {
-        //3793220229463048874
         assertAocDay(new AdventOfCode2019Day12(), "input/aoc2019/input12.txt", "5937", "376203951569712");
     }
 
@@ -201,7 +200,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 24)
     public void testDay24() throws IOException {
-        assertAocDay(new AdventOfCode2019Day22(), "input/aoc2019/input24.txt", "", "");
+        assertAocDay(new AdventOfCode2019Day24(), "input/aoc2019/input24.txt", "", "");
     }
 
     @Test
