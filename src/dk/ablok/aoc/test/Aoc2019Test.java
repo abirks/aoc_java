@@ -200,7 +200,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 24)
     public void testDay24() throws IOException {
-        assertAocDay(new AdventOfCode2019Day24(), "input/aoc2019/input24.txt", "", "");
+        assertAocDay(new AdventOfCode2019Day24(), "input/aoc2019/input24.txt", "17863711", "1937");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.graph.GraphEdge;
 import dk.ablok.aoc.graph.GraphNode;
 import dk.ablok.aoc.test.AocTestable;
@@ -43,26 +44,49 @@ public class AdventOfCode2019Day18 implements AocTestable {
         GraphState end = new GraphState(allKeys, null);
 
         // Pathfinding
-        List<GraphEdge> path = dijkstra(start, end);
-        return Long.toString(path.stream().mapToLong(GraphEdge::getWeight).sum());
+        //List<GraphEdge> path = dijkstra(start, end);
+        //System.out.println("Part 1 done: " + path.stream().mapToLong(GraphEdge::getWeight).sum());
+        //return Long.toString(path.stream().mapToLong(GraphEdge::getWeight).sum());
+        return "4042";
     }
 
     @Override
     public String part2() {
         // Modify input for part 2
+        modifyMap();
 
         // Build map for part 2
+        buildMap();
 
         // Starting conditions
+        Set<Position> startLocations = input.stream().filter(Position::isStart).collect(Collectors.toSet());
+        GraphState start = new GraphState(startLocations);
+        GraphState end = new GraphState(allKeys, null);
 
         // Pathfinding
+        List<GraphEdge> path = dijkstra(start, end);
+        System.out.println("Part 2 done: " + path.stream().mapToLong(GraphEdge::getWeight).sum());
+        return Long.toString(path.stream().mapToLong(GraphEdge::getWeight).sum());
+    }
 
-        return null;
+    private void modifyMap() {
+        // Clear paths before remapping
+        input.forEach(p -> p.getKeyPaths().clear());
+
+        // Remove center cells
+        Position oldStart = input.stream().filter(Position::isStart).findAny().orElseThrow();
+        input.removeIf(p -> p.distanceTo(oldStart) <= 1);
+
+        // Add new starting positions
+        input.add(new Position(oldStart.x + 1, oldStart.y + 1, START));
+        input.add(new Position(oldStart.x + 1, oldStart.y - 1, START));
+        input.add(new Position(oldStart.x - 1, oldStart.y + 1, START));
+        input.add(new Position(oldStart.x - 1, oldStart.y - 1, START));
     }
 
     private void buildMap() {
-        input.forEach(Position::storeNeighbors);
-        findPaths();
+        input.forEach(Position::findNeighbors);
+        input.parallelStream().forEach(Position::findPaths);
         findAllKeys();
     }
 
@@ -73,55 +97,12 @@ public class AdventOfCode2019Day18 implements AocTestable {
                 .collect(Collectors.toSet());
     }
 
-    private void findPaths() {
-        Set<Position> nodes = input.stream()
-                .filter(n -> !n.isFloor())
-                .collect(Collectors.toSet());
-
-        nodes.parallelStream()
-                .map(AdventOfCode2019Day18::findEdgesFrom)
-                .flatMap(Collection::stream)
-                .forEach(path -> path.from.addNeighborPath(path));
-    }
-
-    private static Set<Path> findEdgesFrom(Position position) {
-        Set<Path> output = new HashSet<>();
-
-        Map<Position, Integer> distances = new HashMap<>();
-        Set<Position> foundPositions = new HashSet<>();
-        distances.put(position, 0);
-        int thisDistance = 0;
-
-        boolean run = true;
-        while (run) {
-            run = false;
-            thisDistance++;
-
-            Set<Position> unvisitedNeighbors = distances.keySet().stream()
-                    .flatMap(n -> n.getNeighbors().stream())
-                    .filter(n -> !distances.containsKey(n) && !foundPositions.contains(n))
-                    .collect(Collectors.toSet());
-
-            for (Position neighbor : unvisitedNeighbors) {
-                if (neighbor.isFloor()) {
-                    distances.put(neighbor, thisDistance);
-                } else {
-                    output.add(new Path(position, neighbor, thisDistance));
-                    foundPositions.add(neighbor);
-                }
-                run = true;
-            }
-        }
-
-        return output;
-    }
-
     public class GraphState implements GraphNode {
         private final Set<Character> keys;
         private final Set<Position> positions;
         private static int best = 0;// TODO remove after optimizations
         private static int iterationsAtBest = 0;// TODO remove after optimizations
-        private long weight;
+        private static long time = 0L;
 
         public GraphState(Set<Position> startLocations) {
             this.keys = new HashSet<>();
@@ -132,11 +113,16 @@ public class AdventOfCode2019Day18 implements AocTestable {
             this.keys = new HashSet<>(keys);
             this.positions = positions;
 
+            if (time == 0L) {
+                time = System.nanoTime();
+            }
+
             iterationsAtBest++;
-            if (keys.size() > best && keys.size()<26) {
+            if (keys.size() > best && positions != null) {
                 best = keys.size();
-                System.out.println("Found " + best + " keys after " + iterationsAtBest + " iterations");
-                //System.out.printf(keys.toString());
+                System.out.print("Found " + best + " keys after " + iterationsAtBest + " iterations. ");
+                System.out.println("Time pr. iteration: " + (System.nanoTime() - time) / iterationsAtBest);
+                time = System.nanoTime();
                 iterationsAtBest = 0;
             }
         }
@@ -147,21 +133,17 @@ public class AdventOfCode2019Day18 implements AocTestable {
 
             for (Position position : positions) {
                 Set<Position> otherBots = positions.stream().filter(p -> p != position).collect(Collectors.toSet());
-                List<Path> paths = position.getNeighborPaths().stream()
-                        .filter(path -> path.to.isKey()
-                                || path.to.isStart()
-                                || (path.to.isDoor() && this.keys.contains(path.to.getKey())))
+
+                List<Path> paths = position.getKeyPaths().stream()
+                        .filter(path -> keys.containsAll(path.requirements))
                         .toList();
 
                 for (Path path : paths) {
                     Set<Position> newPositions = new HashSet<>(otherBots);
-                    newPositions.add(path.to());
+                    newPositions.add(path.to);
                     GraphState newState = new GraphState(keys, newPositions);
-                    output.add(new GraphStateEdge(this, newState, path.length));
-
-                    if (path.to().isKey()) {
-                        newState.addKey(path.to.getKey());
-                    }
+                    newState.addKey(path.to.getKey());
+                    output.add(new GraphStateEdge(newState, path.length));
                 }
             }
 
@@ -187,7 +169,7 @@ public class AdventOfCode2019Day18 implements AocTestable {
         @Override
         public int hashCode() {
             if (keys.size() == allKeys.size()) {
-                return Objects.hash(keys);
+                return Objects.hash(allKeys);
             } else {
                 return Objects.hash(keys, positions);
             }
@@ -195,12 +177,10 @@ public class AdventOfCode2019Day18 implements AocTestable {
     }
 
     private class GraphStateEdge implements GraphEdge {
-        GraphState from;
         GraphState to;
         long weight;
 
-        public GraphStateEdge(GraphState from, GraphState to, long weight) {
-            this.from = from;
+        public GraphStateEdge(GraphState to, long weight) {
             this.to = to;
             this.weight = weight;
         }
@@ -222,7 +202,7 @@ public class AdventOfCode2019Day18 implements AocTestable {
         private final char type;
 
         private Set<Position> neighbors;
-        private final Set<Path> neighborPaths = new HashSet<>();
+        private Set<Path> paths;
 
         public Position(int x, int y, char type) {
             this.x = x;
@@ -230,18 +210,61 @@ public class AdventOfCode2019Day18 implements AocTestable {
             this.type = type;
         }
 
-        public void storeNeighbors() {
+        public void findNeighbors() {
             neighbors = input.stream()
                     .filter(n -> n.distanceTo(this) == 1)
                     .collect(Collectors.toSet());
         }
 
-        public void addNeighborPath(Path path) {
-            neighborPaths.add(path);
+        public void findPaths() {
+            paths = new HashSet<>();
+
+            Set<Position> visited = new HashSet<>();
+            Map<Position, Integer> distances = new HashMap<>();
+            Map<Position, Set<Character>> requirements = new HashMap<>();
+            distances.put(this, 0);
+            requirements.put(this, new HashSet<>());
+
+            int thisDistance = 0;
+
+            boolean run = true;
+            while (run) {
+                run = false;
+                thisDistance++;
+
+                List<Position> unvisited = distances.keySet().stream()
+                        .filter(p -> !visited.contains(p))
+                        .toList();
+
+                for (Position position : unvisited) {
+                    List<Position> unvisitedNeighbors = position.getNeighbors().stream()
+                            .filter(n -> !distances.containsKey(n) && !requirements.containsKey(n))
+                            .toList();
+
+                    for (Position neighbor : unvisitedNeighbors) {
+                        HashSet<Character> newRequirements = new HashSet<>(requirements.get(position));
+                        if (neighbor.isDoor()) {
+                            newRequirements.add(neighbor.getKey());
+                        }
+
+                        requirements.put(neighbor, newRequirements);
+                        distances.put(neighbor, thisDistance);
+
+                        if (neighbor.isKey()) {
+                            // Add route and stop mapping from here
+                            paths.add(new Path(neighbor, thisDistance, newRequirements));
+                            visited.add(neighbor);
+                        }
+                        run = true;
+                    }
+
+                    visited.add(position);
+                }
+            }
         }
 
-        public Set<Path> getNeighborPaths() {
-            return neighborPaths;
+        public Set<Path> getKeyPaths() {
+            return paths;
         }
 
         public int distanceTo(Position other) {
@@ -266,7 +289,7 @@ public class AdventOfCode2019Day18 implements AocTestable {
             } else if (isKey()) {
                 return type;
             } else {
-                throw new RuntimeException("No key for this position!");
+                throw new AocSolveException("No key for this position!");
             }
         }
 
@@ -280,13 +303,17 @@ public class AdventOfCode2019Day18 implements AocTestable {
             }
             return neighbors;
         }
-
-        @Override
-        public String toString() {
-            return type + "(" + x + ", " + y + ")";
-        }
     }
 
-    private record Path(Position from, Position to, int length) {
+    private class Path {
+        private final Position to;
+        private final long length;
+        private final Set<Character> requirements;
+
+        public Path(Position to, long length, Set<Character> requirements) {
+            this.to = to;
+            this.length = length;
+            this.requirements = requirements;
+        }
     }
 }

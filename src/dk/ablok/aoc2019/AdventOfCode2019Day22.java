@@ -61,7 +61,7 @@ public class AdventOfCode2019Day22 implements AocTestable {
         return inverse.toString();
     }
 
-    BigInteger findInverse(BigInteger y, BigInteger n) {
+    private BigInteger findInverse(BigInteger y, BigInteger n) {
         // Calculate x such that x * y = 1 (mod n)
         throw new RuntimeException("Not implemented!");
     }
