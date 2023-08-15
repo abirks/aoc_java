@@ -1,15 +1,14 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestableWithDisplay;
-
-import java.io.IOException;
 
 public class AdventOfCode2019Day23 implements AocTestableWithDisplay {
 
     private boolean enableDisplay;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
 
     }
 

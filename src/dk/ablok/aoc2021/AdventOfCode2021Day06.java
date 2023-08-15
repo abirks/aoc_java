@@ -1,8 +1,8 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class AdventOfCode2021Day06 implements AocTestable {
     private Map<Integer, Long> fishes;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         fishes = Arrays.stream(readFirstLine(filename).split(","))
                 .map(Integer::parseInt)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));

@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
@@ -15,7 +15,7 @@ public class AdventOfCode2022Day08 implements AocTestable {
     private final int[][] map = new int[DIM_X][DIM_Y];
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         int y = 0;
         for (String line : readInputAsList(filename)) {
             map[y] = Arrays.stream(line.split("")).mapToInt(Integer::parseInt).toArray();

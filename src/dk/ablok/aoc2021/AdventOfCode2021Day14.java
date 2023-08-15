@@ -1,5 +1,6 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
@@ -17,9 +18,9 @@ public class AdventOfCode2021Day14 implements AocTestable {
     private String template;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         File file = new File(filename);
-
+        //TODO Use utils class
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
             // Read template
@@ -40,6 +41,8 @@ public class AdventOfCode2021Day14 implements AocTestable {
             for (int i = 1; i < template.length(); i++) {
                 pairs.get(template.substring(i - 1, i + 1)).incrementAndGet();
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

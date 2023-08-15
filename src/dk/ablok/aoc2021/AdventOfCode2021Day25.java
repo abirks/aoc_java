@@ -1,5 +1,6 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.File;
@@ -12,7 +13,7 @@ public class AdventOfCode2021Day25 implements AocTestable {
     private int ySize;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         // Open file
         File f = new File(filename);
         try (Scanner sc = new Scanner(f)) {
@@ -40,6 +41,8 @@ public class AdventOfCode2021Day25 implements AocTestable {
             // Keep max values
             xSize = map.keySet().stream().map(v -> v.x).max(Integer::compare).orElseThrow() + 1;
             ySize = map.keySet().stream().map(v -> v.y).max(Integer::compare).orElseThrow() + 1;
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

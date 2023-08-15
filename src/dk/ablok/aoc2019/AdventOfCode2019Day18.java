@@ -1,26 +1,23 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.graph.GraphEdge;
-import dk.ablok.aoc.graph.GraphNode;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.graph.*;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static dk.ablok.aoc.graph.GraphUtils.dijkstra;
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
 public class AdventOfCode2019Day18 implements AocTestable {
     private static final char WALL = '#';
-    private static final char FLOOR = '.';
     private static final char START = '@';
     private final Set<Position> input = new HashSet<>();
     private Set<Character> allKeys;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         char[][] inputArray = read2dArray(filename);
 
         for (int y = 0; y < inputArray.length; y++) {
@@ -44,10 +41,12 @@ public class AdventOfCode2019Day18 implements AocTestable {
         GraphState end = new GraphState(allKeys, null);
 
         // Pathfinding
-        //List<GraphEdge> path = dijkstra(start, end);
-        //System.out.println("Part 1 done: " + path.stream().mapToLong(GraphEdge::getWeight).sum());
-        //return Long.toString(path.stream().mapToLong(GraphEdge::getWeight).sum());
-        return "4042";
+        PathFinder<GraphState, LongWeight> pathFinder = new PathFinder<>(
+                new GraphStateMetric(), new DijkstraMetric<>(new LongWeight(0L)),
+                new LongWeight.LongZeroSupplier(), new LongWeight.LongInfinitySupplier());
+        List<GraphState> path = pathFinder.findRoute(start, end);
+
+        return Long.toString(path.stream().mapToLong(GraphState::getWeight).sum());
     }
 
     @Override
@@ -64,9 +63,12 @@ public class AdventOfCode2019Day18 implements AocTestable {
         GraphState end = new GraphState(allKeys, null);
 
         // Pathfinding
-        List<GraphEdge> path = dijkstra(start, end);
-        System.out.println("Part 2 done: " + path.stream().mapToLong(GraphEdge::getWeight).sum());
-        return Long.toString(path.stream().mapToLong(GraphEdge::getWeight).sum());
+        PathFinder<GraphState, LongWeight> pathFinder = new PathFinder<>(
+                new GraphStateMetric(), new DijkstraMetric<>(new LongWeight(0L)),
+                new LongWeight.LongZeroSupplier(), new LongWeight.LongInfinitySupplier());
+        List<GraphState> path = pathFinder.findRoute(start, end);
+
+        return Long.toString(path.stream().mapToLong(GraphState::getWeight).sum());
     }
 
     private void modifyMap() {
@@ -100,9 +102,7 @@ public class AdventOfCode2019Day18 implements AocTestable {
     public class GraphState implements GraphNode {
         private final Set<Character> keys;
         private final Set<Position> positions;
-        private static int best = 0;// TODO remove after optimizations
-        private static int iterationsAtBest = 0;// TODO remove after optimizations
-        private static long time = 0L;
+        private long weight = 0L;
 
         public GraphState(Set<Position> startLocations) {
             this.keys = new HashSet<>();
@@ -112,29 +112,22 @@ public class AdventOfCode2019Day18 implements AocTestable {
         private GraphState(Set<Character> keys, Set<Position> positions) {
             this.keys = new HashSet<>(keys);
             this.positions = positions;
+        }
 
-            if (time == 0L) {
-                time = System.nanoTime();
-            }
-
-            iterationsAtBest++;
-            if (keys.size() > best && positions != null) {
-                best = keys.size();
-                System.out.print("Found " + best + " keys after " + iterationsAtBest + " iterations. ");
-                System.out.println("Time pr. iteration: " + (System.nanoTime() - time) / iterationsAtBest);
-                time = System.nanoTime();
-                iterationsAtBest = 0;
-            }
+        public GraphState(GraphState newState, long length) {
+            this.keys = newState.keys;
+            this.positions = newState.positions;
+            this.weight = length;
         }
 
         @Override
-        public Set<GraphEdge> getEdgesFrom() {
-            Set<GraphEdge> output = new HashSet<>();
+        public Stream<GraphNode> getConnectionsFrom() {
+            Set<GraphNode> output = new HashSet<>();
 
             for (Position position : positions) {
                 Set<Position> otherBots = positions.stream().filter(p -> p != position).collect(Collectors.toSet());
 
-                List<Path> paths = position.getKeyPaths().stream()
+                List<AdventOfCode2019Day18.Path> paths = position.getKeyPaths().stream()
                         .filter(path -> keys.containsAll(path.requirements))
                         .toList();
 
@@ -143,15 +136,19 @@ public class AdventOfCode2019Day18 implements AocTestable {
                     newPositions.add(path.to);
                     GraphState newState = new GraphState(keys, newPositions);
                     newState.addKey(path.to.getKey());
-                    output.add(new GraphStateEdge(newState, path.length));
+                    output.add(new GraphState(newState, path.length));
                 }
             }
 
-            return output;
+            return output.stream();
         }
 
-        public boolean addKey(Character key) {
-            return this.keys.add(key);
+        public void addKey(Character key) {
+            this.keys.add(key);
+        }
+
+        public long getWeight() {
+            return weight;
         }
 
         @Override
@@ -162,7 +159,9 @@ public class AdventOfCode2019Day18 implements AocTestable {
             if (keys.size() == allKeys.size()) {
                 return true;
             } else {
-                return Objects.equals(keys, that.keys) && Objects.equals(positions, that.positions);
+                return Objects.equals(keys, that.keys)
+                        && Objects.equals(positions, that.positions)
+                        && weight == that.weight;
             }
         }
 
@@ -171,28 +170,15 @@ public class AdventOfCode2019Day18 implements AocTestable {
             if (keys.size() == allKeys.size()) {
                 return Objects.hash(allKeys);
             } else {
-                return Objects.hash(keys, positions);
+                return Objects.hash(keys, positions, weight);
             }
         }
     }
 
-    private class GraphStateEdge implements GraphEdge {
-        GraphState to;
-        long weight;
-
-        public GraphStateEdge(GraphState to, long weight) {
-            this.to = to;
-            this.weight = weight;
-        }
-
+    private class GraphStateMetric implements Metric<GraphState, LongWeight> {
         @Override
-        public GraphNode getTo() {
-            return to;
-        }
-
-        @Override
-        public long getWeight() {
-            return weight;
+        public LongWeight computeCost(GraphState from, GraphState to) {
+            return new LongWeight(to.getWeight());
         }
     }
 
@@ -289,12 +275,8 @@ public class AdventOfCode2019Day18 implements AocTestable {
             } else if (isKey()) {
                 return type;
             } else {
-                throw new AocSolveException("No key for this position!");
+                throw new IllegalStateException("No key for this position!");
             }
-        }
-
-        public boolean isFloor() {
-            return type == FLOOR;
         }
 
         public Set<Position> getNeighbors() {

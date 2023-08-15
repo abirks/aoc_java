@@ -1,9 +1,7 @@
 package dk.ablok.aoc.graph;
 
-import dk.ablok.aoc.exceptions.AocSolveException;
-
-import java.util.Set;
+import java.util.stream.Stream;
 
 public interface GraphNode {
-    Set<GraphEdge> getEdgesFrom();
+    Stream<GraphNode> getConnectionsFrom();
 }

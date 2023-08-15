@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
@@ -7,7 +8,6 @@ import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 import dk.ablok.aoc2019.intcode.queues.JoystickQueue;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +41,7 @@ public class AdventOfCode2019Day13 implements AocTestableWithDisplay {
 
     int blocks = 0;
 
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         input = readCommaSeparatedLongList(filename);
 
         // If not visualizing, replace the bottom row with all wall blocks
@@ -187,7 +187,7 @@ public class AdventOfCode2019Day13 implements AocTestableWithDisplay {
         }
 
         // Only do autoplay if visualization is enabled
-        if (enableDisplay||true) {
+        if (enableDisplay) {
             if (ballX < paddleX) {
                 joystickQueue.add(LEFT);
             } else if (ballX > paddleX) {

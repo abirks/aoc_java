@@ -1,9 +1,13 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
@@ -13,7 +17,7 @@ public class AdventOfCode2019Day10 implements AocTestable {
     private Asteroid bestAsteroid;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         char[][] input = read2dArray(filename);
         for (int y = 0; y < input.length; y++) {
             for (int x = 0; x < input[y].length; x++) {

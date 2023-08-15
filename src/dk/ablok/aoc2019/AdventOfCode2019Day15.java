@@ -1,11 +1,11 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -37,7 +37,7 @@ public class AdventOfCode2019Day15 implements AocTestableWithDisplay {
     private final Map<Location, Integer> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         // Setup VM
         vm = IntCodeVM.getBuilder()
                 .setOutputDelay(enableDisplay ? 1 : 0)

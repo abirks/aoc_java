@@ -1,6 +1,6 @@
 package dk.ablok.aoc.exceptions;
 
-public class AocSolveException extends RuntimeException{
+public class AocSolveException extends Exception {
     public AocSolveException() {
         super();
     }

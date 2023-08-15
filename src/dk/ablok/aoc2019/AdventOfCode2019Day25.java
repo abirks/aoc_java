@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.test.AocTestableWithDisplay;
 import dk.ablok.aoc.io.OutputUtils;
@@ -43,15 +44,16 @@ public class AdventOfCode2019Day25 implements AocTestableWithDisplay {
         this.enableDisplay = enableDisplay;
     }
 
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         vm = IntCodeVM.getBuilder()
                 .setProgram(readCommaSeparatedLongList(filename))
                 .build();
+
         vmout = vm.getOutput();
         vmin = vm.getInput();
     }
 
-    public String part1() {
+    public String part1() throws AocSolveException {
         vm.start();
 
         // Wait for VM to start

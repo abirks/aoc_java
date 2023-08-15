@@ -1,8 +1,8 @@
 package dk.ablok.aoc2015;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +16,7 @@ public class AdventOfCode2015Day05 implements AocTestable {
     private List<String> input;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         input = readInputAsList(filename);
     }
 

@@ -1,9 +1,9 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.io.InputUtils;
+import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class AdventOfCode2022Day21 implements AocTestable {
     private final Map<String, Long> part2values = new HashMap<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         for (String line : InputUtils.readInputAsList(filename)) {
             String[] parts = line.split(" ");
             String monkey = parts[0].substring(0, parts[0].length() - 1);

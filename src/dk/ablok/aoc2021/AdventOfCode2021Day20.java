@@ -1,5 +1,6 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.File;
@@ -12,7 +13,7 @@ public class AdventOfCode2021Day20 implements AocTestable {
     private Map<Position, Boolean> image = new HashMap<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         // Open file
         File f = new File(filename);
         try (Scanner sc = new Scanner(f)) {
@@ -22,7 +23,8 @@ public class AdventOfCode2021Day20 implements AocTestable {
             sc.nextLine(); // Skip empty line
 
             // Read image
-            int x = 0, y = 0;
+            int x = 0;
+            int y = 0;
             while (sc.hasNext()) {
                 for (char c : sc.nextLine().toCharArray()) {
                     image.put(new Position(x, y), c == '#');
@@ -31,6 +33,8 @@ public class AdventOfCode2021Day20 implements AocTestable {
                 x = 0;
                 y++;
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

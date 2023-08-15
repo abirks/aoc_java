@@ -1,5 +1,6 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class AdventOfCode2022Day11 implements AocTestable {
     private Long divisors = 1L;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
             while (iter.hasNext()) {
@@ -43,6 +44,8 @@ public class AdventOfCode2022Day11 implements AocTestable {
                     iter.next(); // Empty line between monkeys
                 }
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

@@ -1,10 +1,12 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +19,7 @@ public class AdventOfCode2019Day12 implements AocTestable {
     private final long[][] velocities = new long[4][3];
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         int i = 0;
         for (String moon : readInputAsList(filename)) {
             Matcher matcher = pattern.matcher(moon);
@@ -30,7 +32,7 @@ public class AdventOfCode2019Day12 implements AocTestable {
                         Long.parseLong(matcher.group(3))};
                 velocities[i] = new long[]{0, 0, 0};
             } else {
-                throw new IllegalArgumentException("Unknown input");
+                throw new AocLoadException("Unknown input");
             }
 
             // Next moon

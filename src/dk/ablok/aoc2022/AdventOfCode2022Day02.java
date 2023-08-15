@@ -1,8 +1,7 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
-
-import java.io.IOException;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
@@ -19,7 +18,7 @@ public class AdventOfCode2022Day02 implements AocTestable {
     private int sum2 = 0;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         for (String line : readInputAsList(filename)) {
             int opponent = parseShape(line.charAt(0));
             int me = parseShape(line.charAt(2));

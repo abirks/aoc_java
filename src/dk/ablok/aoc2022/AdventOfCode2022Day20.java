@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class AdventOfCode2022Day20 implements AocTestable {
     private final List<Number> inputWithKey = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         // Create elements
         for (String line : readInputAsList(filename)) {
             inputWithoutKey.add(new Number(Long.parseLong(line)));
@@ -42,7 +42,7 @@ public class AdventOfCode2022Day20 implements AocTestable {
 
     @Override
     public String part2() {
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             for (Number number : inputWithKey) {
                 moveNumber(number, inputWithKey);
             }

@@ -1,5 +1,6 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ public class AdventOfCode2021Day13 implements AocTestable {
     private final List<String> instructions = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         File file = new File(filename);
 
         try (FileReader fr = new FileReader(file);
@@ -33,6 +34,8 @@ public class AdventOfCode2021Day13 implements AocTestable {
             while ((inline = br.readLine()) != null) {
                 instructions.add(inline);
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

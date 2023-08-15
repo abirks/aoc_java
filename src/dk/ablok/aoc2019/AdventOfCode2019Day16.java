@@ -1,11 +1,11 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static dk.ablok.aoc.io.InputUtils.read1dArray;
 
@@ -17,9 +17,8 @@ public class AdventOfCode2019Day16 implements AocTestable {
     private ArrayList<Object> longInput = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws IOException {
-        char[] file = read1dArray(filename);
-        for (char c : file) {
+    public void load(String filename) throws AocLoadException {
+        for (char c : read1dArray(filename)) {
             input.add(c - '0');
         }
 

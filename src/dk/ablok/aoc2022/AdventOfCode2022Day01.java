@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +14,11 @@ public class AdventOfCode2022Day01 implements AocTestable {
     private final List<Integer> elves = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
+        List<String> input = readInputAsList(filename);
+
         int sum = 0;
-        for (String line : readInputAsList(filename)) {
+        for (String line : input) {
             if (!line.isEmpty()) {
                 sum += Integer.parseInt(line);
             } else {

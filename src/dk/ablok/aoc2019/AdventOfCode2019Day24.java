@@ -1,11 +1,9 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
@@ -17,9 +15,8 @@ public class AdventOfCode2019Day24 implements AocTestable {
     private boolean[][] input = new boolean[Grid.DIMENSION][Grid.DIMENSION];
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         char[][] inputArray = read2dArray(filename);
-
 
         for (int y = 0; y < inputArray.length; y++) {
             for (int x = 0; x < inputArray[y].length; x++) {
@@ -64,8 +61,6 @@ public class AdventOfCode2019Day24 implements AocTestable {
 }
 
 class Grid {
-    public static final List<Grid> ALL_GRIDS = new ArrayList<>();
-
     public static final int DIMENSION = 5;
 
     private static final boolean[][] INNER_MASK = {

@@ -1,8 +1,8 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -21,7 +21,7 @@ public class AdventOfCode2021Day17 implements AocTestable {
     private int ymax;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         Pattern pattern = Pattern.compile("target area: x=(?<xmin>[0-9-]+)..(?<xmax>[0-9-]+), y=(?<ymin>[0-9-]+)..(?<ymax>[0-9-]+)");
         Matcher matcher = pattern.matcher(readFirstLine(filename));
         if (!matcher.find()) {

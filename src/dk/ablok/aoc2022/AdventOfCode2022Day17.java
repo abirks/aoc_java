@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,9 +27,11 @@ public class AdventOfCode2022Day17 implements AocTestable {
     int jetCounter = 0;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
+        char[] input = readFirstLine(filename).toCharArray();
+
         // Read input
-        for (char jet : readFirstLine(filename).toCharArray()) {
+        for (char jet : input) {
             if (jet == '<') {
                 jets.add(LEFT);
             } else {

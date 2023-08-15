@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readFirstLine;
@@ -12,7 +12,7 @@ public class AdventOfCode2022Day06 implements AocTestable {
     private String input;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         input = readFirstLine(filename);
     }
 

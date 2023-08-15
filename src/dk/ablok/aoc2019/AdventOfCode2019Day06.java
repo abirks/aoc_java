@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class AdventOfCode2019Day06 implements AocTestable {
     private final Map<String, String> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         for (String orbit : readInputAsList(filename)) {
             String[] objects = orbit.split("\\)");
             // Map: objects[1] orbits objects[0]

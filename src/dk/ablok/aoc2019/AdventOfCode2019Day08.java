@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class AdventOfCode2019Day08 implements AocTestable {
     private Integer[][][] layers;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         char[] input = readFirstLine(filename).toCharArray();
         int depth = input.length / (WIDTH * HEIGHT);
         layers = new Integer[depth][HEIGHT][WIDTH];

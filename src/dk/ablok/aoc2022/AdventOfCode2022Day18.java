@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,7 +15,7 @@ public class AdventOfCode2022Day18 implements AocTestable {
     private final Set<Cube> air = new HashSet<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         for (String line : readInputAsList(filename)) {
             lava.add(new Cube(line));
         }

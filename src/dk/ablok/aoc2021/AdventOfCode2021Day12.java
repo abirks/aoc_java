@@ -1,5 +1,6 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
@@ -13,7 +14,7 @@ public class AdventOfCode2021Day12 implements AocTestable {
     static Set<Edge> edges = new HashSet<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         File file = new File(filename);
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
@@ -25,6 +26,8 @@ public class AdventOfCode2021Day12 implements AocTestable {
                 String[] parts = inline.split("-");
                 edges.add(new Edge(parts[0], parts[1]));
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

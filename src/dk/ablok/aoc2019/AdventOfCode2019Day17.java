@@ -8,7 +8,6 @@ import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 
-import java.io.IOException;
 import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
@@ -58,7 +57,7 @@ public class AdventOfCode2019Day17 implements AocTestableWithDisplay {
     }
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         vm = IntCodeVM.getBuilder()
                 .setProgram(readCommaSeparatedLongList(filename))
                 .build();
@@ -80,7 +79,7 @@ public class AdventOfCode2019Day17 implements AocTestableWithDisplay {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         vm.start();
         if (enableDisplay) display.start();
 
@@ -104,7 +103,7 @@ public class AdventOfCode2019Day17 implements AocTestableWithDisplay {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         vm.unPause();
 
         // Keep looping until the VM stops and all output has been processed

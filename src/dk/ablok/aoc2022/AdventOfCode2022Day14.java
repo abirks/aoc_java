@@ -1,5 +1,6 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
@@ -19,7 +20,8 @@ public class AdventOfCode2022Day14 implements AocTestable {
     private final Map<Position, Unit> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
+        // TODO Use utils class
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
 
@@ -46,6 +48,8 @@ public class AdventOfCode2022Day14 implements AocTestable {
                     }
                 }
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

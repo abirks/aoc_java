@@ -1,5 +1,6 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class AdventOfCode2019Day14 implements AocTestable {
     private final List<String> priority = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         readInputAsList(filename).forEach(this::parseRecipe);
         rankIngredients();
     }

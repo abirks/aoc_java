@@ -1,8 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +15,7 @@ public class AdventOfCode2022Day09 implements AocTestable {
     private List<String> input = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         input = readInputAsList(filename);
     }
 
@@ -63,7 +63,8 @@ public class AdventOfCode2022Day09 implements AocTestable {
         return positions;
     }
 
-    record Position(int x, int y) {}
+    record Position(int x, int y) {
+    }
 
     static class Knot {
         int y = 0;

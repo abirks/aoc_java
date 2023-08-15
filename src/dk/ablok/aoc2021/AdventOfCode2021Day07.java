@@ -1,8 +1,8 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,10 +14,11 @@ public class AdventOfCode2021Day07 implements AocTestable {
     private Integer max;
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         subs = Arrays.stream(readFirstLine(filename).split(","))
                 .map(Integer::parseInt)
                 .toList();
+
         min = subs.stream().min(Integer::compare).orElseThrow();
         max = subs.stream().max(Integer::compare).orElseThrow();
     }

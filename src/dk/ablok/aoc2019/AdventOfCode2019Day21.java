@@ -1,9 +1,9 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public class AdventOfCode2019Day21 implements AocTestable {
     }
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         input = readCommaSeparatedLongList(filename);
     }
 

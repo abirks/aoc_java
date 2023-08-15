@@ -1,5 +1,6 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.io.File;
@@ -19,9 +20,10 @@ public class AdventOfCode2021Day22 implements AocTestable {
     private static Set<Vector> active = new HashSet<>();
 
     @Override
-    public void load(String filename) throws IOException {
+    public void load(String filename) throws AocLoadException {
         // Load file
         File f = new File(filename);
+        // TODO use utils class
         try (Scanner sc = new Scanner(f)) {
             // Parse each instruction
             while (sc.hasNext()) {
@@ -41,6 +43,8 @@ public class AdventOfCode2021Day22 implements AocTestable {
                         Integer.parseInt(matcher.group("zmin")),
                         Integer.parseInt(matcher.group("zmax"))));
             }
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 
