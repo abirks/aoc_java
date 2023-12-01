@@ -23,6 +23,11 @@ public class AocCompletionTest {
         test25daysInClass(Aoc2022Test.class, 2022);
     }
 
+    @Test
+    public void testAoc2023Completion() {
+        test25daysInClass(Aoc2023Test.class, 2023);
+    }
+
     private void test25daysInClass(Class<?> clazz, int year) {
         List<AocCoverage> annotations = getClassCoverage(clazz);
         for (int day = 1; day <= 25; day++) {
