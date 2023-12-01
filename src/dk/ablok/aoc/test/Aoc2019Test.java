@@ -146,7 +146,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 19)
     public void testDay19() throws AocLoadException, AocSolveException {
-        assertIntcodePuzzle(new AdventOfCode2019Day19(), "input/aoc2019/input19.txt", "", "");
+        assertIntcodePuzzle(new AdventOfCode2019Day19(), "input/aoc2019/input19.txt", "181", "4240964");
     }
 
     @Test
@@ -189,7 +189,7 @@ public class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 22)
     public void testDay22() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2019Day22(), "input/aoc2019/input22.txt", "1822", "");
+        assertAocDay(new AdventOfCode2019Day22(), "input/aoc2019/input22.txt", "1822", "49174686993380");
     }
 
     @Test

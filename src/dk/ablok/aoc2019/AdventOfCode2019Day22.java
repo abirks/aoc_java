@@ -44,54 +44,16 @@ public class AdventOfCode2019Day22 implements AocTestable {
 
         // Calculate coefficients for multiple shuffles
         BigInteger am = a.modPow(SHUFFLES, STACKSIZE2);
-        BigInteger bm = b.multiply(BigInteger.ONE.subtract(a.modPow(SHUFFLES, STACKSIZE2))
-                .divide(BigInteger.ONE.subtract(a))).mod(STACKSIZE2);
-
-        // Calculate inverse
-        BigInteger inverse = INITIAL_VALUE_PART2
-                .subtract(bm)
-                .multiply(findInverse(am, STACKSIZE2))
+        BigInteger bm = b.multiply(am.subtract(BigInteger.ONE))
+                .multiply(a.subtract(BigInteger.ONE).modInverse(STACKSIZE2))
                 .mod(STACKSIZE2);
 
-        // Sanity check
-        BigInteger check = am.multiply(inverse).add(bm).mod(STACKSIZE2);
-        if (!check.equals(INITIAL_VALUE_PART2)) {
-            throw new AocSolveException("Reverse calculation does not check out!");
-        }
+        // Calculate inverse
+        BigInteger inverse = INITIAL_VALUE_PART2.subtract(bm)
+                .multiply(am.modInverse(STACKSIZE2))
+                .mod(STACKSIZE2);
 
         return inverse.toString();
-    }
-
-    private BigInteger findInverse(BigInteger y, BigInteger n) {
-        // Calculate x such that x * y = 1 (mod n)
-        //throw new RuntimeException("Not implemented!");
-        return modularInverse(y, n);
-    }
-
-    public static BigInteger[] extendedGCD(BigInteger a, BigInteger b) {
-        if (a.equals(BigInteger.ZERO)) {
-            return new BigInteger[]{b, BigInteger.ZERO, BigInteger.ONE};
-        } else {
-            BigInteger[] values = extendedGCD(b.mod(a), a);
-            BigInteger gcd = values[0];
-            BigInteger x1 = values[1];
-            BigInteger y1 = values[2];
-            BigInteger x = y1.subtract(b.divide(a).multiply(x1));
-            BigInteger y = x1;
-            return new BigInteger[]{gcd, x, y};
-        }
-    }
-
-    public static BigInteger modularInverse(BigInteger y, BigInteger n) {
-        BigInteger[] values = extendedGCD(y, n);
-        BigInteger gcd = values[0];
-        BigInteger x = values[1];
-
-        if (!gcd.equals(BigInteger.ONE)) {
-            throw new IllegalArgumentException("Modular inverse doesn't exist (y and n are not coprime)");
-        } else {
-            return x.mod(n);
-        }
     }
 
     private void calcCoefficients(BigInteger stackSize) {
