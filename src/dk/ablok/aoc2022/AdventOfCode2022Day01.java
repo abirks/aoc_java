@@ -3,46 +3,40 @@ package dk.ablok.aoc2022;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
+import static dk.ablok.aoc.io.InputUtils.readInputAsListSeparateByEmptyLine;
 
 public class AdventOfCode2022Day01 implements AocTestable {
-
-    private final List<Integer> elves = new ArrayList<>();
+    private List<List<String>> input;
 
     @Override
     public void load(String filename) throws AocLoadException {
-        List<String> input = readInputAsList(filename);
-
-        int sum = 0;
-        for (String line : input) {
-            if (!line.isEmpty()) {
-                sum += Integer.parseInt(line);
-            } else {
-                // Next elf (the last line of the input is also an empty line)
-                elves.add(sum);
-                sum = 0;
-            }
-        }
+        input = readInputAsListSeparateByEmptyLine(filename);
     }
 
     @Override
     public String part1() {
-        Optional<Integer> part1 = elves.stream().max(Integer::compareTo);
-        if (part1.isEmpty()) {
-            throw new IllegalStateException("Answer not found");
-        }
-        return part1.get().toString();
+        return Integer.toString(
+                getElfStream()
+                        .max(Integer::compareTo)
+                        .orElseThrow());
     }
 
     @Override
     public String part2() {
-        elves.sort(Integer::compareTo);
-        int num = elves.size();
-        int part2 = elves.get(num - 1) + elves.get(num - 2) + elves.get(num - 3);
-        return Integer.toString(part2);
+        return Integer.toString(
+                getElfStream()
+                        .sorted((a, b) -> Integer.compare(b, a))
+                        .limit(3)
+                        .reduce(0, Integer::sum));
+    }
+
+    private Stream<Integer> getElfStream() {
+        return input.stream()
+                .map(l -> l.stream()
+                        .mapToInt(Integer::parseInt)
+                        .sum());
     }
 }
