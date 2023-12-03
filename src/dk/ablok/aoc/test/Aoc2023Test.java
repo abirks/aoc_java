@@ -24,7 +24,7 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 3)
     public void testDay03() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day03(), "input/aoc2023/input03.txt", "INCOMPLETE", "INCOMPLETE");
+        assertAocDay(new AdventOfCode2023Day03(), "input/aoc2023/input03.txt", "533775", "78236071");
     }
 
     @Test
