@@ -45,7 +45,7 @@ public class AdventOfCode2023Day02 implements AocTestable {
                 .sum());
     }
 
-    static class GameMapper implements Function<String, Game> {
+    private static class GameMapper implements Function<String, Game> {
         @Override
         public Game apply(String s) {
             Matcher matcher = GAME_PATTERN.matcher(s);

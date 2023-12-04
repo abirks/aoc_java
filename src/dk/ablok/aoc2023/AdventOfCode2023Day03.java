@@ -4,72 +4,61 @@ import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
 public class AdventOfCode2023Day03 implements AocTestable {
-
-    char[][] input;
+    private List<Integer> presentParts = new ArrayList<>();
+    private Map<Gear, List<Integer>> gears = new HashMap<>();
+    private char[][] input;
 
     @Override
     public void load(String filename) throws AocLoadException {
         input = read2dArray(filename);
 
+        StringBuilder number = new StringBuilder();
+        AtomicReference<Symbol> symbol = new AtomicReference<>();
+
+        for (int y = 0; y < input.length; y++) {
+            for (int x = 0; x < input.length; x++) {
+                if (isDigit(x, y)) {
+                    number.append(input[y][x]);
+                    Optional<Symbol> newSymbol = getAdjacentSymbol(x, y);
+                    newSymbol.ifPresent(symbol::set);
+                } else if (!number.isEmpty()) {
+                    // If this is not a digit and the builder is not empty, we must be done collecting a number
+
+                    if (symbol.get() != null) {
+                        // A symbol was found
+                        Integer num = Integer.parseInt(number.toString());
+                        presentParts.add(num);
+
+                        Symbol s = symbol.get();
+                        if (s.c == '*') {
+                            Gear gear = new Gear(s.x, s.y);
+                            gears.computeIfAbsent(gear, g -> new ArrayList<>());
+                            gears.get(gear).add(num);
+                        }
+                    }
+
+                    number = new StringBuilder();
+                    symbol.set(null);
+                }
+            }
+        }
     }
 
     @Override
     public String part1() {
-        int sum = 0;
-
-        StringBuilder number = new StringBuilder();
-        boolean adjacentIsSymbol = false;
-
-        for (int y = 0; y < input.length; y++) {
-            for (int x = 0; x < input.length; x++) {
-                if (isDigit(x, y)) {
-                    number.append(input[y][x]);
-                    adjacentIsSymbol |= hasAdjacentSymbol(x, y);
-                } else if (!number.isEmpty()) {
-                    // Builder is not empty but this is not another digit; number must be done
-                    if (adjacentIsSymbol) {
-                        sum += Integer.parseInt(number.toString());
-                    }
-
-                    number = new StringBuilder();
-                    adjacentIsSymbol = false;
-                }
-            }
-        }
-
-        return Integer.toString(sum);
+        return Integer.toString(
+                presentParts.stream()
+                        .mapToInt(Integer::intValue)
+                        .sum());
     }
 
     @Override
     public String part2() {
-        Map<Gear, List<Integer>> gears = new HashMap<>();
-        StringBuilder number = new StringBuilder();
-        Optional<Gear> optGear = Optional.empty();
-
-        for (int y = 0; y < input.length; y++) {
-            for (int x = 0; x < input.length; x++) {
-                if (isDigit(x, y)) {
-                    number.append(input[y][x]);
-                    Optional<Gear> newGear = getAdjacentGear(x, y);
-                    if (newGear.isPresent()) optGear = newGear;
-                } else if (!number.isEmpty()) {
-                    // Builder is not empty but this is not another digit; number must be done
-                    if (optGear.isPresent()) {
-                        Integer num = Integer.parseInt(number.toString());
-                        gears.computeIfAbsent(optGear.get(), g -> new ArrayList<>());
-                        gears.get(optGear.get()).add(num);
-                    }
-
-                    number = new StringBuilder();
-                    optGear = Optional.empty();
-                }
-            }
-        }
-
         return Integer.toString(
                 gears.values().stream()
                         .filter(integers -> integers.size() == 2)
@@ -81,10 +70,6 @@ public class AdventOfCode2023Day03 implements AocTestable {
 
     private boolean isDigit(int x, int y) {
         return '0' <= input[y][x] && input[y][x] <= '9';
-    }
-
-    private boolean hasAdjacentSymbol(int x, int y) {
-        return getAdjacentSymbol(x, y).isPresent();
     }
 
     private boolean isWithinBounds(int x, int y) {
@@ -105,17 +90,9 @@ public class AdventOfCode2023Day03 implements AocTestable {
         return Optional.empty();
     }
 
-    private Optional<Gear> getAdjacentGear(int x, int y) {
-        Optional<Symbol> opt = getAdjacentSymbol(x, y);
-        if (opt.isPresent() && opt.get().c == '*') {
-            return Optional.of(new Gear(opt.get().x, opt.get().y));
-        }
-        return Optional.empty();
+    private record Gear(int x, int y) {
     }
 
-    record Gear(int x, int y) {
-    }
-
-    record Symbol(int x, int y, char c) {
+    private record Symbol(int x, int y, char c) {
     }
 }
