@@ -71,20 +71,24 @@ public class AdventOfCode2023Day04 implements AocTestable {
     private static class CardMapper implements Function<String, Card> {
         private static final Pattern GAME_PATTERN = Pattern.compile(
                 "^Card\\s+(?<id>\\d*):(?<winners>[0-9\\s]*)\\|(?<numbers>[0-9\\s]*)$");
+        private static final Pattern WHITESPACE = Pattern.compile("\\d+");
 
         @Override
         public Card apply(String s) {
             Matcher matcher = GAME_PATTERN.matcher(s);
             if (matcher.find()) {
                 Card newCard = new Card(Integer.parseInt(matcher.group("id")));
-                for (String winner : matcher.group("winners").split(" ")) {
-                    if (winner.isEmpty()) continue;
-                    newCard.addWinner(Integer.parseInt(winner));
+
+                Matcher winner = WHITESPACE.matcher(matcher.group("winners"));
+                while (winner.find()) {
+                    newCard.addWinner(Integer.parseInt(winner.group()));
                 }
-                for (String number : matcher.group("numbers").split(" ")) {
-                    if (number.isEmpty()) continue;
-                    newCard.addNumber(Integer.parseInt(number));
+
+                Matcher number = WHITESPACE.matcher(matcher.group("numbers"));
+                while (number.find()) {
+                    newCard.addNumber(Integer.parseInt(number.group()));
                 }
+
                 return newCard;
             } else {
                 throw new IllegalArgumentException("Line does not match pattern!");

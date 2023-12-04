@@ -1,9 +1,9 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.buffers.RingBuffer;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static dk.ablok.aoc.io.InputUtils.readNewlineSeparatedIntegerList;
@@ -49,7 +49,30 @@ public class AdventOfCode2021Day01 implements AocTestable {
         return Integer.toString(increases);
     }
 
-    public int sum(RingBuffer<Integer> ringBuffer) {
+    private int sum(RingBuffer<Integer> ringBuffer) {
         return ringBuffer.getBuffer().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    private static class RingBuffer<T> {
+        protected int index = 0;
+        protected int capacity;
+        protected List<T> buffer;
+
+        public RingBuffer(int capacity) {
+            this.capacity = capacity;
+            this.buffer = Arrays.asList((T[]) new Object[capacity]);
+        }
+
+        public void put(T element) {
+            buffer.set(index++ % capacity, element);
+        }
+
+        public T get() {
+            return buffer.get(index++ % capacity);
+        }
+
+        public List<T> getBuffer() {
+            return buffer;
+        }
     }
 }
