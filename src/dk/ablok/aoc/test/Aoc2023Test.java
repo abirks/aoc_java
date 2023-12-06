@@ -38,13 +38,13 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 5)
     public void testDay05() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day05(), "input/aoc2023/input05.txt", INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day05(), "input/aoc2023/input05.txt", "157211394", INCOMPLETE);
     }
 
     @Test
     @AocCoverage(year = 2023, day = 6)
     public void testDay06() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day06(), "input/aoc2023/input06.txt", INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day06(), "input/aoc2023/input06.txt", "160816", "46561107");
     }
 
     @Test
