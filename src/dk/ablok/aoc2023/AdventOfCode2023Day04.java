@@ -14,7 +14,7 @@ import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
 public class AdventOfCode2023Day04 implements AocTestable {
     private Map<Integer, Card> cards;
-    private Map<Integer, Integer> points = new HashMap<>();
+    private final Map<Integer, Integer> points = new HashMap<>();
     private Map<Integer, AtomicInteger> counts;
 
     @Override
@@ -71,7 +71,7 @@ public class AdventOfCode2023Day04 implements AocTestable {
     private static class CardMapper implements Function<String, Card> {
         private static final Pattern GAME_PATTERN = Pattern.compile(
                 "^Card\\s+(?<id>\\d*):(?<winners>[0-9\\s]*)\\|(?<numbers>[0-9\\s]*)$");
-        private static final Pattern WHITESPACE = Pattern.compile("\\d+");
+        private static final Pattern NUMBER = Pattern.compile("\\d+");
 
         @Override
         public Card apply(String s) {
@@ -79,12 +79,12 @@ public class AdventOfCode2023Day04 implements AocTestable {
             if (matcher.find()) {
                 Card newCard = new Card(Integer.parseInt(matcher.group("id")));
 
-                Matcher winner = WHITESPACE.matcher(matcher.group("winners"));
+                Matcher winner = NUMBER.matcher(matcher.group("winners"));
                 while (winner.find()) {
                     newCard.addWinner(Integer.parseInt(winner.group()));
                 }
 
-                Matcher number = WHITESPACE.matcher(matcher.group("numbers"));
+                Matcher number = NUMBER.matcher(matcher.group("numbers"));
                 while (number.find()) {
                     newCard.addNumber(Integer.parseInt(number.group()));
                 }

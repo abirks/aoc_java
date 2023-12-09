@@ -13,13 +13,6 @@ import java.util.regex.Pattern;
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
 public class AdventOfCode2023Day02 implements AocTestable {
-    private static final int MAX_RED = 12;
-    private static final int MAX_GREEN = 13;
-    private static final int MAX_BLUE = 14;
-    private static final Pattern GAME_PATTERN = Pattern.compile("^Game (?<id>\\d*): (?<subsets>.*)$");
-    public static final String RED = "red";
-    public static final String GREEN = "green";
-    public static final String BLUE = "blue";
     private List<Game> games;
 
     @Override
@@ -46,6 +39,11 @@ public class AdventOfCode2023Day02 implements AocTestable {
     }
 
     private static class GameMapper implements Function<String, Game> {
+        private static final String RED = "red";
+        private static final String GREEN = "green";
+        private static final String BLUE = "blue";
+        private static final Pattern GAME_PATTERN = Pattern.compile("^Game (?<id>\\d*): (?<subsets>.*)$");
+
         @Override
         public Game apply(String s) {
             Matcher matcher = GAME_PATTERN.matcher(s);
@@ -108,6 +106,10 @@ public class AdventOfCode2023Day02 implements AocTestable {
     }
 
     record Subset(int red, int green, int blue) {
+        private static final int MAX_RED = 12;
+        private static final int MAX_GREEN = 13;
+        private static final int MAX_BLUE = 14;
+
         @Override
         public String toString() {
             return red + " red, " + green + " green, " + blue + " blue";

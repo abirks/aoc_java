@@ -38,7 +38,7 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 5)
     public void testDay05() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day05(), "input/aoc2023/input05.txt", "157211394", INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day05(), "input/aoc2023/input05.txt", "157211394", "50855035");
     }
 
     @Test
@@ -56,13 +56,13 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 8)
     public void testDay08() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day08(), "input/aoc2023/input08.txt", INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day08(), "input/aoc2023/input08.txt", "12169", "12030780859469");
     }
 
     @Test
     @AocCoverage(year = 2023, day = 9)
     public void testDay09() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day09(), "input/aoc2023/input09.txt", INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day09(), "input/aoc2023/input09.txt", "1725987467", "971");
     }
 
     @Test
