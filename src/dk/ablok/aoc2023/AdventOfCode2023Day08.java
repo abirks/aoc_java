@@ -1,10 +1,11 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.calculations.NumberWithDivisors;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.test.AocTestable;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsListSeparateByEmptyLine;
@@ -49,11 +50,10 @@ public class AdventOfCode2023Day08 implements AocTestable {
     @Override
     public String part2() {
         List<Node> start = nodes.stream().filter(Node::endsWithA).toList();
-        List<Long> cycles = new ArrayList<>();
 
-        for (int j = 0; j < start.size(); j++) {
-            Node here = start.get(j);
+        NumberWithDivisors result = new NumberWithDivisors();
 
+        for (Node here : start) {
             long i = 0;
             while (!here.endsWithZ()) {
                 int finalI = (int) i;
@@ -61,46 +61,10 @@ public class AdventOfCode2023Day08 implements AocTestable {
                 i++;
             }
 
-            cycles.add(i);
+            result.addDivisor(i);
         }
 
-        long product = 1;
-        for (long n : cycles) {
-            product *= n;
-        }
-
-        Map<Long, Long> powers = cycles.stream()
-                .flatMap(c -> getPrimeDivisors(c).entrySet().stream())
-                .collect(Collectors.toMap(Map.Entry<Long, Long>::getKey, Map.Entry<Long, Long>::getValue, (a, b) -> a.compareTo(b) >= 0 ? a : b));
-
-
-        return Long.toString(product);
-    }
-
-    private Map<Long, Long> getPrimeDivisors(long number) {
-        Map<Long, AtomicLong> primeDivisors = new HashMap<>();
-
-        while (number > 1) {
-            long i = 2;
-            while (number % i != 0 || !isPrime(i)) {
-                i++;
-            }
-            number = number / i;
-            primeDivisors.computeIfAbsent(i, x -> new AtomicLong(0));
-            primeDivisors.get(i).incrementAndGet();
-        }
-
-        return primeDivisors.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, x -> x.getValue().get()));
-    }
-
-    private boolean isPrime(long number) {
-        if (number <= 1) return false;
-
-        for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) return false;
-        }
-
-        return true;
+        return Long.toString(result.calculate());
     }
 
     private static class Node {
