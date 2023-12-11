@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
-public class NumberWithDivisors {
+public class LeastCommonMultiple {
     private final List<Long> divisors = new ArrayList<>();
 
     public void addDivisor(long divisor) {

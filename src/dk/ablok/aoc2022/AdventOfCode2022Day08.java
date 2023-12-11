@@ -1,13 +1,13 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day08 implements AocTestable {
+public class AdventOfCode2022Day08 implements AocPuzzle {
 
     private static final int DIM_X = 99;
     private static final int DIM_Y = 99;

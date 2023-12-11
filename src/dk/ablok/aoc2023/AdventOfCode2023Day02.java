@@ -1,7 +1,8 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.InputUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,14 +11,12 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2023Day02 implements AocTestable {
+public class AdventOfCode2023Day02 implements AocPuzzle {
     private List<Game> games;
 
     @Override
     public void load(String filename) throws AocLoadException {
-        games = readInputAsList(filename).stream()
+        games = InputUtils.readInputAsList(filename).stream()
                 .map(new GameMapper())
                 .toList();
     }

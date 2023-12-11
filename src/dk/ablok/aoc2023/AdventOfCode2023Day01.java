@@ -1,22 +1,32 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2023Day01 implements AocTestable {
+/**
+ * Solution to the Advent of Code 2023 day 1 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
+public class AdventOfCode2023Day01 implements NewAocPuzzle {
     private List<String> input;
 
     private final Map<String, Integer> digits = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        AocInput aocInput = new AocInput(2023, 1);
+        input = aocInput.readInputAsList();
     }
 
     @Override
@@ -60,7 +70,7 @@ public class AdventOfCode2023Day01 implements AocTestable {
         Integer last = null;
 
         for (int start = 0; start < line.length(); start++) {
-            for (Map.Entry<String, Integer> replacement : digits.entrySet()) {
+            for (var replacement : digits.entrySet()) {
                 if (line.startsWith(replacement.getKey(), start)) {
                     if (first == null) {
                         first = replacement.getValue();

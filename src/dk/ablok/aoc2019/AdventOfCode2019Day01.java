@@ -1,14 +1,13 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.List;
 
 import static dk.ablok.aoc.io.InputUtils.readNewlineSeparatedIntegerList;
 
-public class AdventOfCode2019Day01 implements AocTestable {
+public class AdventOfCode2019Day01 implements AocPuzzle {
     private List<Integer> input;
 
     @Override

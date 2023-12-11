@@ -1,9 +1,10 @@
-package dk.ablok.aoc.test;
+package dk.ablok.aoc;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 
-public interface AocTestable {
+public interface AocPuzzle {
+    @Deprecated
     void load(String filename) throws AocLoadException;
 
     String part1() throws AocSolveException;

@@ -1,14 +1,14 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.io.InputUtils;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class AdventOfCode2022Day21 implements AocTestable {
+public class AdventOfCode2022Day21 implements AocPuzzle {
 
     private final Map<String, Expression> part1expressions = new HashMap<>();
     private final Map<String, Long> part1values = new HashMap<>();

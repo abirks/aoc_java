@@ -1,7 +1,7 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2023Day04 implements AocTestable {
+public class AdventOfCode2023Day04 implements AocPuzzle {
     private Map<Integer, Card> cards;
     private final Map<Integer, Integer> points = new HashMap<>();
     private Map<Integer, AtomicInteger> counts;

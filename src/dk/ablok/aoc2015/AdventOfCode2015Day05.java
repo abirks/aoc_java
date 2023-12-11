@@ -1,7 +1,7 @@
 package dk.ablok.aoc2015;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2015Day05 implements AocTestable {
+public class AdventOfCode2015Day05 implements AocPuzzle {
     private static final Set<Character> VOWELS = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
     private static final Set<String> FORBIDDEN = new HashSet<>(Arrays.asList("ab", "cd", "pq", "xy"));
     private List<String> input;

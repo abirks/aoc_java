@@ -1,13 +1,13 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.List;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2021Day02 implements AocTestable {
+public class AdventOfCode2021Day02 implements AocPuzzle {
 
     private List<String> input;
 

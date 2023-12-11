@@ -1,9 +1,9 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestableWithDisplay;
+import dk.ablok.aoc.AocPuzzleWithDisplay;
 
-public class AdventOfCode2019Day23 implements AocTestableWithDisplay {
+public class AdventOfCode2019Day23 implements AocPuzzleWithDisplay {
 
     private boolean enableDisplay;
 

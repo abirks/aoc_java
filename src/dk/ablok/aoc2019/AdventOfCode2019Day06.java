@@ -1,9 +1,8 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Map;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day06 implements AocTestable {
+public class AdventOfCode2019Day06 implements AocPuzzle {
     public static final String COM = "COM";
     public static final String SAN = "SAN";
     public static final String YOU = "YOU";

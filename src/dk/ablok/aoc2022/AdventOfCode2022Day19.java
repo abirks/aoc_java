@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.*;
 
-public class AdventOfCode2022Day19 implements AocTestable {
+public class AdventOfCode2022Day19 implements AocPuzzle {
 
     private static final int MINUTES = 24;
     private final List<Blueprint> input = new ArrayList<>();

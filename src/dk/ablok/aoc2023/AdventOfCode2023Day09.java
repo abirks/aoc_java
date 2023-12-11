@@ -1,14 +1,15 @@
 package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2023Day09 implements AocTestable {
+
+public class AdventOfCode2023Day09 implements AocPuzzle {
     private List<OasisSeries> input;
 
     @Override
@@ -46,7 +47,7 @@ public class AdventOfCode2023Day09 implements AocTestable {
         }
 
         public void calculateDiffs() {
-            Map.Entry<Integer, List<Long>> lastEntry = values.entrySet().stream()
+            var lastEntry = values.entrySet().stream()
                     .min(Map.Entry.comparingByKey())
                     .orElseThrow();
             int lastIndex = lastEntry.getKey();

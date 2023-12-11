@@ -2,7 +2,7 @@ package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.test.AocTestableWithDisplay;
+import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -12,7 +12,7 @@ import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day17 implements AocTestableWithDisplay {
+public class AdventOfCode2019Day17 implements AocPuzzleWithDisplay {
     private static final int NEWLINE = '\n';
     private static final int WALKWAY = '#';
     private static final int SPACE = '.';

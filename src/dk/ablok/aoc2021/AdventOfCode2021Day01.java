@@ -1,20 +1,19 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.InputUtils;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readNewlineSeparatedIntegerList;
-
-public class AdventOfCode2021Day01 implements AocTestable {
+public class AdventOfCode2021Day01 implements AocPuzzle {
 
     private List<Integer> input;
 
     @Override
     public void load(String filename) throws AocLoadException {
-        input = readNewlineSeparatedIntegerList(filename);
+        input = InputUtils.readNewlineSeparatedIntegerList(filename);
     }
 
     @Override

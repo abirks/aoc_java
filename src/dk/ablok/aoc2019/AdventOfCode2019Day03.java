@@ -1,14 +1,13 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day03 implements AocTestable {
+public class AdventOfCode2019Day03 implements AocPuzzle {
     private final List<List<Position>> wires = new ArrayList<>();
     private final HashSet<Position> intersections = new HashSet<>();
 

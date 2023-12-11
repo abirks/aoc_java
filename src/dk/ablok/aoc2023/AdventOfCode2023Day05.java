@@ -1,7 +1,7 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2023Day05 implements AocTestable {
+public class AdventOfCode2023Day05 implements AocPuzzle {
     private static final Pattern SEEDS_PATTERN = Pattern.compile("seeds: (?<seeds>[\\d\\s]*)\\n\\n");
     private static final String SEED_TO_SOIL = "seed-to-soil";
     private static final String SOIL_TO_FERTILIZER = "soil-to-fertilizer";

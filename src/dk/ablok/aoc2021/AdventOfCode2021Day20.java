@@ -1,13 +1,13 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day20 implements AocTestable {
+public class AdventOfCode2021Day20 implements AocPuzzle {
 
     private final List<Boolean> pattern = new ArrayList<>();
     private Map<Position, Boolean> image = new HashMap<>();

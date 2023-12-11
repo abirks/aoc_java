@@ -1,16 +1,15 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.InputUtils;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dk.ablok.aoc.io.InputUtils.readFirstLine;
-
-public class AdventOfCode2021Day17 implements AocTestable {
+public class AdventOfCode2021Day17 implements AocPuzzle {
 
     private final Set<Integer> records = new HashSet<>();
     private final Set<Integer> succesful = new HashSet<>();
@@ -23,7 +22,7 @@ public class AdventOfCode2021Day17 implements AocTestable {
     @Override
     public void load(String filename) throws AocLoadException {
         Pattern pattern = Pattern.compile("target area: x=(?<xmin>[0-9-]+)..(?<xmax>[0-9-]+), y=(?<ymin>[0-9-]+)..(?<ymax>[0-9-]+)");
-        Matcher matcher = pattern.matcher(readFirstLine(filename));
+        Matcher matcher = pattern.matcher(InputUtils.readFirstLine(filename));
         if (!matcher.find()) {
             throw new IllegalArgumentException("No match!");
         }

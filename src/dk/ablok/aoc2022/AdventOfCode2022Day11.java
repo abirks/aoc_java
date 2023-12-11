@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day11 implements AocTestable {
+public class AdventOfCode2022Day11 implements AocPuzzle {
 
     private static final int ROUNDS_PART1 = 20;
     private static final int ROUNDS_PART2 = 10000;

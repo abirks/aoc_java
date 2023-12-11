@@ -1,15 +1,14 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
-import java.io.IOException;
 import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day11 implements AocTestable {
+public class AdventOfCode2019Day11 implements AocPuzzle {
     private static final long BLACK = 0;
     private static final long WHITE = 1;
     private List<Long> input;

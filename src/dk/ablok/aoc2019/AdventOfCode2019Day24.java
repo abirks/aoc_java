@@ -1,14 +1,14 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
-public class AdventOfCode2019Day24 implements AocTestable {
+public class AdventOfCode2019Day24 implements AocPuzzle {
     private static final char BUG = '#';
     private static final int PART2_MINUTES = 200;
 

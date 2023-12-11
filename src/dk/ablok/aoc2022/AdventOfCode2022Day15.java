@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day15 implements AocTestable {
+public class AdventOfCode2022Day15 implements AocPuzzle {
 
     private static final Pattern pattern = Pattern.compile(
             "^Sensor at x=(.*), y=(.*): closest beacon is at x=(.*), y=(.*)$");

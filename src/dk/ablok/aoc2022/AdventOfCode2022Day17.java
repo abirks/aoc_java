@@ -1,14 +1,14 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
-public class AdventOfCode2022Day17 implements AocTestable {
+public class AdventOfCode2022Day17 implements AocPuzzle {
 
     private static final int WIDTH = 7;
     private static final Position LEFT = new Position(-1, 0);

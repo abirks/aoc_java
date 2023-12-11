@@ -1,6 +1,6 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day05 implements AocTestable {
+public class AdventOfCode2022Day05 implements AocPuzzle {
 
     private final Map<Character, List<Character>> crates = new HashMap<>();
     private final List<String> moves = new ArrayList<>();

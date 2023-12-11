@@ -1,5 +1,6 @@
-package dk.ablok.aoc.test;
+package test;
 
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2023.*;
@@ -14,9 +15,9 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 1)
     public void testDay01() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day01(), "input/aoc2023/input01.txt", "55029", "55686");
+        assertAocDay(new AdventOfCode2023Day01(), "55029", "55686");
     }
-
+/*
     @Test
     @AocCoverage(year = 2023, day = 2)
     public void testDay02() throws AocLoadException, AocSolveException {
@@ -68,7 +69,7 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 10)
     public void testDay10() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day10(), "input/aoc2023/input10.txt", INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day10(), "input/aoc2023/input10.txt", "7063", INCOMPLETE);
     }
 
     @Test
@@ -158,12 +159,12 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 25)
     public void testDay25() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day25(), "input/aoc2023/input25.txt", INCOMPLETE, INCOMPLETE);
-    }
+        assertAocDay(new AdventOfCode2023Day25(), "input/aoc2023/input25.txt", INCOMPLETE, null);
+    }*/
 
-    private void assertAocDay(AocTestable puzzle, String filename, String expected1, String expected2)
+    private void assertAocDay(NewAocPuzzle puzzle, String expected1, String expected2)
             throws AocLoadException, AocSolveException {
-        puzzle.load(filename);
+        puzzle.load();
         assertEquals(expected1, puzzle.part1());
         assertEquals(expected2, puzzle.part2());
     }

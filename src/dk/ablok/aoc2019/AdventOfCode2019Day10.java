@@ -1,9 +1,8 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
-public class AdventOfCode2019Day10 implements AocTestable {
+public class AdventOfCode2019Day10 implements AocPuzzle {
 
     private final List<Asteroid> asteroids = new ArrayList<>();
     private Asteroid bestAsteroid;

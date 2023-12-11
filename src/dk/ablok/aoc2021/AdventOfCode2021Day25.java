@@ -1,13 +1,13 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day25 implements AocTestable {
+public class AdventOfCode2021Day25 implements AocPuzzle {
     private Map<Vect, State> map = new HashMap<>();
     private int xSize;
     private int ySize;

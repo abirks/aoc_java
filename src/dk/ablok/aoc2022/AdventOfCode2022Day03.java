@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day03 implements AocTestable {
+public class AdventOfCode2022Day03 implements AocPuzzle {
 
     private List<String> backpacks = new ArrayList<>();
 

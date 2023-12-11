@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day23 implements AocTestable {
+public class AdventOfCode2022Day23 implements AocPuzzle {
 
     private static final Position NORTH = new Position(0, -1);
     private static final Position SOUTH = new Position(0, 1);

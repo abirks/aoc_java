@@ -1,15 +1,14 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.InputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static dk.ablok.aoc.io.InputUtils.read1dArray;
-
-public class AdventOfCode2019Day16 implements AocTestable {
+public class AdventOfCode2019Day16 implements AocPuzzle {
     private static final int NUM_PHASES = 100;
     private static final int NUM_REPEATS = 10_000;
     private static final int[] BASE_PATTERN = new int[]{0, 1, 0, -1};
@@ -17,7 +16,7 @@ public class AdventOfCode2019Day16 implements AocTestable {
 
     @Override
     public void load(String filename) throws AocLoadException {
-        for (char c : read1dArray(filename)) {
+        for (char c : InputUtils.read1dArray(filename)) {
             input.add(c - '0');
         }
     }
@@ -63,7 +62,7 @@ public class AdventOfCode2019Day16 implements AocTestable {
 
             int previous = phase > 1
                     ? calculateDigit(inputRepeats, patternDigit, phase - 1)
-                    : input.get(patternDigit % (input.size() * inputRepeats));
+                    : input.get((patternDigit % (input.size() * inputRepeats))%input.size());
 
             result += pattern * previous;
         }

@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-public class AdventOfCode2021Day16 implements AocTestable {
+public class AdventOfCode2021Day16 implements AocPuzzle {
     private Packet top;
 
     @Override

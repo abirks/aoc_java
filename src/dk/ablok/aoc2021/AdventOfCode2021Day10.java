@@ -1,13 +1,13 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.util.*;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2021Day10 implements AocTestable {
+public class AdventOfCode2021Day10 implements AocPuzzle {
     private static final Map<Character, Character> matches = new HashMap<>();
     private static final Map<Character, Long> valuesA = new HashMap<>();
     private static final Map<Character, Long> valuesB = new HashMap<>();

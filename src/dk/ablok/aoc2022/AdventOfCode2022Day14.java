@@ -1,7 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.OutputUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,9 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc.io.OutputUtils.*;
-
-public class AdventOfCode2022Day14 implements AocTestable {
+public class AdventOfCode2022Day14 implements AocPuzzle {
 
     private static final Position SAND_START = new Position(500, 0);
     private int mapLowerBound = 0;
@@ -124,7 +123,7 @@ public class AdventOfCode2022Day14 implements AocTestable {
 
     class Unit {
         protected Position position;
-        protected String display = ANSI_WHITE + "#";
+        protected String display = OutputUtils.ANSI_WHITE + "#";
 
         public Unit(Position position) {
             this.position = position;
@@ -148,9 +147,9 @@ public class AdventOfCode2022Day14 implements AocTestable {
             this.hasVoid = hasVoid;
 
             if (hasVoid) {
-                this.display = ANSI_GREEN + "*";
+                this.display = OutputUtils.ANSI_GREEN + "*";
             } else {
-                this.display = ANSI_RED + "*";
+                this.display = OutputUtils.ANSI_RED + "*";
             }
         }
 

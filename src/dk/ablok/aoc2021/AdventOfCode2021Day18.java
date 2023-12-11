@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AdventOfCode2021Day18 implements AocTestable {
+public class AdventOfCode2021Day18 implements AocPuzzle {
     private final List<Number> numbers = new ArrayList<>();
 
     @Override

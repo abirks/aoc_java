@@ -1,8 +1,8 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.calculations.NumberWithDivisors;
+import dk.ablok.aoc.calculations.LeastCommonMultiple;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.util.List;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsListSeparateByEmptyLine;
 
-public class AdventOfCode2023Day08 implements AocTestable {
+public class AdventOfCode2023Day08 implements AocPuzzle {
     private byte[] directions;
     private Set<Node> nodes;
 
@@ -51,7 +51,7 @@ public class AdventOfCode2023Day08 implements AocTestable {
     public String part2() {
         List<Node> start = nodes.stream().filter(Node::endsWithA).toList();
 
-        NumberWithDivisors result = new NumberWithDivisors();
+        LeastCommonMultiple result = new LeastCommonMultiple();
 
         for (Node here : start) {
             long i = 0;

@@ -1,14 +1,14 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2021Day15 implements AocTestable {
+public class AdventOfCode2021Day15 implements AocPuzzle {
     private HashMap<Position, Integer> map;
     private int yMax;
     private int xMax;

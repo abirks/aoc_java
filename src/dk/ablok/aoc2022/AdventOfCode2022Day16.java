@@ -1,8 +1,9 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.graph.GraphNode;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.InputUtils;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -10,15 +11,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2022Day16 implements AocTestable {
+public class AdventOfCode2022Day16 implements AocPuzzle {
     private Set<Tunnel> tunnels = new HashSet<>();
     private Map<String, Integer> pressure = new HashMap<>();
 
     @Override
     public void load(String filename) throws AocLoadException {
-        for (String line : readInputAsList(filename)) {
+        for (String line : InputUtils.readInputAsList(filename)) {
             Pattern pattern = Pattern.compile("Valve (?<name>[A-Z]+) has flow rate=(?<pressure>\\d+); tunnels? leads? to valves? (?<tunnels>[A-Z, ]+)");
             Matcher matcher = pattern.matcher(line);
 

@@ -1,7 +1,7 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.stream.LongStream;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2023Day06 implements AocTestable {
+public class AdventOfCode2023Day06 implements AocPuzzle {
     private static final String TIME = "Time:";
     private static final String DISTANCE = "Distance:";
     private List<Long> times;

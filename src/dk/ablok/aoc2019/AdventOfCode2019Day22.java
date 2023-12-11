@@ -2,14 +2,14 @@ package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.math.BigInteger;
 import java.util.List;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day22 implements AocTestable {
+public class AdventOfCode2019Day22 implements AocPuzzle {
 
     private static final String DEAL_INTO_NEW_STACK = "deal into new stack";
     private static final String CUT = "cut";

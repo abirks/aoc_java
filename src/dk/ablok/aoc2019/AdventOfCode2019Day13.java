@@ -1,7 +1,7 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestableWithDisplay;
+import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -15,7 +15,7 @@ import java.util.Queue;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day13 implements AocTestableWithDisplay {
+public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
     private static final long LEFT = -1;
     private static final long NEUTRAL = 0;
     private static final long RIGHT = 1;

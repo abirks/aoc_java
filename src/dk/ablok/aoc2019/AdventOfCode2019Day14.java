@@ -1,15 +1,14 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2019Day14 implements AocTestable {
+public class AdventOfCode2019Day14 implements AocPuzzle {
 
     private static final long ONE_TRILLION = 1_000_000_000_000L;
     public static final String ORE = "ORE";

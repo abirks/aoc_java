@@ -1,7 +1,8 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.io.OutputUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,9 +10,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc.io.OutputUtils.*;
-
-public class AdventOfCode2022Day12 implements AocTestable {
+public class AdventOfCode2022Day12 implements AocPuzzle {
 
     private final Set<Position> directions = new HashSet<>();
 
@@ -130,9 +129,9 @@ public class AdventOfCode2022Day12 implements AocTestable {
                 output.append(color(position));
 
                 if (path.contains(position)) {
-                    output.append(ANSI_BLUE_BACKGROUND);
+                    output.append(OutputUtils.ANSI_BLUE_BACKGROUND);
                 } else {
-                    output.append(ANSI_BLACK_BACKGROUND);
+                    output.append(OutputUtils.ANSI_BLACK_BACKGROUND);
                 }
 
                 if (position.equals(start)) {
@@ -143,7 +142,7 @@ public class AdventOfCode2022Day12 implements AocTestable {
                     output.append((char) map.get(position).intValue());
                 }
             }
-            output.append(ANSI_RESET);
+            output.append(OutputUtils.ANSI_RESET);
             output.append("\n");
         }
         System.out.println(output);

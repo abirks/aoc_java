@@ -1,15 +1,14 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AdventOfCode2021Day21 implements AocTestable {
+public class AdventOfCode2021Day21 implements AocPuzzle {
 
     private long player1Wins = 0;
     private Map<Universe, AtomicLong> universes = new HashMap<>();

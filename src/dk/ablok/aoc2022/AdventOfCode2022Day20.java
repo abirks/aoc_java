@@ -1,14 +1,14 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day20 implements AocTestable {
+public class AdventOfCode2022Day20 implements AocPuzzle {
 
     private static final long KEY = 811589153L;
     private final List<Number> inputWithoutKey = new ArrayList<>();

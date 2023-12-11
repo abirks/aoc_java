@@ -1,14 +1,13 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
-public class AdventOfCode2019Day08 implements AocTestable {
+public class AdventOfCode2019Day08 implements AocPuzzle {
     private static final int WHITE = 1;
     private static final int TRANSPARENT = 2;
 

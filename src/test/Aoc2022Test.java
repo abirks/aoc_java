@@ -1,7 +1,8 @@
-package dk.ablok.aoc.test;
+package test;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc2022.*;
 import org.junit.jupiter.api.Test;
 
@@ -167,7 +168,7 @@ public class Aoc2022Test {
         assertAocDay(new AdventOfCode2022Day25(), "input/aoc2022/input25.txt", "2=10---0===-1--01-20", null);
     }
 
-    private void assertAocDay(AocTestable puzzle, String filename, String expected1, String expected2)
+    private void assertAocDay(AocPuzzle puzzle, String filename, String expected1, String expected2)
             throws AocLoadException, AocSolveException {
         puzzle.load(filename);
         assertEquals(expected1, puzzle.part1());

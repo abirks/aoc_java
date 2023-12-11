@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AdventOfCode2021Day14 implements AocTestable {
+public class AdventOfCode2021Day14 implements AocPuzzle {
 
     private final Map<String, String> patterns = new HashMap<>();
     private Map<String, AtomicLong> pairs = new HashMap<>();

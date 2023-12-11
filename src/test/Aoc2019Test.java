@@ -1,7 +1,9 @@
-package dk.ablok.aoc.test;
+package test;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc2019.*;
 import org.junit.jupiter.api.Test;
 
@@ -231,13 +233,13 @@ public class Aoc2019Test {
         assertIntcodePuzzle(puzzle, "input/aoc2019/input25.txt", "229384", null);
     }
 
-    private void assertIntcodePuzzle(AocTestableWithDisplay puzzle, String filename, String expected1, String expected2)
+    private void assertIntcodePuzzle(AocPuzzleWithDisplay puzzle, String filename, String expected1, String expected2)
             throws AocLoadException, AocSolveException {
         puzzle.enableDisplay(false);
         assertAocDay(puzzle, filename, expected1, expected2);
     }
 
-    private void assertAocDay(AocTestable puzzle, String filename, String expected1, String expected2)
+    private void assertAocDay(AocPuzzle puzzle, String filename, String expected1, String expected2)
             throws AocLoadException, AocSolveException {
         puzzle.load(filename);
         assertEquals(expected1, puzzle.part1());

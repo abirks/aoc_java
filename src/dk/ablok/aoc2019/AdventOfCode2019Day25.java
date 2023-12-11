@@ -2,7 +2,7 @@ package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.test.AocTestableWithDisplay;
+import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc.io.OutputUtils;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
-public class AdventOfCode2019Day25 implements AocTestableWithDisplay {
+public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
 
     public static final String COMMAND = "Command?\n";
     public static final String AIRLOCK = "keypad at the main airlock.\"";

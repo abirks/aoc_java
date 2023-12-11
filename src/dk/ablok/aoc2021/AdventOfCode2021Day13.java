@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
+import dk.ablok.aoc.AocPuzzle;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day13 implements AocTestable {
+public class AdventOfCode2021Day13 implements AocPuzzle {
 
     private Set<Vect> points = new HashSet<>();
     private final List<String> instructions = new ArrayList<>();

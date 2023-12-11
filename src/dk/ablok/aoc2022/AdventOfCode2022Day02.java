@@ -1,11 +1,11 @@
 package dk.ablok.aoc2022;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.test.AocTestable;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-public class AdventOfCode2022Day02 implements AocTestable {
+public class AdventOfCode2022Day02 implements AocPuzzle {
 
     private static final int WIN = 6;
     private static final int LOSE = 0;
