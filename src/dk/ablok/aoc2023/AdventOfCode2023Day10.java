@@ -7,21 +7,18 @@ import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 
-import static dk.ablok.aoc.io.OutputUtils.*;
-
 public class AdventOfCode2023Day10 implements NewAocPuzzle {
     public static final String SOMETHING_IS_WRONG = "Something's wrong :(";
+    public static final String INCORRECT_DIRECTION = "That's not a proper direction!";
     private char[][] input;
-    private int[][] rotations;
     private Map<Vector2D, Integer> distances;
-    private Set<Vector2D> inside;
-    private Set<Vector2D> outside;
+    private int[][] crossings;
 
     @Override
     public void load() throws AocLoadException {
         AocInput aocInput = new AocInput(2023, 10);
         input = aocInput.read2dArray('.');
-        rotations = new int[input.length][input[0].length];
+        crossings = new int[input.length][input[0].length];
     }
 
     @Override
@@ -39,21 +36,23 @@ public class AdventOfCode2023Day10 implements NewAocPuzzle {
             direction.rotate(1);
         }
 
-        int sumRotation = 0;
+        int sumCrossings = 0;
         int distance = 0;
         do {
             distance++;
             distances.put(position, distance);
 
-            int rotation = getRotation(position, direction);
-            sumRotation += rotation;
-            direction.rotate(rotation);
-            rotations[position.y][position.x] = rotation;
+            int crossing = getCrossing(position, direction);
+            crossings[position.y][position.x] = crossing;
+            sumCrossings += crossing;
 
+            direction.rotate(getRotation(position, direction));
             position = position.add(direction);
         } while (getChar(position) != 'S');
 
-        rotations[start.y][start.x] = -(sumRotation % 4);
+        int startRotation = sumCrossings % 2;
+        if (startRotation < 0) startRotation += 2;
+        crossings[start.y][start.x] = startRotation;
 
         return Integer.toString(
                 (distances.values().stream()
@@ -66,47 +65,23 @@ public class AdventOfCode2023Day10 implements NewAocPuzzle {
 
     @Override
     public String part2() throws AocSolveException {
-        inside = new HashSet<>();
-        outside = new HashSet<>();
+        Set<Vector2D> inside = new HashSet<>();
+
         for (int y = 0; y < input.length; y++) {
             int sum = 0;
             for (int x = 0; x < input[y].length; x++) {
                 Vector2D position = new Vector2D(x, y);
-                if (distances.containsKey(position) && getChar(position) != '.') {
-                    sum++;
+                if (distances.containsKey(position)) {
+                    sum += crossings[y][x];
                 }
 
-                if (sum % 2 != 0 && getChar(position) == '.') {
-                    this.inside.add(position);
-                }
-
-                if (sum % 2 == 0 && getChar(position) == '.') {
-                    outside.add(position);
+                if (sum % 2 != 0 && !distances.containsKey(position)) {
+                    inside.add(position);
                 }
             }
         }
-
-        printMap(distances.keySet());
 
         return Integer.toString(inside.size());
-    }
-
-    private void printMap(Set<Vector2D> loop) {
-        for (int y = 0; y < input.length; y++) {
-            for (int x = 0; x < input[y].length; x++) {
-                if (loop.contains(new Vector2D(x, y))) {
-                    System.out.print(ANSI_GREEN);
-                } else if (inside.contains(new Vector2D(x, y))) {
-                    System.out.print(ANSI_RED);
-                } else if (outside.contains(new Vector2D(x, y))) {
-                    System.out.print(ANSI_BLUE);
-                } else {
-                    System.out.print(ANSI_WHITE);
-                }
-                System.out.print(input[y][x]);
-            }
-            System.out.println();
-        }
     }
 
     private char getChar(Vector2D position) {
@@ -125,6 +100,8 @@ public class AdventOfCode2023Day10 implements NewAocPuzzle {
     }
 
     private boolean connectsInDirection(Vector2D position, Vector2D direction) {
+        if (!isWithinBounds(position)) return false;
+
         if (direction.y == -1) {
             return getChar(position) == 'L' || getChar(position) == '|' || getChar(position) == 'J';
         } else if (direction.y == 1) {
@@ -134,7 +111,11 @@ public class AdventOfCode2023Day10 implements NewAocPuzzle {
         } else if (direction.x == -1) {
             return getChar(position) == '7' || getChar(position) == '-' || getChar(position) == 'J';
         }
-        throw new IllegalStateException("That's not a proper direction!");
+        throw new IllegalStateException(INCORRECT_DIRECTION);
+    }
+
+    private boolean isWithinBounds(Vector2D position) {
+        return 0 <= position.y && position.y < input.length && 0 <= position.x && position.x < input[position.y].length;
     }
 
     private int getRotation(Vector2D position, Vector2D direction) {
@@ -183,7 +164,56 @@ public class AdventOfCode2023Day10 implements NewAocPuzzle {
                     throw new IllegalStateException(SOMETHING_IS_WRONG);
             };
         }
-        throw new IllegalStateException("That's not a proper direction!");
+        throw new IllegalStateException(INCORRECT_DIRECTION);
+    }
+
+    private int getCrossing(Vector2D position, Vector2D direction) {
+        if (direction.y == -1) {
+            return switch (getChar(position)) {
+                case '7':
+                    yield 1;
+                case '|':
+                    yield 1;
+                case 'F':
+                    yield 1;
+                default:
+                    throw new IllegalStateException(SOMETHING_IS_WRONG);
+            };
+        } else if (direction.y == 1) {
+            return switch (getChar(position)) {
+                case 'L':
+                    yield 0;
+                case '|':
+                    yield -1;
+                case 'J':
+                    yield 0;
+                default:
+                    throw new IllegalStateException(SOMETHING_IS_WRONG);
+            };
+        } else if (direction.x == 1) {
+            return switch (getChar(position)) {
+                case 'J':
+                    yield 0;
+                case '-':
+                    yield 0;
+                case '7':
+                    yield -1;
+                default:
+                    throw new IllegalStateException(SOMETHING_IS_WRONG);
+            };
+        } else if (direction.x == -1) {
+            return switch (getChar(position)) {
+                case 'F':
+                    yield -1;
+                case '-':
+                    yield 0;
+                case 'L':
+                    yield 0;
+                default:
+                    throw new IllegalStateException(SOMETHING_IS_WRONG);
+            };
+        }
+        throw new IllegalStateException(INCORRECT_DIRECTION);
     }
 
     static class Vector2D {
