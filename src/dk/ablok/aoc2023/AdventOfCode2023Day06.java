@@ -1,15 +1,14 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.LongStream;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2023Day06 implements AocPuzzle {
+public class AdventOfCode2023Day06 implements NewAocPuzzle {
     private static final String TIME = "Time:";
     private static final String DISTANCE = "Distance:";
     private List<Long> times;
@@ -18,8 +17,8 @@ public class AdventOfCode2023Day06 implements AocPuzzle {
     private long combinedDistance;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        List<String> input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        List<String> input = new AocInput(2023, 6).readInputAsList();
         times = Arrays.stream(
                         input.get(0)
                                 .replace(TIME, "")

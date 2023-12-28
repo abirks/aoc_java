@@ -1,22 +1,20 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.io.InputUtils;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static dk.ablok.aoc.io.InputUtils.read2dArray;
-
-public class AdventOfCode2023Day03 implements AocPuzzle {
+public class AdventOfCode2023Day03 implements NewAocPuzzle {
     private List<Integer> presentParts = new ArrayList<>();
     private Map<Gear, List<Integer>> gears = new HashMap<>();
     private char[][] input;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = InputUtils.read2dArray(filename);
+    public void load() throws AocLoadException {
+        input = new AocInput(2023,3).read2dArray();
 
         StringBuilder number = new StringBuilder();
         AtomicReference<Symbol> symbol = new AtomicReference<>();

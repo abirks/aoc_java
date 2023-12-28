@@ -1,7 +1,8 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -9,9 +10,7 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2023Day05 implements AocPuzzle {
+public class AdventOfCode2023Day05 implements NewAocPuzzle {
     private static final Pattern SEEDS_PATTERN = Pattern.compile("seeds: (?<seeds>[\\d\\s]*)\\n\\n");
     private static final String SEED_TO_SOIL = "seed-to-soil";
     private static final String SOIL_TO_FERTILIZER = "soil-to-fertilizer";
@@ -27,8 +26,8 @@ public class AdventOfCode2023Day05 implements AocPuzzle {
 
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        String input = String.join("\n", readInputAsList(filename));
+    public void load() throws AocLoadException {
+        String input = String.join("\n", new AocInput(2023, 5).readInputAsList());
 
         seeds = parseSeeds(input);
 

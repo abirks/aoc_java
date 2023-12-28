@@ -1,20 +1,19 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
-
-public class AdventOfCode2023Day09 implements AocPuzzle {
+public class AdventOfCode2023Day09 implements NewAocPuzzle {
     private List<OasisSeries> input;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename).stream()
+    public void load() throws AocLoadException {
+        input = new AocInput(2023, 9).readInputAsList().stream()
                 .map(line -> line.split(" "))
                 .map(a -> Arrays.stream(a).map(Long::parseLong).toList())
                 .map(OasisSeries::new)

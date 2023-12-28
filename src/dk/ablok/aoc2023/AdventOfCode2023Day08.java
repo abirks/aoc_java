@@ -1,22 +1,21 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.calculations.LeastCommonMultiple;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsListSeparateByEmptyLine;
-
-public class AdventOfCode2023Day08 implements AocPuzzle {
+public class AdventOfCode2023Day08 implements NewAocPuzzle {
     private byte[] directions;
     private Set<Node> nodes;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        List<List<String>> input = readInputAsListSeparateByEmptyLine(filename);
+    public void load() throws AocLoadException {
+        List<List<String>> input = new AocInput(2023, 8).readInputAsListSeparateByEmptyLine();
         directions = input.get(0).get(0).getBytes();
 
         nodes = input.get(1).stream()

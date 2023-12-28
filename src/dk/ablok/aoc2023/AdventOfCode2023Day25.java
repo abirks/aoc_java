@@ -44,7 +44,7 @@ public class AdventOfCode2023Day25 implements NewAocPuzzle {
             karger.kargerReduction();
         } while (karger.connections.size() > 6);
 
-        System.out.println("AoC 2023 day 25 required " + attempts + " to reach a solution");
+        System.out.println("AoC 2023 day 25 required " + attempts + " attempts to reach a solution");
 
         var groups = karger.components.values().stream()
                 .mapToInt(c -> c.name.split(";").length)

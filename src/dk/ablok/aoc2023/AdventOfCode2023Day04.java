@@ -1,7 +1,8 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,16 +11,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2023Day04 implements AocPuzzle {
+public class AdventOfCode2023Day04 implements NewAocPuzzle {
     private Map<Integer, Card> cards;
     private final Map<Integer, Integer> points = new HashMap<>();
     private Map<Integer, AtomicInteger> counts;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        cards = readInputAsList(filename).stream()
+    public void load() throws AocLoadException {
+        cards = new AocInput(2023, 4).readInputAsList().stream()
                 .map(new CardMapper())
                 .collect(Collectors.toMap(Card::getId, card -> card));
 

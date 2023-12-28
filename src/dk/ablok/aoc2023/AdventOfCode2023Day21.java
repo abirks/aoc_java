@@ -1,11 +1,11 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.AocPuzzle;
 
-public class AdventOfCode2023Day21 implements AocPuzzle {
+public class AdventOfCode2023Day21 implements NewAocPuzzle {
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
 
     }
 
