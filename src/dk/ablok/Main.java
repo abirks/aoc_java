@@ -2,11 +2,11 @@ package dk.ablok;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc2023.AdventOfCode2023Day13;
+import dk.ablok.aoc2023.AdventOfCode2023Day14;
 
 public class Main {
     public static void main(String[] args) {
-        NewAocPuzzle puzzle = new AdventOfCode2023Day13();
+        NewAocPuzzle puzzle = new AdventOfCode2023Day14();
         puzzle.load();
 
         try {

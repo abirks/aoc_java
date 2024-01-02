@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class AdventOfCode2021Day06 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         for (int i = 0; i < PART1_DAYS; i++) {
             updateFishes();
         }
@@ -34,7 +35,7 @@ public class AdventOfCode2021Day06 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         for (int i = PART1_DAYS; i < PART2_DAYS; i++) {
             updateFishes();
         }

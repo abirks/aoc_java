@@ -2,6 +2,7 @@ package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.graph.*;
 
 import java.util.*;
@@ -60,7 +61,7 @@ public class AdventOfCode2019Day20 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         List<Portal> path = pathFinder.findRoute(startPortal, endPortal);
         return Long.toString(path.stream()
                 .mapToLong(Portal::getWeight)
@@ -68,7 +69,7 @@ public class AdventOfCode2019Day20 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Enable recursive edges on all portals. Logic for part 2 is implemented in the getEdgesFrom()
         // method on the portal
         portals.forEach(Portal::setRecursive);

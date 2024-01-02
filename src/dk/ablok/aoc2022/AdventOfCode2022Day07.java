@@ -1,6 +1,7 @@
 package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,7 +58,7 @@ public class AdventOfCode2022Day07 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         root.totalSize();
         long sum = 0L;
         for (Long size : sizes.stream().filter(s -> s <= PART1_LIMIT).toList()) {
@@ -67,7 +68,7 @@ public class AdventOfCode2022Day07 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         long toDelete = root.totalSize() + PART2_NEEDED - PART2_TOTAL;
         return Long.toString(sizes.stream().sorted().filter(s -> s >= toDelete).findFirst().orElseThrow());
     }

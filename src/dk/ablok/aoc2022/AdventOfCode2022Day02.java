@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import static dk.ablok.aoc.io.InputUtils.readInputAsList;
 
@@ -29,12 +30,12 @@ public class AdventOfCode2022Day02 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Integer.toString(sum1);
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Integer.toString(sum2);
     }
 

@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ public class AdventOfCode2021Day07 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         long best = Long.MAX_VALUE;
         for (int x = min; x <= max; x++) {
             int finalX = x;
@@ -39,7 +40,7 @@ public class AdventOfCode2021Day07 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         long best = Long.MAX_VALUE;
         for (int x = min; x <= max; x++) {
             int finalX = x;

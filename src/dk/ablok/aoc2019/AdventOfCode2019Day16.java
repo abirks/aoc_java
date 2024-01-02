@@ -2,6 +2,7 @@ package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.InputUtils;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class AdventOfCode2019Day16 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         List<Integer> data = process(input);
 
 
@@ -36,7 +37,7 @@ public class AdventOfCode2019Day16 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Find offset
         int offset = 0;
         for (int i = 0; i < 7; i++) {

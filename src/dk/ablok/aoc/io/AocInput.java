@@ -116,8 +116,8 @@ public class AocInput {
     }
 
     public Path getFile() {
-        String inputUrl = String.format("https://adventofcode.com/%d/day/%d/input", year, day);
-        String localPath = String.format("input/aoc%04d/input%02d.txt", year, day);
+        String inputUrl = String.format("https://adventofcode.com/%d/day/%d/input", year, day); // TODO move to deltaspike config
+        String localPath = String.format("input/aoc%04d/input%02d.txt", year, day);// TODO move to deltaspike config
 
         try {
             if (!fileExists(localPath)) {

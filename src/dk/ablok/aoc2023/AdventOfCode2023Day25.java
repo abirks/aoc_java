@@ -2,20 +2,32 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Solution to the Advent of Code 2023 day 25 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day25 implements NewAocPuzzle {
     private static final Random random = new Random();
     private Map<String, Component> originalComponents;
-    private Set<Connection> originalConnections = new HashSet<>();
+    private final Set<Connection> originalConnections = new HashSet<>();
 
     @Override
     public void load() throws AocLoadException {
-        List<String> input = new AocInput(2023, 25).readInputAsList();
+        AocInput aocInput = new AocInput(2023, 25);
+        List<String> input = aocInput.readInputAsList();
 
         // Initialize sets for all nodes
         originalComponents = input.stream()
@@ -35,7 +47,7 @@ public class AdventOfCode2023Day25 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int attempts = 0;
         KargerAlgorithm karger;
         do {
@@ -54,7 +66,8 @@ public class AdventOfCode2023Day25 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
+        // No part 2 on this day
         return null;
     }
 

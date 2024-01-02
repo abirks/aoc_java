@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,14 +20,14 @@ public class AdventOfCode2021Day03 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         String gamma = part1Logic(input, '1');
         String epsilon = part1Logic(input, '0');
         return Integer.toString(Integer.parseInt(gamma, 2) * Integer.parseInt(epsilon, 2));
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         String oxygen = part2Logic(input, '1');
         String co2 = part2Logic(input, '0');
         return Integer.toString(Integer.parseInt(oxygen, 2) * Integer.parseInt(co2, 2));

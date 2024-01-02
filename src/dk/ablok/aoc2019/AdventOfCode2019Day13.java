@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -107,7 +108,7 @@ public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
         this.enableDisplay = enableDisplay;
     }
 
-    public String part1() {
+    public String part1() throws AocSolveException {
         vm.start();
 
         // Wait for VM to start
@@ -139,7 +140,7 @@ public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
         return Integer.toString(blocks);
     }
 
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Resume VM
         vm.unPause();
 

@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class AdventOfCode2023Day01 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         digits.put("1", 1);
         digits.put("2", 2);
         digits.put("3", 3);
@@ -48,7 +49,7 @@ public class AdventOfCode2023Day01 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         digits.put("one", 1);
         digits.put("two", 2);
         digits.put("three", 3);

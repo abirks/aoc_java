@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class AdventOfCode2019Day24 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         Grid grid = new Grid(input, false);
         Set<Long> ratings = new HashSet<>();
 
@@ -42,7 +43,7 @@ public class AdventOfCode2019Day24 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         Grid grid = new Grid(input, true);
 
         for (int i = 0; i < PART2_MINUTES; i++) {
@@ -106,8 +107,6 @@ class Grid {
         switch (direction) {
             case LOWER -> higher = parent;
             case HIGHER -> lower = parent;
-            case default -> {
-            }
         }
     }
 

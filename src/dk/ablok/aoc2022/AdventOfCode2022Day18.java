@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public class AdventOfCode2022Day18 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         for (Cube cube : lava) {
             cube.countNeighbors(lava);
         }
@@ -31,7 +32,7 @@ public class AdventOfCode2022Day18 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Find outer bounds of the magma drop
         int minX = lava.stream().mapToInt(a -> a.x).min().orElseThrow() - 1;
         int minY = lava.stream().mapToInt(a -> a.y).min().orElseThrow() - 1;

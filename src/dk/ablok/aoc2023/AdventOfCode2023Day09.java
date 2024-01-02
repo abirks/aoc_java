@@ -2,18 +2,29 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-
+/**
+ * Solution to the Advent of Code 2023 day 9 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day09 implements NewAocPuzzle {
     private List<OasisSeries> input;
 
     @Override
     public void load() throws AocLoadException {
-        input = new AocInput(2023, 9).readInputAsList().stream()
+        AocInput aocInput = new AocInput(2023, 9);
+        input = aocInput.readInputAsList().stream()
                 .map(line -> line.split(" "))
                 .map(a -> Arrays.stream(a).map(Long::parseLong).toList())
                 .map(OasisSeries::new)
@@ -22,7 +33,7 @@ public class AdventOfCode2023Day09 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Long.toString(
                 input.stream()
                         .mapToLong(OasisSeries::extrapolateForwards)
@@ -30,7 +41,7 @@ public class AdventOfCode2023Day09 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Long.toString(
                 input.stream()
                         .mapToLong(OasisSeries::extrapolateBackwards)

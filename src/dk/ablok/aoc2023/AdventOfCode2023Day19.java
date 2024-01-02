@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
@@ -10,6 +11,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Solution to the Advent of Code 2023 day 19 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day19 implements NewAocPuzzle {
     private static final Pattern WORKFLOW_PATTERN = Pattern.compile("^(?<name>.*)\\{(?<rules>.*)\\}$");
 
@@ -20,7 +31,8 @@ public class AdventOfCode2023Day19 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        List<List<String>> input = new AocInput(2023, 19).readInputAsListSeparateByEmptyLine();
+        AocInput aocInput = new AocInput(2023, 19);
+        List<List<String>> input = aocInput.readInputAsListSeparateByEmptyLine();
 
         for (String workflow : input.get(0)) {
             Matcher matcher = WORKFLOW_PATTERN.matcher(workflow);
@@ -37,7 +49,7 @@ public class AdventOfCode2023Day19 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         parts.forEach(workflows.get("in"));
 
         return Long.toString(accepted.stream()
@@ -46,7 +58,7 @@ public class AdventOfCode2023Day19 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         accepted.clear();
         rejected.clear();
 

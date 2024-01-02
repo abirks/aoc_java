@@ -2,7 +2,8 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.io.OutputUtils;
+import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AnsiColorConstants;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -53,7 +54,7 @@ public class AdventOfCode2022Day14 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         // Loop until sand falls outside (break if that happens)
         while (true) {
 
@@ -76,7 +77,7 @@ public class AdventOfCode2022Day14 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Loop until sand falls outside (break if that happens)
         while (true) {
 
@@ -123,7 +124,7 @@ public class AdventOfCode2022Day14 implements AocPuzzle {
 
     class Unit {
         protected Position position;
-        protected String display = OutputUtils.ANSI_WHITE + "#";
+        protected String display = AnsiColorConstants.ANSI_WHITE + "#";
 
         public Unit(Position position) {
             this.position = position;
@@ -147,9 +148,9 @@ public class AdventOfCode2022Day14 implements AocPuzzle {
             this.hasVoid = hasVoid;
 
             if (hasVoid) {
-                this.display = OutputUtils.ANSI_GREEN + "*";
+                this.display = AnsiColorConstants.ANSI_GREEN + "*";
             } else {
-                this.display = OutputUtils.ANSI_RED + "*";
+                this.display = AnsiColorConstants.ANSI_RED + "*";
             }
         }
 

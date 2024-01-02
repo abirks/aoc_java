@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
@@ -11,6 +12,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Solution to the Advent of Code 2023 day 4 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day04 implements NewAocPuzzle {
     private Map<Integer, Card> cards;
     private final Map<Integer, Integer> points = new HashMap<>();
@@ -18,7 +29,9 @@ public class AdventOfCode2023Day04 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        cards = new AocInput(2023, 4).readInputAsList().stream()
+        AocInput aocInput = new AocInput(2023, 4);
+
+        cards = aocInput.readInputAsList().stream()
                 .map(new CardMapper())
                 .collect(Collectors.toMap(Card::getId, card -> card));
 
@@ -42,7 +55,7 @@ public class AdventOfCode2023Day04 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Long.toString(
                 points.values().stream()
                         .mapToInt(Integer::intValue)
@@ -50,7 +63,7 @@ public class AdventOfCode2023Day04 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Long.toString(
                 counts.values().stream()
                         .mapToInt(AtomicInteger::get)

@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ public class AdventOfCode2022Day13 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int index = 0;
         int sum = 0;
 
@@ -40,7 +41,7 @@ public class AdventOfCode2022Day13 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         List<TreeNode> allPackets = new ArrayList<>();
 
         for (List<String> pair : input) {

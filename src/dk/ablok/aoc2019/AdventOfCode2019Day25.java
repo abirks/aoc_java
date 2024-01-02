@@ -3,7 +3,7 @@ package dk.ablok.aoc2019;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
-import dk.ablok.aoc.io.OutputUtils;
+import dk.ablok.aoc.io.AnsiColorConstants;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.io.BufferedReader;
@@ -81,6 +81,11 @@ public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
         throw new AocSolveException("VM finished without finding a solution!");
     }
 
+    public String part2() throws AocSolveException {
+        // No part 2 on this day
+        return null;
+    }
+
     private String extractResult(String output) {
         Matcher matcher = PATTERN.matcher(output);
         if (matcher.find()) {
@@ -111,7 +116,7 @@ public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
         vmin.add((long) '\n');
 
         if (enableDisplay && autoplay) {
-            System.out.println(OutputUtils.ANSI_GREEN + command + OutputUtils.ANSI_RESET);
+            System.out.println(AnsiColorConstants.ANSI_GREEN + command + AnsiColorConstants.ANSI_RESET);
             delay();
         }
     }
@@ -147,10 +152,5 @@ public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted");
         }
-    }
-
-    public String part2() {
-        // No part 2 on this day
-        return null;
     }
 }

@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.util.*;
@@ -26,14 +27,14 @@ public class AdventOfCode2019Day11 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         Robot robot = new Robot(BLACK);
         robot.paint();
         return Integer.toString(robot.getPainted());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         Robot robot = new Robot(WHITE);
         robot.paint();
         return robot.getIdentifier();

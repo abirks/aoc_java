@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
 
     @Override
     public void load(String filename) throws AocLoadException {
+        // TODO refactor to use AocInput
         File f = new File(filename);
         try (Scanner sc = new Scanner(f)) {
             map = new HashMap<>();
@@ -38,14 +40,14 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         Position start = new Position(0, 0);
         Position destination = new Position(xMax - 1, yMax - 1);
         return Integer.toString(fillSearch(map, start, destination));
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         Position start = new Position(0, 0);
 
         // Expand map
@@ -92,12 +94,14 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
     }
 
     static class Position {
-        int x;
-        int y;
+        private final int x;
+        private final int y;
+        private final int hash;
 
         public Position(int x, int y) {
             this.x = x;
             this.y = y;
+            this.hash = Objects.hash(x, y);
         }
 
         @Override
@@ -124,7 +128,7 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
 
         @Override
         public int hashCode() {
-            return Objects.hash(x, y);
+            return hash;
         }
     }
 }

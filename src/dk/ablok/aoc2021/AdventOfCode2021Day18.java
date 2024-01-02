@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +17,7 @@ public class AdventOfCode2021Day18 implements AocPuzzle {
 
     @Override
     public void load(String filename) throws AocLoadException {
+        // TODO refactor to use AocInput
         File file = new File(filename);
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
@@ -34,14 +36,14 @@ public class AdventOfCode2021Day18 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         Number partA = numbers.stream().map(Number::clone).reduce(Number::add).orElseThrow();
         partA.reduce();
         return Long.toString(partA.magnitude());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         long best = 0;
         for (int na = 0; na < numbers.size(); na++) {
             for (int nb = 0; nb < numbers.size(); nb++) {

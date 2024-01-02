@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class AdventOfCode2021Day08 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int occurrences = 0;
 
         for (DisplayInput i : input) {
@@ -38,7 +39,7 @@ public class AdventOfCode2021Day08 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         int value = 0;
 
         for (DisplayInput i : input) {

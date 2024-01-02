@@ -2,17 +2,29 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Solution to the Advent of Code 2023 day 13 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day13 implements NewAocPuzzle {
     private final List<Character[][]> patterns = new ArrayList<>();
 
     @Override
     public void load() throws AocLoadException {
-        List<List<String>> input = new AocInput(2023, 13).readInputAsListSeparateByEmptyLine();
+        AocInput aocInput = new AocInput(2023, 13);
+        List<List<String>> input = aocInput.readInputAsListSeparateByEmptyLine();
 
         for (List<String> lines : input) {
             Character[][] pattern = new Character[lines.size()][lines.get(0).length()];
@@ -26,12 +38,12 @@ public class AdventOfCode2023Day13 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Integer.toString(scoreSymmetries(0));
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Integer.toString(scoreSymmetries(1));
     }
 

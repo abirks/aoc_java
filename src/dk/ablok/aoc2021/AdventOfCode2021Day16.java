@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class AdventOfCode2021Day16 implements AocPuzzle {
     @Override
     public void load(String filename) throws AocLoadException {
         BitSet input = new BitSet();
-
+        // TODO refactor to use AocInput
         int i = 0;
 
         try (FileInputStream fileInput = new FileInputStream(filename)) {
@@ -42,12 +43,12 @@ public class AdventOfCode2021Day16 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Long.toString(top.versionSum());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Long.toString(top.getValue());
     }
 

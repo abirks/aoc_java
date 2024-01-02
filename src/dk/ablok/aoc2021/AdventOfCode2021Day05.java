@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,7 +24,7 @@ public class AdventOfCode2021Day05 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         count(input, false);
         return Long.toString(map.values().stream()
                 .filter(atomicInteger -> atomicInteger.intValue() > 1)
@@ -31,7 +32,7 @@ public class AdventOfCode2021Day05 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         count(input, true);
         return Long.toString(map.values().stream()
                 .filter(atomicInteger -> atomicInteger.intValue() > 1)

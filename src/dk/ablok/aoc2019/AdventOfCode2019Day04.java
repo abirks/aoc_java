@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
@@ -16,7 +17,7 @@ public class AdventOfCode2019Day04 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int count1 = 0;
 
         while (code.isBelowLimit()) {
@@ -33,7 +34,7 @@ public class AdventOfCode2019Day04 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Integer.toString(count2);
     }
 

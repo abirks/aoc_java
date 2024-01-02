@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
@@ -58,7 +59,7 @@ public class AdventOfCode2019Day15 implements AocPuzzleWithDisplay {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         if (enableDisplay) {
             display.start();
         }
@@ -75,7 +76,7 @@ public class AdventOfCode2019Day15 implements AocPuzzleWithDisplay {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         if (enableDisplay) {
             display.stop();
         }

@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ public class AdventOfCode2019Day01 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Integer.toString(input.stream().mapToInt(i -> (i / 3) - 2).sum());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         int res = 0;
         for (Integer i : input) {
             int j = i / 3 - 2;

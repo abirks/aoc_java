@@ -7,6 +7,16 @@ import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 
+/**
+ * Solution to the Advent of Code 2023 day 10 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day10 implements NewAocPuzzle {
     public static final String SOMETHING_IS_WRONG = "Something's wrong :(";
     public static final String INCORRECT_DIRECTION = "That's not a proper direction!";

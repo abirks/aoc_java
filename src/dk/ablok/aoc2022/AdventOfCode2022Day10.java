@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class AdventOfCode2022Day10 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         for (String op : input) {
             String[] parts = op.split(" ");
             switch (parts[0]) {
@@ -42,7 +43,7 @@ public class AdventOfCode2022Day10 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         StringBuilder output = new StringBuilder();
         for (int y = 0; y < 6; y++) {
             for (int x = 0; x < 40; x++) {

@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,13 @@ public class AdventOfCode2022Day25 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return fromDecimalToSnafu(input.stream().mapToLong(Long::longValue).sum());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
+        // No part 2 on this day
         return null;
     }
 

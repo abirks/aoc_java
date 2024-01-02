@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,14 +21,14 @@ public class AdventOfCode2022Day09 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         List<Knot> rope = generateRope(2);
         Set<Position> positions = ropeLogic(rope);
         return Integer.toString(positions.size());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         List<Knot> rope = generateRope(10);
         Set<Position> positions = ropeLogic(rope);
         return Integer.toString(positions.size());

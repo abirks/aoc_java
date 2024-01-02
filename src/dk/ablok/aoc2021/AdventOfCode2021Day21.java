@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class AdventOfCode2021Day21 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int player1Position = startPlayer1;
         int player1Score = 0;
         int player2Position = startPlayer2;
@@ -48,7 +49,7 @@ public class AdventOfCode2021Day21 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         universes.put(new Universe(startPlayer1, startPlayer2, 0, 0), new AtomicLong(1));
         while (universes.size() > 0) {
             Map<Universe, AtomicLong> newUniverses = new HashMap<>();

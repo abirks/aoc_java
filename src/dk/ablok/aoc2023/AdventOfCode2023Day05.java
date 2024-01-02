@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
@@ -10,6 +11,16 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * Solution to the Advent of Code 2023 day 5 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day05 implements NewAocPuzzle {
     private static final Pattern SEEDS_PATTERN = Pattern.compile("seeds: (?<seeds>[\\d\\s]*)\\n\\n");
     private static final String SEED_TO_SOIL = "seed-to-soil";
@@ -27,7 +38,8 @@ public class AdventOfCode2023Day05 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        String input = String.join("\n", new AocInput(2023, 5).readInputAsList());
+        AocInput aocInput = new AocInput(2023, 5);
+        String input = String.join("\n", aocInput.readInputAsList());
 
         seeds = parseSeeds(input);
 
@@ -41,7 +53,7 @@ public class AdventOfCode2023Day05 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Long.toString(
                 seeds.stream()
                         .map(seed -> new Range(seed, 1))
@@ -52,7 +64,7 @@ public class AdventOfCode2023Day05 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Long.toString(
                 IntStream.range(0, seeds.size() / 2)
                         .mapToObj(i -> new Range(seeds.get(i * 2), seeds.get(i * 2 + 1)))

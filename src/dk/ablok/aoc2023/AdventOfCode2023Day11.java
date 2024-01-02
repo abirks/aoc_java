@@ -2,12 +2,23 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.LongStream;
 
+/**
+ * Solution to the Advent of Code 2023 day 11 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day11 implements NewAocPuzzle {
     private final Set<Galaxy> galaxies1 = new HashSet<>();
     private final Set<Galaxy> galaxies2 = new HashSet<>();
@@ -16,7 +27,8 @@ public class AdventOfCode2023Day11 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        char[][] input = new AocInput(2023, 11).read2dArray();
+        AocInput aocInput = new AocInput(2023, 11);
+        char[][] input = aocInput.read2dArray();
 
         yDim = input.length;
         xDim = input[0].length;
@@ -32,13 +44,13 @@ public class AdventOfCode2023Day11 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         expandUniverse(galaxies1, 1);
         return Long.toString(findDistances(galaxies1));
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         expandUniverse(galaxies2, 999999);
         return Long.toString(findDistances(galaxies2));
     }

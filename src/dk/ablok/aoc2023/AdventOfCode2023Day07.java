@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
@@ -10,25 +11,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Solution to the Advent of Code 2023 day 7 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day07 implements NewAocPuzzle {
     private final List<Hand> hands = new ArrayList<>();
 
     @Override
     public void load() throws AocLoadException {
-        List<String> lines = new AocInput(2023, 7).readInputAsList();
+        AocInput aocInput = new AocInput(2023, 7);
+        List<String> lines = aocInput.readInputAsList();
         for (String line : lines) {
             hands.add(new Hand(line.split(" ")[0], Long.parseLong(line.split(" ")[1])));
         }
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         hands.sort(Hand::compareTo);
         return Long.toString(sumHands());
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         hands.forEach(hand -> hand.useWildcards(true));
         hands.sort(Hand::compareTo);
         return Long.toString(sumHands());

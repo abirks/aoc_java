@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +20,7 @@ public class AdventOfCode2021Day09 implements AocPuzzle {
     @Override
     public void load(String filename) throws AocLoadException {
         File file = new File(filename);
-
+        // TODO refactor to use AocInput
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
             int x;
@@ -39,7 +40,7 @@ public class AdventOfCode2021Day09 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         // Find low spots
         int score = 0;
         for (Map.Entry<Vect, Integer> p : map.entrySet()) {
@@ -53,7 +54,7 @@ public class AdventOfCode2021Day09 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         for (Vect p : lowSpots) {
             // If it's not already filled
             if (filled.contains(p)) {

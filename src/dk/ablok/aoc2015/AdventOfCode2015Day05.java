@@ -1,7 +1,8 @@
 package dk.ablok.aoc2015;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class AdventOfCode2015Day05 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Long.toString(input.stream()
                 .filter(s -> countVowels(s) >= 3)
                 .filter(this::hasDouble)
@@ -30,7 +31,7 @@ public class AdventOfCode2015Day05 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Long.toString(input.stream()
                 .filter(this::hasRepeatedDouble)
                 .filter(this::hasRepeatedWithSpacer)

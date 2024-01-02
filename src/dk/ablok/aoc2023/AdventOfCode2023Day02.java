@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashSet;
@@ -11,18 +12,29 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Solution to the Advent of Code 2023 day 2 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day02 implements NewAocPuzzle {
     private List<Game> games;
 
     @Override
     public void load() throws AocLoadException {
-        games = new AocInput(2023, 2).readInputAsList().stream()
+        AocInput aocInput = new AocInput(2023, 2);
+        games = aocInput.readInputAsList().stream()
                 .map(new GameMapper())
                 .toList();
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Integer.toString(games.stream()
                 .filter(Game::isPossible)
                 .mapToInt(Game::getId)
@@ -30,7 +42,7 @@ public class AdventOfCode2023Day02 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Integer.toString(games.stream()
                 .map(Game::getMinimalPossibleSet)
                 .mapToInt(Subset::getPower)

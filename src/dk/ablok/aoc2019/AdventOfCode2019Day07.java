@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class AdventOfCode2019Day07 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         // Set of digits
         Set<Integer> digits = new HashSet<>();
         for (int i = 0; i <= 4; i++) {
@@ -41,7 +42,7 @@ public class AdventOfCode2019Day07 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Set of digits
         Set<Integer> digits = new HashSet<>();
         for (int i = 5; i <= 9; i++) {

@@ -1,7 +1,8 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.*;
 
@@ -36,7 +37,7 @@ public class AdventOfCode2021Day10 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         long scoreA = 0;
         lineLoop:
         for (String line : input) {
@@ -60,7 +61,7 @@ public class AdventOfCode2021Day10 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         List<Long> scoresB = new ArrayList<>();
 
         for (Deque<Character> stack : incomplete) {

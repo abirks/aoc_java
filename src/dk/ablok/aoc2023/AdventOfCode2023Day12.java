@@ -2,6 +2,7 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
@@ -11,17 +12,28 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Solution to the Advent of Code 2023 day 12 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day12 implements NewAocPuzzle {
     private List<String> input;
     private final Map<Data, Long> memo = new ConcurrentHashMap<>();
 
     @Override
     public void load() throws AocLoadException {
-        input = new AocInput(2023, 12).readInputAsList();
+        AocInput aocInput = new AocInput(2023, 12);
+        input = aocInput.readInputAsList();
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int arrangements = 0;
 
         for (String line : input) {
@@ -36,7 +48,7 @@ public class AdventOfCode2023Day12 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         long arrangements = 0L;
 
         for (String line : input) {

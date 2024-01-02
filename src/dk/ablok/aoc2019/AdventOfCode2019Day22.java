@@ -33,7 +33,7 @@ public class AdventOfCode2019Day22 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         calcCoefficients(STACKSIZE1);
         return a.multiply(INITIAL_VALUE_PART1).add(b).mod(STACKSIZE1).toString();
     }

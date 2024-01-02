@@ -1,8 +1,9 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.graph.*;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.graph.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         // Build map for part 1
         buildMap();
 
@@ -50,7 +51,7 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Modify input for part 2
         modifyMap();
 

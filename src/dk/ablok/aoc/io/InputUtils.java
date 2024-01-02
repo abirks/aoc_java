@@ -12,10 +12,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Deprecated
 public class InputUtils {
     private InputUtils() {
     }
 
+    @Deprecated
     public static List<String> readInputAsList(String filename) throws AocLoadException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             return stream.toList();
@@ -24,6 +26,7 @@ public class InputUtils {
         }
     }
 
+    @Deprecated
     public static List<List<String>> readInputAsListSeparateByEmptyLine(String filename) throws AocLoadException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             Iterator<String> iter = stream.iterator();
@@ -51,6 +54,7 @@ public class InputUtils {
         }
     }
 
+    @Deprecated
     public static String readFirstLine(String filename) throws AocLoadException {
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             return stream.findFirst().orElseThrow();
@@ -59,22 +63,27 @@ public class InputUtils {
         }
     }
 
+    @Deprecated
     public static List<Integer> readCommaSeparatedIntegerList(String filename) throws AocLoadException {
         return Arrays.stream(readFirstLine(filename).split(",")).map(Integer::parseInt).toList();
     }
 
+    @Deprecated
     public static List<Long> readCommaSeparatedLongList(String filename) throws AocLoadException {
         return Arrays.stream(readFirstLine(filename).split(",")).map(Long::parseLong).toList();
     }
 
+    @Deprecated
     public static List<Integer> readNewlineSeparatedIntegerList(String filename) throws AocLoadException {
         return readInputAsList(filename).stream().map(Integer::parseInt).toList();
     }
 
+    @Deprecated
     public static char[][] read2dArray(String filename) throws AocLoadException {
         return read2dArray(filename, (char) 0);
     }
 
+    @Deprecated
     public static char[][] read2dArray(String filename, char defaultValue) throws AocLoadException {
         List<String> lines = readInputAsList(filename);
 
@@ -97,6 +106,7 @@ public class InputUtils {
         return output;
     }
 
+    @Deprecated
     public static char[] read1dArray(String filename) throws AocLoadException {
         byte[] bytes = readFirstLine(filename).getBytes(StandardCharsets.UTF_8);
         char[] output = new char[bytes.length];

@@ -2,7 +2,8 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.io.OutputUtils;
+import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AnsiColorConstants;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,12 +56,12 @@ public class AdventOfCode2022Day12 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Integer.toString(pathfinder(start, here -> here.equals(end), false));
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Integer.toString(pathfinder(end, here -> map.getOrDefault(here, Integer.MAX_VALUE) == 'a', true));
     }
 
@@ -129,9 +130,9 @@ public class AdventOfCode2022Day12 implements AocPuzzle {
                 output.append(color(position));
 
                 if (path.contains(position)) {
-                    output.append(OutputUtils.ANSI_BLUE_BACKGROUND);
+                    output.append(AnsiColorConstants.ANSI_BLUE_BACKGROUND);
                 } else {
-                    output.append(OutputUtils.ANSI_BLACK_BACKGROUND);
+                    output.append(AnsiColorConstants.ANSI_BLACK_BACKGROUND);
                 }
 
                 if (position.equals(start)) {
@@ -142,7 +143,7 @@ public class AdventOfCode2022Day12 implements AocPuzzle {
                     output.append((char) map.get(position).intValue());
                 }
             }
-            output.append(OutputUtils.ANSI_RESET);
+            output.append(AnsiColorConstants.ANSI_RESET);
             output.append("\n");
         }
         System.out.println(output);

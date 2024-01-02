@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class AdventOfCode2019Day21 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         createVm(part1Script);
 
         vm.start();
@@ -41,7 +42,7 @@ public class AdventOfCode2019Day21 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         createVm(part2Script);
 
         vm.start();

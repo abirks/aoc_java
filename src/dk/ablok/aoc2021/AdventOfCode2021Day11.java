@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +18,7 @@ public class AdventOfCode2021Day11 implements AocPuzzle {
     @Override
     public void load(String filename) throws AocLoadException {
         File file = new File(filename);
-
+        // TODO refactor to use AocInput
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
 
@@ -38,7 +39,7 @@ public class AdventOfCode2021Day11 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int flashes = 0;
 
         for (int d = 0; d < 100; d++) {
@@ -49,7 +50,7 @@ public class AdventOfCode2021Day11 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Keep doing steps until all octopuses flash at the same time
         int d = 100;
         int flashed;

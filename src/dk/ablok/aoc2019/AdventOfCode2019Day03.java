@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.*;
 
@@ -29,7 +30,7 @@ public class AdventOfCode2019Day03 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         intersections.addAll(new HashSet<>(wires.get(0)));
         intersections.retainAll(new HashSet<>(wires.get(1)));
         return Integer.toString(intersections.stream()
@@ -38,7 +39,7 @@ public class AdventOfCode2019Day03 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         Map<Position, Integer> distances = new HashMap<>();
         intersections.forEach(intersection -> distances.put(
                 intersection, wires.get(0).indexOf(intersection) + wires.get(1).indexOf(intersection)));

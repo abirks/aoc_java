@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,12 +26,12 @@ public class AdventOfCode2019Day14 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Long.toString(oreRequiredToProduceFuel(1L));
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // 1 trillion ORE can make between 0 and 1 trillion FUEL.
         // Use the bisection method to find the right number
         long upper = ONE_TRILLION;

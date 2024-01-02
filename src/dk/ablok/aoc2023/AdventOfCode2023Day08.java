@@ -3,19 +3,32 @@ package dk.ablok.aoc2023;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.calculations.LeastCommonMultiple;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Solution to the Advent of Code 2023 day 8 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day08 implements NewAocPuzzle {
     private byte[] directions;
     private Set<Node> nodes;
 
     @Override
     public void load() throws AocLoadException {
-        List<List<String>> input = new AocInput(2023, 8).readInputAsListSeparateByEmptyLine();
+        AocInput aocInput = new AocInput(2023, 8);
+        List<List<String>> input = aocInput.readInputAsListSeparateByEmptyLine();
+
         directions = input.get(0).get(0).getBytes();
 
         nodes = input.get(1).stream()
@@ -34,7 +47,7 @@ public class AdventOfCode2023Day08 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         Node here = nodes.stream().filter(n -> n.getName().equals("AAA")).findFirst().orElseThrow();
 
         int i = 0;
@@ -47,7 +60,7 @@ public class AdventOfCode2023Day08 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         List<Node> start = nodes.stream().filter(Node::endsWithA).toList();
 
         LeastCommonMultiple result = new LeastCommonMultiple();

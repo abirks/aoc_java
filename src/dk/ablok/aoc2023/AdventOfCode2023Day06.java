@@ -2,12 +2,23 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.LongStream;
 
+/**
+ * Solution to the Advent of Code 2023 day 6 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day06 implements NewAocPuzzle {
     private static final String TIME = "Time:";
     private static final String DISTANCE = "Distance:";
@@ -18,7 +29,9 @@ public class AdventOfCode2023Day06 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        List<String> input = new AocInput(2023, 6).readInputAsList();
+        AocInput aocInput = new AocInput(2023, 6);
+        List<String> input = aocInput.readInputAsList();
+
         times = Arrays.stream(
                         input.get(0)
                                 .replace(TIME, "")
@@ -45,7 +58,7 @@ public class AdventOfCode2023Day06 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         long counter = 1;
         for (int i = 0; i < times.size(); i++) {
             long target = distances.get(i);
@@ -56,7 +69,7 @@ public class AdventOfCode2023Day06 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Long.toString(possibleDistances(combinedTime).filter(p -> p > combinedDistance).count());
     }
 

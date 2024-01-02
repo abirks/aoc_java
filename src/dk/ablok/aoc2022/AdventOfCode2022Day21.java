@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.InputUtils;
 
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class AdventOfCode2022Day21 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         // Reduce map until root has been calculated
         while (!part1values.containsKey("root")) {
             reduceMaps(part1expressions, part1values);
@@ -46,7 +47,7 @@ public class AdventOfCode2022Day21 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         part2values.remove("humn");
 
         while (reduceMaps(part2expressions, part2values) > 0);

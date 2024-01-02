@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,7 +48,7 @@ public class AdventOfCode2021Day14 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         for (int n = 0; n < 10; n++) {
             doStep();
         }
@@ -56,7 +57,7 @@ public class AdventOfCode2021Day14 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         for (int n = 10; n < 40; n++) {
             doStep();
         }

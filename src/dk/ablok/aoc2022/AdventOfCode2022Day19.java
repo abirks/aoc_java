@@ -2,6 +2,7 @@ package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -77,13 +78,14 @@ public class AdventOfCode2022Day19 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
-        depthFirstSearch(0, new Factory(), input.get(0));
-        return Integer.toString(input.get(0).best);
+    public String part1() throws AocSolveException {
+        throw new AocSolveException("Not solved yet");
+        //depthFirstSearch(0, new Factory(), input.get(0));
+        //return Integer.toString(input.get(0).best);
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return null;
     }
 

@@ -2,11 +2,22 @@ package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Solution to the Advent of Code 2023 day 3 puzzle
+ *
+ * <p>
+ * This code includes solutions to problems from Advent of Code,
+ * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * </p>
+ *
+ * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ */
 public class AdventOfCode2023Day03 implements NewAocPuzzle {
     private List<Integer> presentParts = new ArrayList<>();
     private Map<Gear, List<Integer>> gears = new HashMap<>();
@@ -14,7 +25,8 @@ public class AdventOfCode2023Day03 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        input = new AocInput(2023,3).read2dArray();
+        AocInput aocInput = new AocInput(2023, 3);
+        input = aocInput.read2dArray();
 
         StringBuilder number = new StringBuilder();
         AtomicReference<Symbol> symbol = new AtomicReference<>();
@@ -49,7 +61,7 @@ public class AdventOfCode2023Day03 implements NewAocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         return Integer.toString(
                 presentParts.stream()
                         .mapToInt(Integer::intValue)
@@ -57,7 +69,7 @@ public class AdventOfCode2023Day03 implements NewAocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         return Integer.toString(
                 gears.values().stream()
                         .filter(integers -> integers.size() == 2)

@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.Arrays;
 
@@ -27,7 +28,7 @@ public class AdventOfCode2019Day08 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         // Find the layer with the fewest zeros
         long minZeros = Integer.MAX_VALUE;
         int minZerosZ = 0;
@@ -47,7 +48,7 @@ public class AdventOfCode2019Day08 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         StringBuilder output = new StringBuilder();
 
         // Loop over each pixel

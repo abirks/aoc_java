@@ -2,6 +2,7 @@ package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.InputUtils;
 
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class AdventOfCode2021Day01 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int last = Integer.MAX_VALUE;
         int increases = 0;
 
@@ -30,7 +31,7 @@ public class AdventOfCode2021Day01 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         RingBuffer<Integer> window = new RingBuffer<>(3);
         for (int i = 0; i < 3; i++) {
             window.put(Integer.MAX_VALUE / 3);

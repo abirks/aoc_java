@@ -1,7 +1,8 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
+import dk.ablok.aoc.exceptions.AocSolveException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +29,7 @@ public class AdventOfCode2019Day10 implements AocPuzzle {
     }
 
     @Override
-    public String part1() {
+    public String part1() throws AocSolveException {
         int bestCount = 0;
 
         for (Asteroid current : asteroids) {
@@ -50,7 +51,7 @@ public class AdventOfCode2019Day10 implements AocPuzzle {
     }
 
     @Override
-    public String part2() {
+    public String part2() throws AocSolveException {
         // Remove the chosen location from the list
         asteroids.remove(bestAsteroid);
 
