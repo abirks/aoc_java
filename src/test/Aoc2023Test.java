@@ -99,13 +99,13 @@ public class Aoc2023Test {
     @Test
     @AocCoverage(year = 2023, day = 15)
     public void testDay15() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day15(), "494980", INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day15(), "494980", "247933");
     }
 
     @Test
     @AocCoverage(year = 2023, day = 16)
     public void testDay16() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2023Day16(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2023Day16(), "7392", "7665");
     }
 
     @Test
