@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/aoc_java.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day01.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day02.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day03.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day04.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day05.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day06.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day07.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day08.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day09.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day10.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day11.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day12.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day13.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day14.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day15.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day16.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day17.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day18.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day19.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day20.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day21.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day22.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day23.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day24.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2024/AdventOfCode2024Day25.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2024Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/AocPuzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/AocPuzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/AocPuzzleWithDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/AocPuzzleWithDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/NewAocPuzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/NewAocPuzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/calculations/LeastCommonMultiple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/calculations/LeastCommonMultiple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/exceptions/AocLoadException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/exceptions/AocLoadException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/exceptions/AocSolveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/exceptions/AocSolveException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/DijkstraMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/DijkstraMetric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/GraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/GraphNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/LongWeight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/LongWeight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/Metric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/Metric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/NodeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/NodeData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/PathFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/PathFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/graph/Weight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/graph/Weight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/io/AnsiColorConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/io/AnsiColorConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/io/AocInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/io/AocInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/io/InputUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/io/InputUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc/tree/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/tree/TreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2015/AdventOfCode2015Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2015/AdventOfCode2015Day05.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day04.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day04.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day05.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day06.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day06.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day07.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day08.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day09.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day09.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day10.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day11.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day13.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day14.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day14.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day15.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day15.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day16.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day16.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day17.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day17.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day18.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day18.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day19.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day19.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day20.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day20.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day21.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day21.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day22.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day22.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day23.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day23.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day24.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day24.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/AdventOfCode2019Day25.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day25.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/IntCodeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/IntCodeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/IntCodeVM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/IntCodeVM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/display/Blocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/display/Blocks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/display/DisplayBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/display/DisplayBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/display/IntCodeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/display/IntCodeDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/queues/FrameTriggerQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/queues/FrameTriggerQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2019/intcode/queues/JoystickQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/intcode/queues/JoystickQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day04.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day04.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day05.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day06.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day06.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day07.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day08.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day09.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day09.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day10.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day11.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day13.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day14.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day14.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day15.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day15.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day16.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day16.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day17.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day17.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day18.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day18.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day19.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day19.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day20.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day20.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day21.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day21.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day22.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day22.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day23.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day23.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day24.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day24.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2021/AdventOfCode2021Day25.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2021/AdventOfCode2021Day25.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day04.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day04.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day05.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day06.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day06.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day07.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day08.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day09.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day09.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day10.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day11.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day13.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day14.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day14.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day15.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day15.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day16.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day16.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day17.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day17.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day18.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day18.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day19.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day19.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day20.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day20.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day21.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day21.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day22.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day22.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day23.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day23.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day24.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day24.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2022/AdventOfCode2022Day25.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day25.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day04.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day04.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day05.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day06.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day06.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day07.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day08.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day09.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day09.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day10.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day11.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day13.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day14.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day14.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day15.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day15.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day16.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day16.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day17.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day17.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day18.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day18.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day19.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day19.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day20.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day20.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day21.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day21.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day22.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day22.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day23.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day23.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day24.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day24.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/ablok/aoc2023/AdventOfCode2023Day25.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2023/AdventOfCode2023Day25.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/Aoc2019Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2019Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/Aoc2021Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2021Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/Aoc2022Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2022Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/Aoc2023Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2023Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/AocCompletionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/AocCompletionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/AocCoverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/AocCoverage.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2plKHQGnUQGjNtyzVGNLV8BLW65" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.Aoc2024Test.executor": "Run",
+    "JUnit.Aoc2024Test.testDay01.executor": "Run",
+    "JUnit.AocCompletionTest.testAoc2024Completion.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/code/aoc_java/input/aoc2024",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.4413793",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\code\aoc_java\input\aoc2024" />
+      <recent name="C:\code\aoc_java\src\test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\code\aoc_java\src\test\java\dk\ablok" />
+      <recent name="C:\code\aoc_java\src\main\java" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="dk.ablok.aoc2024" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.Aoc2024Test.testDay01">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dk.ablok.Main" />
+      <module name="myproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.ablok.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Aoc2024Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="myproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.ablok.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dk.ablok" />
+      <option name="MAIN_CLASS_NAME" value="dk.ablok.Aoc2024Test" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Aoc2024Test.testDay01" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="myproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.ablok.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dk.ablok" />
+      <option name="MAIN_CLASS_NAME" value="dk.ablok.Aoc2024Test" />
+      <option name="METHOD_NAME" value="testDay01" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AocCompletionTest.testAoc2024Completion" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="myproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.ablok.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dk.ablok" />
+      <option name="MAIN_CLASS_NAME" value="dk.ablok.AocCompletionTest" />
+      <option name="METHOD_NAME" value="testAoc2024Completion" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="aoc_java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="aoc_java" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.Aoc2024Test.testDay01" />
+        <item itemvalue="JUnit.Aoc2024Test" />
+        <item itemvalue="JUnit.AocCompletionTest.testAoc2024Completion" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="" />
+      <created>1733335134043</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733335134043</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -1,4 +1,4 @@
-package test;
+package dk.ablok;
 
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;

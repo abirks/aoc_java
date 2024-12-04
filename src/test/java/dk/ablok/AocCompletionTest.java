@@ -1,4 +1,4 @@
-package test;
+package dk.ablok;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +26,11 @@ public class AocCompletionTest {
     @Test
     public void testAoc2023Completion() {
         test25daysInClass(Aoc2023Test.class, 2023);
+    }
+
+    @Test
+    public void testAoc2024Completion() {
+        test25daysInClass(Aoc2024Test.class, 2024);
     }
 
     private void test25daysInClass(Class<?> clazz, int year) {
