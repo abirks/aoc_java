@@ -15,11 +15,11 @@ import java.util.stream.Stream;
  * Solution to the Advent of Code 2023 day 5 puzzle
  *
  * <p>
- * This code includes solutions to problems from Advent of Code,
- * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by 
+ * <a href="https://adventofcode.com/about">Eric Wastl</a>.
  * </p>
  *
- * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 public class AdventOfCode2023Day05 implements NewAocPuzzle {
     private static final Pattern SEEDS_PATTERN = Pattern.compile("seeds: (?<seeds>[\\d\\s]*)\\n\\n");
@@ -82,7 +82,7 @@ public class AdventOfCode2023Day05 implements NewAocPuzzle {
         return ranges.stream();
     }
 
-    private List<Long> parseSeeds(String input) {
+    private List<Long> parseSeeds(String input) throws AocLoadException {
         Matcher seedsMatcher = SEEDS_PATTERN.matcher(input);
 
         if (!seedsMatcher.find()) throw new AocLoadException("Could not find seeds line");
@@ -92,7 +92,7 @@ public class AdventOfCode2023Day05 implements NewAocPuzzle {
                 .toList();
     }
 
-    private Mapper parseMapper(String mappingString, String input) {
+    private Mapper parseMapper(String mappingString, String input) throws AocLoadException {
         Pattern pattern = Pattern.compile(mappingString + MAPPING);
         Matcher seedToSoilMatcher = pattern.matcher(input);
 

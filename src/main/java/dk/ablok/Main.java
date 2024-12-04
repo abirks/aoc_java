@@ -1,12 +1,14 @@
 package dk.ablok;
 
 import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2023.AdventOfCode2023Day14;
+import dk.ablok.aoc2024.AdventOfCode2024Day05;
 
 public class Main {
-    public static void main(String[] args) {
-        NewAocPuzzle puzzle = new AdventOfCode2023Day14();
+    public static void main(String[] args) throws AocLoadException {
+        NewAocPuzzle puzzle = new AdventOfCode2024Day05();
         puzzle.load();
 
         try {

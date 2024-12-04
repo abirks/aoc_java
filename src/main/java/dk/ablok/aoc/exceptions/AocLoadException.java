@@ -1,6 +1,6 @@
 package dk.ablok.aoc.exceptions;
 
-public class AocLoadException extends RuntimeException {
+public class AocLoadException extends Exception {
     public AocLoadException() {
         super();
     }

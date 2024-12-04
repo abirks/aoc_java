@@ -8,11 +8,11 @@ import dk.ablok.aoc.exceptions.AocSolveException;
  * Solution to the Advent of Code 2024 day 9 puzzle
  *
  * <p>
- * This code includes solutions to problems from Advent of Code,
- * created by <a href="https://adventofcode.com/">Eric Wastl</a>.
+ * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by 
+ * <a href="https://adventofcode.com/about">Eric Wastl</a>.
  * </p>
  *
- * @author Anders Birk Sørensen &lt;anders@ablok.dk&gt;
+ * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 public class AdventOfCode2024Day09 implements NewAocPuzzle {
 

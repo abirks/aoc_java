@@ -2,27 +2,25 @@ package dk.ablok.aoc.io;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class AocInput {
     private final int year;
     private final int day;
+    private final Properties properties;
 
-    public AocInput(int year, int day) {
+    public AocInput(int year, int day) throws AocLoadException {
         this.year = year;
         this.day = day;
+        this.properties = loadProperties();
     }
 
     public List<String> readInputAsList() throws AocLoadException {
@@ -63,6 +61,14 @@ public class AocInput {
     public String readFirstLine() throws AocLoadException {
         try (Stream<String> stream = Files.lines(getFile())) {
             return stream.findFirst().orElseThrow();
+        } catch (IOException e) {
+            throw new AocLoadException(e);
+        }
+    }
+
+    public String readAll() throws AocLoadException {
+        try {
+            return Files.readString(getFile());
         } catch (IOException e) {
             throw new AocLoadException(e);
         }
@@ -115,34 +121,71 @@ public class AocInput {
         return output;
     }
 
-    public Path getFile() {
-        String inputUrl = String.format("https://adventofcode.com/%d/day/%d/input", year, day); // TODO move to deltaspike config
-        String localPath = String.format("input/aoc%04d/input%02d.txt", year, day);// TODO move to deltaspike config
+    public Path getFile() throws AocLoadException {
+        String inputUrl = String.format((String) properties.get("inputUrlFormat"), year, day);
+        String localPath = String.format((String) properties.get("localPathFormat"), year, day);
 
         try {
-            if (!fileExists(localPath)) {
+            Path path = Path.of(localPath);
+            if (!Files.exists(path)) {
                 String content = downloadInput(inputUrl);
                 saveToFile(content, localPath);
             }
-            return Path.of(localPath);
+            return path;
         } catch (IOException e) {
             throw new AocLoadException(e);
         }
     }
 
-    private boolean fileExists(String filePath) {
-        return Files.exists(Path.of(filePath));
-    }
+    private String downloadInput(String url) throws AocLoadException {
+        HttpURLConnection connection = getConnection(url);
 
-    private String downloadInput(String url) throws IOException {
-        URL resourceUrl = new URL(url);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(resourceUrl.openStream()))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             StringBuilder content = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line).append("\n");
             }
             return content.toString();
+        } catch (IOException e) {
+            throw new AocLoadException("Exception while reading input stream from AoC website", e);
+        }
+
+    }
+
+    private HttpURLConnection getConnection(String url) throws AocLoadException {
+        String sessionCookie = (String) properties.get("sessionCookie");
+        if (sessionCookie == null || sessionCookie.isEmpty()) {
+            throw new AocLoadException("SessionCookie is not set in config.properties");
+        }
+
+        try {
+            URL resourceUrl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) resourceUrl.openConnection();
+
+            connection.setRequestProperty("Cookie", "session=" + sessionCookie);
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                throw new AocLoadException("Failed to fetch input: HTTP " + responseCode);
+            }
+
+            return connection;
+        } catch (IOException e) {
+            throw new AocLoadException("Exception while connecting to AoC website", e);
+        }
+    }
+
+    private Properties loadProperties() throws AocLoadException {
+        Properties prop = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                throw new FileNotFoundException("config.properties not found in resources");
+            }
+            prop.load(input);
+            return prop;
+        } catch (IOException e) {
+            throw new AocLoadException(e);
         }
     }
 

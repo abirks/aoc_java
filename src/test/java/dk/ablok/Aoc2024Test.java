@@ -21,19 +21,19 @@ public class Aoc2024Test {
     @Test
     @AocCoverage(year = 2024, day = 2)
     public void testDay02() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day02(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day02(), "463", "514");
     }
 
     @Test
     @AocCoverage(year = 2024, day = 3)
     public void testDay03() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day03(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day03(), "181345830", "98729041");
     }
 
     @Test
     @AocCoverage(year = 2024, day = 4)
     public void testDay04() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day04(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day04(), "2414", "1871");
     }
 
     @Test
