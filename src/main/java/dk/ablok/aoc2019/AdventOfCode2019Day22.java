@@ -1,15 +1,14 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.io.AocInput;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2019Day22 implements AocPuzzle {
+public class AdventOfCode2019Day22 implements NewAocPuzzle {
 
     private static final String DEAL_INTO_NEW_STACK = "deal into new stack";
     private static final String CUT = "cut";
@@ -22,14 +21,15 @@ public class AdventOfCode2019Day22 implements AocPuzzle {
     private static final BigInteger STACKSIZE2 = BigInteger.valueOf(119315717514047L);
     private static final BigInteger SHUFFLES = BigInteger.valueOf(101741582076661L);
 
-    private List<String> input;
+    private List<String> process;
 
     private BigInteger a;
     private BigInteger b;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 22);
+        process = input.readInputAsList();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AdventOfCode2019Day22 implements AocPuzzle {
         a = BigInteger.ONE;
         b = BigInteger.ZERO;
 
-        for (String line : input) {
+        for (String line : process) {
             if (line.startsWith(DEAL_INTO_NEW_STACK)) {
                 // a = -1, b = -1
                 a = a.multiply(BigInteger.ONE.negate());

@@ -9,7 +9,7 @@ public class AdventOfCode2019Day19 implements AocPuzzleWithDisplay {
     private boolean enableDisplay;
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
 
     }
 

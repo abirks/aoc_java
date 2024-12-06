@@ -3,6 +3,7 @@ package dk.ablok.aoc2019;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc2019.intcode.IntCodeException;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
@@ -13,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
-
-import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
 public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
     private static final long LEFT = -1;
@@ -28,7 +27,7 @@ public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
 
     private static final int OUTPUT_LENGTH = 3;
 
-    private List<Long> input;
+    private List<Long> program;
     private IntCodeVM vm;
     private Queue<Long> vmOut;
     private JoystickQueue joystickQueue;
@@ -42,8 +41,9 @@ public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
 
     int blocks = 0;
 
-    public void load(String filename) throws AocLoadException {
-        input = readCommaSeparatedLongList(filename);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 13);
+        program = input.readCommaSeparatedLongList();
 
         // If not visualizing, replace the bottom row with all wall blocks
         if (!enableDisplay) {
@@ -52,7 +52,7 @@ public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
 
         joystickQueue = new JoystickQueue();
         vm = IntCodeVM.getBuilder()
-                .setProgram(input)
+                .setProgram(program)
                 .setInput(joystickQueue)
                 .setInputDelay(enableDisplay ? 5 : 0) // Only add a delay if visualization is enabled
                 .build();
@@ -90,17 +90,17 @@ public class AdventOfCode2019Day13 implements AocPuzzleWithDisplay {
                 BACKGROUND, WALL);
 
         // Find the last occurrence of a row with a wall on either side and 22 empty spaces in between
-        int position = input.size() - bottomLine.size();
-        while (!input.subList(position, position + bottomLine.size()).equals(bottomLine)) {
+        int position = program.size() - bottomLine.size();
+        while (!program.subList(position, position + bottomLine.size()).equals(bottomLine)) {
             position--;
         }
 
         // Replace it with 24 wall segments to make the game un-losable
-        List<Long> newList = new ArrayList<>(input);
+        List<Long> newList = new ArrayList<>(program);
         for (int i = 0; i < bottomLine.size(); i++) {
             newList.set(position + i, WALL);
         }
-        input = newList;
+        program = newList;
     }
 
     @Override

@@ -1,18 +1,21 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import static dk.ablok.aoc.io.InputUtils.readFirstLine;
 
-public class AdventOfCode2019Day04 implements AocPuzzle {
+public class AdventOfCode2019Day04 implements NewAocPuzzle {
     private Code code;
     private int count2 = 0;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        String[] parts = readFirstLine(filename).split("-");
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019,4);
+        String[] parts = input.readFirstLine().split("-");
         code = new Code(parts[0], parts[1]);
     }
 

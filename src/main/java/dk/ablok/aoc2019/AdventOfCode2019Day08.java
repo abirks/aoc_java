@@ -1,14 +1,13 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
 
-import static dk.ablok.aoc.io.InputUtils.readFirstLine;
-
-public class AdventOfCode2019Day08 implements AocPuzzle {
+public class AdventOfCode2019Day08 implements NewAocPuzzle {
     private static final int WHITE = 1;
     private static final int TRANSPARENT = 2;
 
@@ -17,13 +16,15 @@ public class AdventOfCode2019Day08 implements AocPuzzle {
     private Integer[][][] layers;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        char[] input = readFirstLine(filename).toCharArray();
-        int depth = input.length / (WIDTH * HEIGHT);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 8);
+        char[] pixels = input.read1dArray();
+
+        int depth = pixels.length / (WIDTH * HEIGHT);
         layers = new Integer[depth][HEIGHT][WIDTH];
 
-        for (int i = 0; i < input.length; i++) {
-            layers[i / (HEIGHT * WIDTH)][(i / WIDTH) % HEIGHT][i % WIDTH] = input[i] - '0';
+        for (int i = 0; i < pixels.length; i++) {
+            layers[i / (HEIGHT * WIDTH)][(i / WIDTH) % HEIGHT][i % WIDTH] = pixels[i] - '0';
         }
     }
 

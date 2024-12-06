@@ -4,6 +4,7 @@ import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc.io.AnsiColorConstants;
+import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.io.BufferedReader;
@@ -44,9 +45,11 @@ public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
         this.enableDisplay = enableDisplay;
     }
 
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 25);
+
         vm = IntCodeVM.getBuilder()
-                .setProgram(readCommaSeparatedLongList(filename))
+                .setProgram(input.readCommaSeparatedLongList())
                 .build();
 
         vmout = vm.getOutput();

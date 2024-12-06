@@ -1,30 +1,30 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readNewlineSeparatedIntegerList;
-
-public class AdventOfCode2019Day01 implements AocPuzzle {
-    private List<Integer> input;
+public class AdventOfCode2019Day01 implements NewAocPuzzle {
+    private List<Integer> modules;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readNewlineSeparatedIntegerList(filename);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 1);
+        modules = input.readCommaSeparatedIntegerList();
     }
 
     @Override
     public String part1() throws AocSolveException {
-        return Integer.toString(input.stream().mapToInt(i -> (i / 3) - 2).sum());
+        return Integer.toString(modules.stream().mapToInt(i -> (i / 3) - 2).sum());
     }
 
     @Override
     public String part2() throws AocSolveException {
         int res = 0;
-        for (Integer i : input) {
+        for (Integer i : modules) {
             int j = i / 3 - 2;
             int k = (j / 3) - 2;
             int add = 0;

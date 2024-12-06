@@ -1,31 +1,31 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.graph.*;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static dk.ablok.aoc.io.InputUtils.read2dArray;
-
-public class AdventOfCode2019Day18 implements AocPuzzle {
+public class AdventOfCode2019Day18 implements NewAocPuzzle {
     private static final char WALL = '#';
     private static final char START = '@';
-    private final Set<Position> input = new HashSet<>();
+    private final Set<Position> positions = new HashSet<>();
     private Set<Character> allKeys;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        char[][] inputArray = read2dArray(filename);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 18);
+        char[][] inputArray = input.read2dArray();
 
         for (int y = 0; y < inputArray.length; y++) {
             for (int x = 0; x < inputArray[y].length; x++) {
                 if (inputArray[y][x] != WALL) {
                     Position newPosition = new Position(x, y, inputArray[y][x]);
-                    input.add(newPosition);
+                    positions.add(newPosition);
                 }
             }
         }
@@ -37,7 +37,7 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
         buildMap();
 
         // Starting conditions
-        Set<Position> startLocations = input.stream().filter(Position::isStart).collect(Collectors.toSet());
+        Set<Position> startLocations = positions.stream().filter(Position::isStart).collect(Collectors.toSet());
         GraphState start = new GraphState(startLocations);
         GraphState end = new GraphState(allKeys, null);
 
@@ -59,7 +59,7 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
         buildMap();
 
         // Starting conditions
-        Set<Position> startLocations = input.stream().filter(Position::isStart).collect(Collectors.toSet());
+        Set<Position> startLocations = positions.stream().filter(Position::isStart).collect(Collectors.toSet());
         GraphState start = new GraphState(startLocations);
         GraphState end = new GraphState(allKeys, null);
 
@@ -74,27 +74,27 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
 
     private void modifyMap() {
         // Clear paths before remapping
-        input.forEach(p -> p.getKeyPaths().clear());
+        positions.forEach(p -> p.getKeyPaths().clear());
 
         // Remove center cells
-        Position oldStart = input.stream().filter(Position::isStart).findAny().orElseThrow();
-        input.removeIf(p -> p.distanceTo(oldStart) <= 1);
+        Position oldStart = positions.stream().filter(Position::isStart).findAny().orElseThrow();
+        positions.removeIf(p -> p.distanceTo(oldStart) <= 1);
 
         // Add new starting positions
-        input.add(new Position(oldStart.x + 1, oldStart.y + 1, START));
-        input.add(new Position(oldStart.x + 1, oldStart.y - 1, START));
-        input.add(new Position(oldStart.x - 1, oldStart.y + 1, START));
-        input.add(new Position(oldStart.x - 1, oldStart.y - 1, START));
+        positions.add(new Position(oldStart.x + 1, oldStart.y + 1, START));
+        positions.add(new Position(oldStart.x + 1, oldStart.y - 1, START));
+        positions.add(new Position(oldStart.x - 1, oldStart.y + 1, START));
+        positions.add(new Position(oldStart.x - 1, oldStart.y - 1, START));
     }
 
     private void buildMap() {
-        input.forEach(Position::findNeighbors);
-        input.parallelStream().forEach(Position::findPaths);
+        positions.forEach(Position::findNeighbors);
+        positions.parallelStream().forEach(Position::findPaths);
         findAllKeys();
     }
 
     private void findAllKeys() {
-        allKeys = input.stream()
+        allKeys = positions.stream()
                 .filter(Position::isKey)
                 .map(Position::getKey)
                 .collect(Collectors.toSet());
@@ -198,7 +198,7 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
         }
 
         public void findNeighbors() {
-            neighbors = input.stream()
+            neighbors = positions.stream()
                     .filter(n -> n.distanceTo(this) == 1)
                     .collect(Collectors.toSet());
         }

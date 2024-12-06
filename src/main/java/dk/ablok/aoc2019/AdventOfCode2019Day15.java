@@ -3,6 +3,7 @@ package dk.ablok.aoc2019;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 import dk.ablok.aoc2019.intcode.display.DisplayBlock;
 import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
@@ -38,11 +39,13 @@ public class AdventOfCode2019Day15 implements AocPuzzleWithDisplay {
     private final Map<Location, Integer> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 15);
+
         // Setup VM
         vm = IntCodeVM.getBuilder()
                 .setOutputDelay(enableDisplay ? 1 : 0)
-                .setProgram(readCommaSeparatedLongList(filename))
+                .setProgram(input.readCommaSeparatedLongList())
                 .build();
         vmout = vm.getOutput();
 

@@ -1,27 +1,28 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static dk.ablok.aoc.io.InputUtils.read2dArray;
-
-public class AdventOfCode2019Day10 implements AocPuzzle {
+public class AdventOfCode2019Day10 implements NewAocPuzzle {
 
     private final List<Asteroid> asteroids = new ArrayList<>();
     private Asteroid bestAsteroid;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        char[][] input = read2dArray(filename);
-        for (int y = 0; y < input.length; y++) {
-            for (int x = 0; x < input[y].length; x++) {
-                if (input[y][x] == '#') {
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 10);
+        char[][] map = input.read2dArray();
+
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
+                if (map[y][x] == '#') {
                     asteroids.add(new Asteroid(x, y));
                 }
             }

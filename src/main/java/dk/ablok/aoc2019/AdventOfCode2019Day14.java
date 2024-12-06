@@ -1,15 +1,14 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2019Day14 implements AocPuzzle {
+public class AdventOfCode2019Day14 implements NewAocPuzzle {
 
     private static final long ONE_TRILLION = 1_000_000_000_000L;
     public static final String ORE = "ORE";
@@ -20,8 +19,9 @@ public class AdventOfCode2019Day14 implements AocPuzzle {
     private final List<String> priority = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        readInputAsList(filename).forEach(this::parseRecipe);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 14);
+        input.readInputAsList().forEach(this::parseRecipe);
         rankIngredients();
     }
 

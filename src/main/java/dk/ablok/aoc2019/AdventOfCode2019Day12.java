@@ -1,26 +1,29 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2019Day12 implements AocPuzzle {
+public class AdventOfCode2019Day12 implements NewAocPuzzle {
     private static final Pattern pattern = Pattern.compile("^<x=(-?\\d+), y=(-?\\d+), z=(-?\\d+)>$");
     private final long[][] positions = new long[4][3];
     private final long[][] velocities = new long[4][3];
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 12);
+        List<String> moons = input.readInputAsList();
+
         int i = 0;
-        for (String moon : readInputAsList(filename)) {
+        for (String moon : moons) {
             Matcher matcher = pattern.matcher(moon);
             boolean matchFound = matcher.find();
 
@@ -157,18 +160,5 @@ public class AdventOfCode2019Day12 implements AocPuzzle {
                     Arrays.stream(velocities[moon]).map(Math::abs).sum();
         }
         return energy;
-    }
-
-    private String printAllMoons() {
-        StringBuilder output = new StringBuilder();
-        for (int moon = 0; moon < positions.length; moon++) {
-            output.append(print(moon));
-        }
-        return output.toString();
-    }
-
-    private String print(int moon) {
-        return "pos=<x=" + positions[moon][0] + ", y=" + positions[moon][1] + ", z=" + positions[moon][2] +
-                ">, vel=<x=" + velocities[moon][0] + ", y=" + velocities[moon][1] + ", z=" + velocities[moon][2] + ">\n";
     }
 }

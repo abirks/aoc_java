@@ -1,18 +1,17 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.util.*;
 
-import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
-
-public class AdventOfCode2019Day11 implements AocPuzzle {
+public class AdventOfCode2019Day11 implements NewAocPuzzle {
     private static final long BLACK = 0;
     private static final long WHITE = 1;
-    private List<Long> input;
+    private List<Long> program;
 
     public enum Direction {
         UP,
@@ -22,8 +21,9 @@ public class AdventOfCode2019Day11 implements AocPuzzle {
     }
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readCommaSeparatedLongList(filename);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 11);
+        program = input.readCommaSeparatedLongList();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AdventOfCode2019Day11 implements AocPuzzle {
         public Robot(long startColor) {
             tiles.put(new Tile(0, 0), startColor);
             vm = IntCodeVM.getBuilder()
-                    .setProgram(input)
+                    .setProgram(program)
                     .build();
             vm.start();
         }

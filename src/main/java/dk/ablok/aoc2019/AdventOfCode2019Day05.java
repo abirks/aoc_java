@@ -1,20 +1,20 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
 
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
-
-public class AdventOfCode2019Day05 implements AocPuzzle {
-    private List<Long> input;
+public class AdventOfCode2019Day05 implements NewAocPuzzle {
+    private List<Long> program;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readCommaSeparatedLongList(filename);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 5);
+        program = input.readCommaSeparatedLongList();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class AdventOfCode2019Day05 implements AocPuzzle {
 
     private long runVmWithId(long id) {
         IntCodeVM vm = IntCodeVM.getBuilder()
-                .setProgram(input)
+                .setProgram(program)
                 .build();
         vm.addToInput(id);
 

@@ -1,9 +1,11 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.graph.*;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,7 +13,7 @@ import java.util.stream.Stream;
 
 import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
-public class AdventOfCode2019Day20 implements AocPuzzle {
+public class AdventOfCode2019Day20 implements NewAocPuzzle {
     private static final char EMPTY = ' ';
     private static final char FLOOR = '.';
     private static final char WALL = '#';
@@ -54,8 +56,9 @@ public class AdventOfCode2019Day20 implements AocPuzzle {
     }
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        map = read2dArray(filename, EMPTY);
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 16);
+        map = input.read2dArray(EMPTY);
         findPortals();
         findPaths();
     }

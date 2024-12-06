@@ -1,35 +1,32 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc.io.InputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2019Day16 implements AocPuzzle {
+public class AdventOfCode2019Day16 implements NewAocPuzzle {
     private static final int NUM_PHASES = 100;
     private static final int NUM_REPEATS = 10_000;
     private static final int[] BASE_PATTERN = new int[]{0, 1, 0, -1};
-    private final List<Integer> input = new ArrayList<>();
+    private final List<Integer> signal = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (char c : InputUtils.read1dArray(filename)) {
-            input.add(c - '0');
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 16);
+        for (char c : input.read1dArray()) {
+            signal.add(c - '0');
         }
     }
 
     @Override
     public String part1() throws AocSolveException {
-        List<Integer> data = process(input);
-
-
-        for (int a=0;a<8;a++){
-            //System.out.println(calculateDigit(1, a, 100));
-        }
+        List<Integer> data = process(signal);
 
         return data.subList(0, 8).stream()
                 .map(Object::toString)
@@ -41,7 +38,7 @@ public class AdventOfCode2019Day16 implements AocPuzzle {
         // Find offset
         int offset = 0;
         for (int i = 0; i < 7; i++) {
-            offset = offset * 10 + input.get(i);
+            offset = offset * 10 + signal.get(i);
         }
 
         long result = 0L;
@@ -57,13 +54,13 @@ public class AdventOfCode2019Day16 implements AocPuzzle {
 
         // Call self recursively. Half of all calls will just return 0 since the pattern is 0, so skip those
         int result = 0;
-        for (int patternDigit = 0; patternDigit < input.size() * inputRepeats; patternDigit++) {
+        for (int patternDigit = 0; patternDigit < signal.size() * inputRepeats; patternDigit++) {
             int pattern = generatePattern(patternDigit, inputDigit);
             if (pattern == 0) continue;
 
             int previous = phase > 1
                     ? calculateDigit(inputRepeats, patternDigit, phase - 1)
-                    : input.get((patternDigit % (input.size() * inputRepeats))%input.size());
+                    : signal.get((patternDigit % (signal.size() * inputRepeats)) % signal.size());
 
             result += pattern * previous;
         }

@@ -165,7 +165,7 @@ public class Aoc2021Test {
     @Test
     @AocCoverage(year = 2021, day = 25)
     public void testDay25() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2021Day25(), "input/aoc2021/input25.txt", "384", "");
+        assertAocDay(new AdventOfCode2021Day25(), "input/aoc2021/input25.txt", "384", null);
     }
 
     private void assertAocDay(AocPuzzle puzzle, String filename, String expected1, String expected2)

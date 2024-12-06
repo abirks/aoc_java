@@ -1,25 +1,26 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2019Day06 implements AocPuzzle {
+public class AdventOfCode2019Day06 implements NewAocPuzzle {
     public static final String COM = "COM";
     public static final String SAN = "SAN";
     public static final String YOU = "YOU";
     private final Map<String, String> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (String orbit : readInputAsList(filename)) {
+    public void load() throws AocLoadException {
+        AocInput input = new AocInput(2019, 6);
+
+        for (String orbit : input.readInputAsList()) {
             String[] objects = orbit.split("\\)");
             // Map: objects[1] orbits objects[0]
             map.put(objects[1], objects[0]);
