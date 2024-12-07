@@ -14,52 +14,52 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Aoc2019Test {
+class Aoc2019Test {
     @Test
     @AocCoverage(year = 2019, day = 1)
-    public void testDay01() throws AocLoadException, AocSolveException {
+    void testDay01() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day01(), "3262358", "4890696");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 2)
-    public void testDay02() throws AocLoadException, AocSolveException {
+    void testDay02() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day02(), "4023471", "8051");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 3)
-    public void testDay03() throws AocLoadException, AocSolveException {
+    void testDay03() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day03(), "5357", "101956");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 4)
-    public void testDay04() throws AocLoadException, AocSolveException {
+    void testDay04() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day04(), "460", "290");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 5)
-    public void testDay05() throws AocLoadException, AocSolveException {
+    void testDay05() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day05(), "9961446", "742621");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 6)
-    public void testDay06() throws AocLoadException, AocSolveException {
+    void testDay06() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day06(), "249308", "349");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 7)
-    public void testDay07() throws AocLoadException, AocSolveException {
+    void testDay07() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day07(), "262086", "5371621");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 8)
-    public void testDay08() throws AocLoadException, AocSolveException {
+    void testDay08() throws AocLoadException, AocSolveException {
         final String ACKPZ = """
                  ##   ##  #  # ###  ####\s
                 #  # #  # # #  #  #    #\s
@@ -73,19 +73,19 @@ public class Aoc2019Test {
 
     @Test
     @AocCoverage(year = 2019, day = 9)
-    public void testDay09() throws AocLoadException, AocSolveException {
+    void testDay09() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day09(), "2745604242", "51135");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 10)
-    public void testDay10() throws AocLoadException, AocSolveException {
+    void testDay10() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day10(), "267", "1309");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 11)
-    public void testDay11() throws AocLoadException, AocSolveException {
+    void testDay11() throws AocLoadException, AocSolveException {
         final String KRZEAJHB = """
                  #  # ###  #### ####  ##    ## #  # ###   \s
                  # #  #  #    # #    #  #    # #  # #  #  \s
@@ -99,37 +99,37 @@ public class Aoc2019Test {
 
     @Test
     @AocCoverage(year = 2019, day = 12)
-    public void testDay12() throws AocLoadException, AocSolveException {
+    void testDay12() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day12(), "5937", "376203951569712");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 13)
-    public void testDay13() throws AocLoadException, AocSolveException {
+    void testDay13() throws AocLoadException, AocSolveException {
         assertIntcodePuzzle(new AdventOfCode2019Day13(), "318", "16309");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 14)
-    public void testDay14() throws AocLoadException, AocSolveException {
+    void testDay14() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day14(), "892207", "1935265");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 15)
-    public void testDay15() throws AocLoadException, AocSolveException {
+    void testDay15() throws AocLoadException, AocSolveException {
         assertIntcodePuzzle(new AdventOfCode2019Day15(), "262", "314");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 16)
-    public void testDay16() throws AocLoadException, AocSolveException {
+    void testDay16() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day16(), "61149209", "16178430");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 17)
-    public void testDay17() throws AocLoadException, AocSolveException {
+    void testDay17() throws AocLoadException, AocSolveException {
         final String mainSequence = "B,A,B,C,A,B,A,C,C,A";
         final String sequenceA = "R,10,R,6,R,4,R,4";
         final String sequenceB = "L,12,L,12,R,4";
@@ -142,25 +142,25 @@ public class Aoc2019Test {
 
     @Test
     @AocCoverage(year = 2019, day = 18)
-    public void testDay18() throws AocLoadException, AocSolveException {
+    void testDay18() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day18(), "4042", "2014");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 19)
-    public void testDay19() throws AocLoadException, AocSolveException {
+    void testDay19() throws AocLoadException, AocSolveException {
         assertIntcodePuzzle(new AdventOfCode2019Day19(), "181", "4240964");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 20)
-    public void testDay20() throws AocLoadException, AocSolveException {
+    void testDay20() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day20(), "528", "6214");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 21)
-    public void testDay21() throws AocLoadException, AocSolveException {
+    void testDay21() throws AocLoadException, AocSolveException {
         final String PART1_SCRIPT = """
                 NOT A J
                 NOT B T
@@ -191,25 +191,25 @@ public class Aoc2019Test {
 
     @Test
     @AocCoverage(year = 2019, day = 22)
-    public void testDay22() throws AocLoadException, AocSolveException {
+    void testDay22() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day22(), "1822", "49174686993380");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 23)
-    public void testDay23() throws AocLoadException, AocSolveException {
+    void testDay23() throws AocLoadException, AocSolveException {
         assertIntcodePuzzle(new AdventOfCode2019Day23(), "", "");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 24)
-    public void testDay24() throws AocLoadException, AocSolveException {
+    void testDay24() throws AocLoadException, AocSolveException {
         assertAocDay(new AdventOfCode2019Day24(), "17863711", "1937");
     }
 
     @Test
     @AocCoverage(year = 2019, day = 25)
-    public void testDay25() throws AocLoadException, AocSolveException {
+    void testDay25() throws AocLoadException, AocSolveException {
         final List<String> steps = new ArrayList<>(Arrays.asList(
                 "north",
                 "east",
@@ -236,7 +236,7 @@ public class Aoc2019Test {
 
     private void assertIntcodePuzzle(AocPuzzleWithDisplay puzzle, String expected1, String expected2)
             throws AocLoadException, AocSolveException {
-        puzzle.enableDisplay(false);
+        puzzle.enableDisplay(true);
         assertAocDay(puzzle, expected1, expected2);
     }
 
