@@ -13,7 +13,7 @@ public class AdventOfCode2019Day01 implements NewAocPuzzle {
     @Override
     public void load() throws AocLoadException {
         AocInput input = new AocInput(2019, 1);
-        modules = input.readCommaSeparatedIntegerList();
+        modules = input.readNewlineSeparatedIntegerList();
     }
 
     @Override

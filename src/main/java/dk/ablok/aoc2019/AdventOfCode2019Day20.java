@@ -1,6 +1,5 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -10,8 +9,6 @@ import dk.ablok.aoc.io.AocInput;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static dk.ablok.aoc.io.InputUtils.read2dArray;
 
 public class AdventOfCode2019Day20 implements NewAocPuzzle {
     private static final char EMPTY = ' ';

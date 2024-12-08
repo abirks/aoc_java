@@ -3,12 +3,13 @@ package dk.ablok.aoc2024;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 /**
  * Solution to the Advent of Code 2024 day 9 puzzle
  *
  * <p>
- * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by 
+ * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by
  * <a href="https://adventofcode.com/about">Eric Wastl</a>.
  * </p>
  *
@@ -18,7 +19,8 @@ public class AdventOfCode2024Day09 implements NewAocPuzzle {
 
     @Override
     public void load() throws AocLoadException {
-        throw new RuntimeException("Not solved yet!");
+        AocInput input = new AocInput(2024, 9);
+        input.readAll();
     }
 
     @Override

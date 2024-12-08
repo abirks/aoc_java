@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
-
 public class AdventOfCode2019Day15 implements AocPuzzleWithDisplay {
 
     private static final long NORTH = 1;

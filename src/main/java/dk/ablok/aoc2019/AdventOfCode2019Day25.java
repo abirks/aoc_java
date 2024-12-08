@@ -1,8 +1,8 @@
 package dk.ablok.aoc2019;
 
+import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.AocPuzzleWithDisplay;
 import dk.ablok.aoc.io.AnsiColorConstants;
 import dk.ablok.aoc.io.AocInput;
 import dk.ablok.aoc2019.intcode.IntCodeVM;
@@ -16,8 +16,6 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static dk.ablok.aoc.io.InputUtils.readCommaSeparatedLongList;
 
 public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
 

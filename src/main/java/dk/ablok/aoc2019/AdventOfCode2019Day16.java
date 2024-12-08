@@ -4,7 +4,6 @@ import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
-import dk.ablok.aoc.io.InputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
