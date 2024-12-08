@@ -127,6 +127,7 @@ public class AocInput {
 
         try {
             Path path = Path.of(localPath);
+            Files.createDirectories(path.getParent());
             if (!Files.exists(path)) {
                 String content = downloadInput(inputUrl);
                 saveToFile(content, localPath);
