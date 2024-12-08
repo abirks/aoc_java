@@ -8,6 +8,8 @@ import dk.ablok.aoc.io.AocInput;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -47,57 +49,32 @@ public class AdventOfCode2024Day08 implements NewAocPuzzle {
 
     @Override
     public String part1() throws AocSolveException {
-        Set<Position> antinodes = new HashSet<>();
-
-        for (Character frequency : frequencies) {
-            List<Position> antennasWithFrequency = antennas.stream()
-                    .filter(a -> a.c() == frequency)
-                    .map(Antenna::position)
-                    .toList();
-            antinodes.addAll(findAntinodes(antennasWithFrequency));
-        }
-
+        Set<Position> antinodes = calculationLoop(this::calculateAntinodes);
         return Integer.toString(antinodes.size());
     }
 
     @Override
     public String part2() throws AocSolveException {
-        Set<Position> antinodes = new HashSet<>();
-
-        for (Character frequency : frequencies) {
-            List<Position> antennasWithFrequency = antennas.stream()
-                    .filter(a -> a.c() == frequency)
-                    .map(Antenna::position)
-                    .toList();
-            antinodes.addAll(findAntinodesWithResonance(antennasWithFrequency));
-        }
-
+        Set<Position> antinodes = calculationLoop(this::calculateAntinodesWithResonance);
         return Integer.toString(antinodes.size());
     }
 
-    private Set<Position> findAntinodesWithResonance(List<Position> antennasWithFrequency) {
+    private Set<Position> calculationLoop(BiFunction<Position, Position, Set<Position>> calculation) {
         Set<Position> antinodes = new HashSet<>();
 
-        for (Position positionA : antennasWithFrequency) {
-            for (Position positionB : antennasWithFrequency) {
-                if (positionA.equals(positionB)) {
-                    continue;
-                }
+        for (Character frequency : frequencies) {
+            List<Position> antennaPositions = antennas.stream()
+                    .filter(a -> a.c() == frequency)
+                    .map(Antenna::position)
+                    .toList();
 
-                Position diff = positionA.subtract(positionB);
-                int divisor = gcd(diff.x(), diff.y());
-                Position direction = new Position(diff.x() / divisor, diff.y() / divisor);
+            for (Position positionA : antennaPositions) {
+                for (Position positionB : antennaPositions) {
+                    if (positionA.equals(positionB)) {
+                        continue;
+                    }
 
-                Position antinode = positionA.add(direction);
-                while (antinode.isWithinBounds(map)) {
-                    antinodes.add(antinode);
-                    antinode = antinode.add(direction);
-                }
-
-                antinode = positionA.subtract(direction);
-                while (antinode.isWithinBounds(map)) {
-                    antinodes.add(antinode);
-                    antinode = antinode.subtract(direction);
+                    antinodes.addAll(calculation.apply(positionA, positionB));
                 }
             }
         }
@@ -105,27 +82,39 @@ public class AdventOfCode2024Day08 implements NewAocPuzzle {
         return antinodes;
     }
 
-    private Set<Position> findAntinodes(List<Position> antennasWithFrequency) {
+    private Set<Position> calculateAntinodes(Position positionA, Position positionB) {
         Set<Position> antinodes = new HashSet<>();
+        Position diff = positionA.subtract(positionB);
 
-        for (Position positionA : antennasWithFrequency) {
-            for (Position positionB : antennasWithFrequency) {
-                if (positionA.equals(positionB)) {
-                    continue;
-                }
+        Position antinodeA = positionA.add(diff);
+        if (antinodeA.isWithinBounds(map)) {
+            antinodes.add(antinodeA);
+        }
 
-                Position diff = positionA.subtract(positionB);
+        Position antinodeB = positionB.subtract(diff);
+        if (antinodeB.isWithinBounds(map)) {
+            antinodes.add(antinodeB);
+        }
 
-                Position antinodeA = positionA.add(diff);
-                if (antinodeA.isWithinBounds(map)) {
-                    antinodes.add(antinodeA);
-                }
+        return antinodes;
+    }
 
-                Position antinodeB = positionB.subtract(diff);
-                if (antinodeB.isWithinBounds(map)) {
-                    antinodes.add(antinodeB);
-                }
-            }
+    private Set<Position> calculateAntinodesWithResonance(Position positionA, Position positionB) {
+        Set<Position> antinodes = new HashSet<>();
+        Position diff = positionA.subtract(positionB);
+        int divisor = gcd(diff.x(), diff.y());
+        Position direction = new Position(diff.x() / divisor, diff.y() / divisor);
+
+        Position antinode = positionA.add(direction);
+        while (antinode.isWithinBounds(map)) {
+            antinodes.add(antinode);
+            antinode = antinode.add(direction);
+        }
+
+        antinode = positionA.subtract(direction);
+        while (antinode.isWithinBounds(map)) {
+            antinodes.add(antinode);
+            antinode = antinode.subtract(direction);
         }
 
         return antinodes;
