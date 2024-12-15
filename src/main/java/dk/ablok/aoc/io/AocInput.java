@@ -82,6 +82,10 @@ public class AocInput {
         return Arrays.stream(readFirstLine().split(",")).map(Long::parseLong).toList();
     }
 
+    public List<Long> readSpaceSeparatedLongList() throws AocLoadException {
+        return Arrays.stream(readFirstLine().split(" ")).map(Long::parseLong).toList();
+    }
+
     public List<Integer> readNewlineSeparatedIntegerList() throws AocLoadException {
         return readInputAsList().stream().map(Integer::parseInt).toList();
     }
