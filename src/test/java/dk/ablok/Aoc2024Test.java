@@ -44,7 +44,7 @@ class Aoc2024Test {
     @Test
     @AocCoverage(year = 2024, day = 6)
     void testDay06() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day06(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day06(), "41", INCOMPLETE);
     }
 
     @Test
@@ -56,7 +56,7 @@ class Aoc2024Test {
     @Test
     @AocCoverage(year = 2024, day = 8)
     void testDay08() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day08(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day08(), "348", "1221");
     }
 
     @Test
@@ -98,7 +98,7 @@ class Aoc2024Test {
     @Test
     @AocCoverage(year = 2024, day = 15)
     void testDay15() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day15(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day15(), "1495147", "1524905");
     }
 
     @Test
