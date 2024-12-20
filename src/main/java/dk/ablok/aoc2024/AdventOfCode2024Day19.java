@@ -3,12 +3,18 @@ package dk.ablok.aoc2024;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Solution to the Advent of Code 2024 day 19 puzzle
  *
  * <p>
- * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by 
+ * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by
  * <a href="https://adventofcode.com/about">Eric Wastl</a>.
  * </p>
  *
@@ -16,18 +22,70 @@ import dk.ablok.aoc.exceptions.AocSolveException;
  */
 public class AdventOfCode2024Day19 implements NewAocPuzzle {
 
+    private List<String> patterns;
+    private List<String> designs;
+    private List<String> possibleDesigns;
+
+    private Map<String, Long> possibleCombinationsMemoization = new HashMap<>();
+
     @Override
     public void load() throws AocLoadException {
-        throw new RuntimeException("Not solved yet!");
+        AocInput input = new AocInput(2024, 19);
+        List<List<String>> parts = input.readInputAsListSeparateByEmptyLine();
+        patterns = Arrays.asList(parts.get(0).get(0).split(", "));
+        designs = parts.get(1);
     }
 
     @Override
     public String part1() throws AocSolveException {
-        throw new AocSolveException("Not solved yet!");
+        StringBuilder patternBuilder = new StringBuilder();
+        patternBuilder.append("^(");
+        patternBuilder.append(String.join("|", patterns));
+        patternBuilder.append(")*$");
+
+        Pattern pattern = Pattern.compile(patternBuilder.toString());
+
+        possibleDesigns = designs.stream()
+                .filter(d -> designCanBeMade(d, pattern))
+                .toList();
+
+        return Integer.toString(possibleDesigns.size());
     }
 
     @Override
     public String part2() throws AocSolveException {
-        throw new AocSolveException("Not solved yet!");
+        long possibleCombinations = 0;
+
+        for (String design : possibleDesigns) {
+            possibleCombinations += countPossibleCombinations(design);
+        }
+
+        return Long.toString(possibleCombinations);
+    }
+
+    private boolean designCanBeMade(String design, Pattern pattern) {
+        Matcher matcher = pattern.matcher(design);
+        return matcher.find();
+    }
+
+    private long countPossibleCombinations(String design) {
+        if (possibleCombinationsMemoization.containsKey(design)) {
+            return possibleCombinationsMemoization.get(design);
+        }
+
+        if (design.isEmpty()) {
+            return 1;
+        }
+
+        long possibleCombinations = 0;
+
+        for (String pattern : patterns) {
+            if (design.startsWith(pattern)) {
+                possibleCombinations += countPossibleCombinations(design.substring(pattern.length()));
+            }
+        }
+
+        possibleCombinationsMemoization.put(design, possibleCombinations);
+        return possibleCombinations;
     }
 }
