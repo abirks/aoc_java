@@ -5,10 +5,12 @@ import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Solution to the Advent of Code 2024 day 19 puzzle
@@ -26,7 +28,7 @@ public class AdventOfCode2024Day19 implements NewAocPuzzle {
     private List<String> designs;
     private List<String> possibleDesigns;
 
-    private Map<String, Long> possibleCombinationsMemoization = new HashMap<>();
+    private final Map<String, Long> possibleCombinationsMemoization = new ConcurrentHashMap<>();
 
     @Override
     public void load() throws AocLoadException {
