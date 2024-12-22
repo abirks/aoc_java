@@ -90,6 +90,10 @@ public class AocInput {
         return readInputAsList().stream().map(Integer::parseInt).toList();
     }
 
+    public List<Long> readNewlineSeparatedLongList() throws AocLoadException {
+        return readInputAsList().stream().map(Long::parseLong).toList();
+    }
+
     public char[][] read2dArray() throws AocLoadException {
         return read2dArray((char) 0);
     }
