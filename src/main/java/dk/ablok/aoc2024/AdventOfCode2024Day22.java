@@ -6,6 +6,8 @@ import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
@@ -35,40 +37,39 @@ public class AdventOfCode2024Day22 implements NewAocPuzzle {
         long sum = initialSecrets.stream()
                 .mapToLong(this::generateLastNumber)
                 .sum();
-        //return Long.toString(sum);
-        return "INCOMPLETE";
+        return Long.toString(sum);
     }
 
     @Override
     public String part2() throws AocSolveException {
+        // Collect the pattern at each price point
         List<List<PriceData>> sequences = initialSecrets.stream()
                 .map(this::generatePriceData)
                 .toList();
 
-        Set<List<Long>> patterns = sequences.stream()
-                .flatMap(Collection::stream)
-                .map(PriceData::pattern)
-                .collect(Collectors.toSet());
-
-        Optional<Long> price = patterns.stream()
+        // For each sequence of PriceData, keep only the first occurrence of each pattern along with the price when it occurs
+        List<Set<PriceData>> priceAtFirstOccurrence = sequences.stream()
                 .parallel()
-                .map(p -> calculateAllPrices(sequences, p))
-                .max(Long::compareTo);
+                .map(this::keepFirstPatternOccurrence)
+                .toList();
 
-        return Long.toString(price.orElseThrow());
+        // Flatmap all entries together and group them by pattern. Sum the prices.
+        Map<List<Long>, AtomicLong> summed = new ConcurrentHashMap<>();
+        priceAtFirstOccurrence.stream()
+                .parallel()
+                .flatMap(Set::stream)
+                .forEach(data -> summed.computeIfAbsent(data.pattern(), k -> new AtomicLong()).addAndGet(data.price()));
+
+        // Finally, select the highest sum as the result
+        return Long.toString(summed.values().stream()
+                .map(AtomicLong::longValue)
+                .max(Long::compareTo).orElseThrow());
     }
 
-    private long calculateAllPrices(List<List<PriceData>> sequences, List<Long> pattern) {
-        return sequences.stream()
-                .mapToLong(seq -> calculatePriceUsingPattern(seq, pattern))
-                .sum();
-    }
-
-    private long calculatePriceUsingPattern(List<PriceData> sequence, List<Long> pattern) {
-        Optional<PriceData> first = sequence.stream()
-                .filter(s -> s.pattern().equals(pattern))
-                .findFirst();
-        return first.map(PriceData::price).orElse(0L);
+    private Set<PriceData> keepFirstPatternOccurrence(List<PriceData> sequence) {
+        return sequence.stream()
+                .sequential()
+                .collect(Collectors.toSet());
     }
 
     private List<PriceData> generatePriceData(long input) {
@@ -79,7 +80,8 @@ public class AdventOfCode2024Day22 implements NewAocPuzzle {
         List<Long> window = new ArrayList<>();
 
         // Preload the window
-        for (int i = 0; i < WINDOW_LENGTH; i++) {
+        window.add(0L);
+        for (int i = 0; i < WINDOW_LENGTH - 1; i++) {
             long newSecret = generateNextNumber(lastSecret);
             long newPrice = newSecret % 10;
             window.add(newPrice - lastPrice);
@@ -88,7 +90,7 @@ public class AdventOfCode2024Day22 implements NewAocPuzzle {
         }
 
         // Save the preceding pattern in each PriceData for fast filtering
-        for (int i = WINDOW_LENGTH; i < ITERATIONS; i++) {
+        for (int i = WINDOW_LENGTH; i <= ITERATIONS; i++) {
             long newSecret = generateNextNumber(lastSecret);
             long newPrice = newSecret % 10;
             window.add(newPrice - lastPrice);
@@ -125,5 +127,16 @@ public class AdventOfCode2024Day22 implements NewAocPuzzle {
     }
 
     record PriceData(long price, List<Long> pattern) {
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            PriceData priceData = (PriceData) o;
+            return Objects.equals(pattern, priceData.pattern);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(pattern);
+        }
     }
 }
