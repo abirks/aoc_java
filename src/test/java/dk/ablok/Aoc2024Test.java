@@ -86,7 +86,7 @@ class Aoc2024Test {
     @Test
     @AocCoverage(year = 2024, day = 13)
     void testDay13() throws AocLoadException, AocSolveException {
-        assertAocDay(new AdventOfCode2024Day13(), INCOMPLETE, INCOMPLETE);
+        assertAocDay(new AdventOfCode2024Day13(), "32026", "89013607072065");
     }
 
     @Test
