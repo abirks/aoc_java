@@ -59,7 +59,7 @@ public class AdventOfCode2024Day06 implements NewAocPuzzle {
                 guard.move();
                 visited.add(Visited.fromGuard(guard));
                 setMap(guard.position, 'x');
-                print();
+                //print();
             }
         }
 
@@ -91,7 +91,7 @@ public class AdventOfCode2024Day06 implements NewAocPuzzle {
                     virtualGuard.goBackwards();
                     virtualVisited.add(Visited.fromGuard(virtualGuard));
                     setMap(virtualGuard.position, 'x');
-                    print();
+                    //print();
                 }
             }
         }
