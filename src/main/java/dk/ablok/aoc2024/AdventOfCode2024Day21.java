@@ -192,6 +192,8 @@ public class AdventOfCode2024Day21 implements NewAocPuzzle {
             for (Action action : actions) {
 
             }
+
+            return null;
         }
 
         private List<Action> determineMovesSingleAction(Button startingPosition, Action action) {
@@ -205,6 +207,8 @@ public class AdventOfCode2024Day21 implements NewAocPuzzle {
                 // TODO determine shortest path
                 movementCache.add(new MovementCache(startingPosition, action, actions));
             }
+
+            return null;
         }
 
         private Button act(Button position, Action action) {

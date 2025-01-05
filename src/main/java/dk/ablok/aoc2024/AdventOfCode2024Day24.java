@@ -24,9 +24,8 @@ import java.util.stream.Stream;
  */
 public class AdventOfCode2024Day24 implements NewAocPuzzle {
     private static final Pattern GATE_PATTERN = Pattern.compile("^(?<a>[a-z0-9]+) (?<op>AND|OR|XOR) (?<b>[a-z0-9]+) -> (?<c>[a-z0-9]+)$");
-
     private final Map<String, Boolean> initialValues = new ConcurrentHashMap<>();
-    private final Set<Gate> gates = new HashSet<>();
+    private final Set<Gate> initialGates = new HashSet<>();
 
     private int bitCount;
 
@@ -47,7 +46,10 @@ public class AdventOfCode2024Day24 implements NewAocPuzzle {
             }
 
             Operation op = Operation.valueOf(matcher.group("op"));
-            gates.add(new Gate(matcher.group("a"), matcher.group("b"), matcher.group("c"), op));
+            Set<String> gateInput = new HashSet<>();
+            gateInput.add(matcher.group("a"));
+            gateInput.add(matcher.group("b"));
+            initialGates.add(new Gate(gateInput, matcher.group("c"), op));
 
             if (matcher.group("c").startsWith("z")) {
                 int newBitCount = Integer.parseInt(matcher.group("c").substring(1));
@@ -58,154 +60,103 @@ public class AdventOfCode2024Day24 implements NewAocPuzzle {
 
     @Override
     public String part1() throws AocSolveException {
-        //return Long.toString(evaluateGates(initialValues));
+        //return Long.toString(evaluateGates(initialGates, initialValues));
         return "INCOMPLETE";
     }
 
     @Override
     public String part2() throws AocSolveException {
+        // Sanity check
+        Map<String, Boolean> values00 = prepareValues(0, 0, 0);
+        if (evaluateGates(initialGates, values00) != 0L) {
+            throw new AocSolveException("Error in 0+0. This should not happen since there are no NOT gates.");
+        }
+
+
         Set<Gate> safeGates = new HashSet<>();
-        Set<Gate> unsafeGates = new HashSet<>();
 
-        // Check each bit and stop when we find one that's not adding correctly
-        /*for (int i = 0; i < bitCount; i++) {
-            String variable = String.format("z%02d", i);
-            Set<Gate> dependencies = mapDependencies(variable).stream()
-                    .filter(g -> !unsafeGates.contains(g))
-                    .filter(g -> !safeGates.contains(g))
-                    .collect(Collectors.toSet());
+        Set<String> swapped = new HashSet<>();
 
-            if (testBit(i)) {
-                // No errors on this bit - mark the bit and its dependencies as "safe"
-                System.out.println("No errors in bit " + i + ". Marking dependencies as safe.");
-                safeGates.addAll(dependencies);
-            } else {
-                // List unsafe dependencies for the errant bit
-                System.out.println("Error in bit " + i + ". Unsafe dependencies: ");
-                dependencies.forEach(System.out::println);
-                System.out.println();
-                unsafeGates.addAll(dependencies);
+        Set<Gate> workingGates = new HashSet<>(initialGates);
+        for (int bit = 0; bit < bitCount; bit++) {
+            List<Gate> relatedGates = new ArrayList<>();
+            relatedGates.addAll(mapDependencies(String.format("z%02d", bit)));
+            relatedGates.addAll(mapReceivers(bit));
+            relatedGates.removeAll(safeGates);
+
+            if (!additionIsCorrect(bit, workingGates)) {
+                System.out.println("Bit " + bit);
+                System.out.println("Error in addition");
+
+                workingGates = swapGatesUntilAdditionWorks(bit, workingGates, relatedGates);
+                continue;
             }
-        }*/
 
-        for (int i = 0; i < bitCount; i++) {
-            checkGates(i);
+            safeGates.addAll(mapDependencies(String.format("z%02d", bit)));
         }
 
-        return "";
+        for (int bit = 0; bit < bitCount; bit++) {
+            if (!additionIsCorrect(bit, workingGates)) {
+                System.out.println("Addition is still not correct on bit " + bit + "!");
+            }
+        }
+
+        // Loop over alle non-safe gates: bfq,fjp,hkh,mdm,z18,z19,z27,z31
+        // Loop over receiver-mapped:     bng,fjp,fqh,ntr,pfb,vgg,z18,z31
+        // Loop med receiver-mapped alle: bng,fjp,fqh,ntr,pfb,vgg,z18,z31
+        return swapped.stream()
+                .sorted()
+                .collect(Collectors.joining(","));
     }
 
-    private void checkGates(int bit) {
-        var outputGates = findOutputGate(bit);
-        var inputGates = findInputGate(bit);
-
-        if (outputGates.size() != 1 || outputGates.get(0).getOp() != Operation.XOR) {
-            System.out.println("Did not find exactly one XOR gate with output for bit " + bit + ". Found instead: " + outputGates);
-        }
-        var outputGate = outputGates.get(0);
-
-        var inputAnds = inputGates.stream()
-                .filter(g -> g.getOp() == Operation.AND)
-                .toList();
-        if (inputAnds.size() != 1) {
-            System.out.println("Did not find exactly one AND input gate for bit " + bit + ". Found instead: " + inputAnds);
-        }
-        var inputAnd = inputAnds.get(0);
-
-        var inputXors = inputGates.stream()
-                .filter(g -> g.getOp() == Operation.XOR)
-                .toList();
-        if (inputXors.size() != 1) {
-            System.out.println("Did not find exactly one XOR gate for bit " + bit + ". Found instead: " + inputXors);
-        }
-        var inputXor = inputXors.get(0);
-
-        if (!outputGate.getA().equals(inputXor.getC()) && !outputGate.getB().equals(inputXor.getC())) {
-            System.out.println("Input XOR is not connected to output gate for bit " + bit + ". Instead: " + inputXor);
-        }
-
-        var carryOutAndGates = findCarryOutAndGates(inputXor);
-        if (carryOutAndGates.size() != 1) {
-            System.out.println("Did not find exactly one carry output AND gate for bit " + bit + ". Found instead: " + carryOutAndGates);
-        }
-        var carryOutAnd = carryOutAndGates.get(0);
-
-        var carryOrs = findCarryOrs(carryOutAnd, inputAnd);
-        if (carryOrs.size() != 1) {
-            System.out.println("Did not find exactly one carry OR gate for bit " + bit + ". Should have input: " + inputAnd.getC() + " or " + carryOutAnd.getC());
-        }
+    private boolean additionIsCorrect(int bit, Set<Gate> gates) throws AocSolveException {
+        Map<String, Boolean> values01 = prepareValues(0, 1, bit);
+        Map<String, Boolean> values10 = prepareValues(1, 0, bit);
+        Map<String, Boolean> values11 = prepareValues(1, 1, bit);
+        return evaluateGates(gates, values01) == 1L << bit
+                && evaluateGates(gates, values10) == 1L << bit;
+                //&& evaluateGates(gates, values11) == 2L << bit;
     }
 
-    private List<Gate> findOutputGate(int bit) {
-        String outputName = String.format("z%02d", bit);
-        return gates.stream()
-                .filter(g -> g.getC().equals(outputName))
-                .toList();
-    }
+    private Set<Gate> swapGatesUntilAdditionWorks(int bit, Set<Gate> allGates, List<Gate> gatesToSwap) throws AocSolveException {
+        for (int i = 0; i < gatesToSwap.size(); i++) {
+            for (int j = i + 1; j < gatesToSwap.size(); j++) {
+                Gate a = gatesToSwap.get(i);
+                Gate b = gatesToSwap.get(j);
 
-    private List<Gate> findInputGate(int bit) {
-        String xInputName = String.format("x%02d", bit);
-        String yInputName = String.format("y%02d", bit);
-        return gates.stream()
-                .filter(g -> (g.getA().equals(xInputName) && g.getB().equals(yInputName))
-                        || (g.getA().equals(yInputName) && g.getB().equals(xInputName)))
-                .toList();
-    }
+                Set<Gate> swapped = swapOutputs(allGates, a, b);
 
-    private List<Gate> findCarryOutAndGates(Gate outputGate) {
-        return gates.stream()
-                .filter(g -> (g.getA().equals(outputGate.getA()) && g.getB().equals(outputGate.getB()))
-                        || (g.getA().equals(outputGate.getB()) && g.getB().equals(outputGate.getA())))
-                .filter(g -> g.getOp() == Operation.AND)
-                .toList();
-    }
-
-    private List<Gate> findCarryOrs(Gate carryOutAnd, Gate inputAnd) {
-        return gates.stream()
-                .filter(g -> g.getA().equals(carryOutAnd.getC()) || g.getA().equals(inputAnd.getC())
-                        || g.getB().equals(carryOutAnd.getC()) || g.getB().equals(inputAnd.getC()))
-                .filter(g -> g.getOp() == Operation.OR)
-                .toList();
-    }
-
-    private boolean testBit(int bit) {
-        return testBitWithInput(bit, 0, 0)
-                && testBitWithInput(bit, 1, 0)
-                && testBitWithInput(bit, 0, 1)
-                && testBitWithInput(bit, 1, 1);
-    }
-
-    private boolean testBitWithInput(int bit, int x, int y) {
-        Map<String, Boolean> testValues00 = new HashMap<>();
-        testValues00.putAll(convertLongToMap((long) x << bit, "x"));
-        testValues00.putAll(convertLongToMap((long) y << bit, "y"));
-        long result = evaluateGates(testValues00);
-        if (result == ((long) x << bit) + ((long) y << bit)) {
-            return true;
-        }
-        return false;
-    }
-
-    private Set<Gate> mapDependencies(String input) {
-        Set<Gate> dependencyGates = new HashSet<>();
-
-        Set<String> dependencyVariables = new HashSet<>();
-        dependencyVariables.add(input);
-
-        while (!dependencyVariables.isEmpty()) {
-            Set<Gate> found = dependencyVariables.stream()
-                    .flatMap(d -> gates.stream()
-                            .filter(g -> g.getC().equals(d)))
-                    .collect(Collectors.toSet());
-
-            dependencyGates.addAll(found);
-
-            dependencyVariables = found.stream()
-                    .flatMap(g -> Stream.of(g.getA(), g.getB()))
-                    .collect(Collectors.toSet());
+                try {
+                    if (additionIsCorrect(bit, swapped)) {
+                        System.out.println("Swapped " + a.output() + " and " + b.output());
+                        return swapped;
+                    }
+                } catch (IllegalStateException e) {
+                    // Logic could not be executed; try next combination
+                    continue;
+                }
+            }
         }
 
-        return dependencyGates;
+        throw new AocSolveException("Could not fix gate by swapping outputs");
+    }
+
+    private Set<Gate> swapOutputs(Set<Gate> gates, Gate a, Gate b) {
+        Set<Gate> swapped = new HashSet<>(gates);
+        swapped.remove(a);
+        swapped.remove(b);
+        swapped.add(new Gate(a.input(), b.output(), a.op()));
+        swapped.add(new Gate(b.input(), a.output(), b.op()));
+        return swapped;
+    }
+
+    private Map<String, Boolean> prepareValues(int x, int y, int bit) {
+        long shiftedX = (long) x << bit;
+        long shiftedY = (long) y << bit;
+        Map<String, Boolean> values = new ConcurrentHashMap<>();
+        values.putAll(convertLongToMap(shiftedX, "x"));
+        values.putAll(convertLongToMap(shiftedY, "y"));
+        return values;
     }
 
     private Map<String, Boolean> convertLongToMap(long input, String prefix) {
@@ -223,11 +174,65 @@ public class AdventOfCode2024Day24 implements NewAocPuzzle {
         return output;
     }
 
-    private long evaluateGates(Map<String, Boolean> values) {
+    private Set<Gate> mapDependencies(String input) {
+        Set<Gate> dependencyGates = new HashSet<>();
+
+        Set<String> dependencyVariables = new HashSet<>();
+        dependencyVariables.add(input);
+
+        while (!dependencyVariables.isEmpty()) {
+            Set<Gate> found = dependencyVariables.stream()
+                    .flatMap(d -> initialGates.stream()
+                            .filter(g -> g.output().equals(d)))
+                    .collect(Collectors.toSet());
+
+            dependencyGates.addAll(found);
+
+            dependencyVariables = found.stream()
+                    .flatMap(g -> g.input().stream())
+                    .collect(Collectors.toSet());
+        }
+
+        return dependencyGates;
+    }
+
+    private List<Gate> mapReceivers(int bit) {
+        List<Gate> receivers = new ArrayList<>();
+
+        Set<String> variables = new HashSet<>();
+        variables.add(String.format("x%02d", bit));
+        variables.add(String.format("y%02d", bit));
+
+        while (!variables.isEmpty()) {
+            Set<Gate> found = variables.stream()
+                    .flatMap(d -> initialGates.stream()
+                            .filter(g -> g.input().contains(d)))
+                    .collect(Collectors.toSet());
+
+            receivers.addAll(found);
+
+            variables = found.stream()
+                    .map(Gate::output)
+                    .collect(Collectors.toSet());
+        }
+
+        return receivers;
+    }
+
+    private long evaluateGates(Set<Gate> gates, Map<String, Boolean> values) throws AocSolveException {
         Set<Gate> processedGates = new HashSet<>();
         while (!processedGates.containsAll(gates)) {
-            List<Gate> done = gates.stream().filter(g -> g.inputsAreReady(values)).toList();
-            done.forEach(g -> g.execute(values));
+            List<Gate> done = gates.stream()
+                    .filter(g -> !processedGates.contains(g))
+                    .filter(g -> g.inputsAreReady(values)).toList();
+
+            if (done.isEmpty()) {
+                throw new IllegalStateException("No executed gates are ready");
+            }
+
+            for (Gate g : done) {
+                g.execute(values);
+            }
             processedGates.addAll(done);
         }
 
@@ -250,46 +255,20 @@ public class AdventOfCode2024Day24 implements NewAocPuzzle {
         AND, OR, XOR
     }
 
-    static class Gate {
-        private final String a;
-        private final String b;
-        private String c;
-        private final Operation op;
-
-        public Gate(String a, String b, String c, Operation op) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-            this.op = op;
-        }
-
-        public String getA() {
-            return a;
-        }
-
-        public String getB() {
-            return b;
-        }
-
-        public String getC() {
-            return c;
-        }
-
-        public Operation getOp() {
-            return op;
-        }
-
-        public void setC(String c) {
-            this.c = c;
-        }
+    record Gate(Set<String> input, String output, Operation op) {
 
         boolean inputsAreReady(Map<String, Boolean> values) {
-            return values.containsKey(a) && values.containsKey(b);
+            return input.stream().allMatch(values::containsKey);
         }
 
-        void execute(Map<String, Boolean> values) {
-            boolean valueA = values.get(a);
-            boolean valueB = values.get(b);
+        void execute(Map<String, Boolean> values) throws AocSolveException {
+            if (input.size() != 2) {
+                throw new AocSolveException("Incorrect number of inputs");
+            }
+
+            Iterator<String> iter = input.iterator();
+            boolean valueA = values.get(iter.next());
+            boolean valueB = values.get(iter.next());
 
             boolean valueC = switch (op) {
                 case AND -> valueA && valueB;
@@ -297,12 +276,12 @@ public class AdventOfCode2024Day24 implements NewAocPuzzle {
                 case XOR -> valueA ^ valueB;
             };
 
-            values.put(c, valueC);
+            values.put(output, valueC);
         }
 
         @Override
         public String toString() {
-            return a + " " + op.toString() + " " + b + " ->" + c;
+            return "(" + input().stream().sorted().collect(Collectors.joining(" " + op().name() + " ")) + ") -> " + output;
         }
     }
 }

@@ -101,7 +101,7 @@ public class AdventOfCode2024Day12 implements NewAocPuzzle {
             // End when returned to the starting position
 
             List<Position> corners = findCorners(plots);
-            print(corners.toArray(new Position[0]));
+            //print(corners.toArray(new Position[0]));
             totalPrice += plots.size() * corners.size();
         }
 
