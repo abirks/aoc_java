@@ -1,15 +1,12 @@
 package dk.ablok.aoc2024;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -25,9 +22,10 @@ import java.util.stream.Collectors;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+ @AocSolution(year = 2024, day = 1)
 public class AdventOfCode2024Day01 implements NewAocPuzzle {
-    private List<Integer> left = new ArrayList<>();
-    private List<Integer> right = new ArrayList<>();
+    private final List<Integer> left = new ArrayList<>();
+    private final List<Integer> right = new ArrayList<>();
 
     @Override
     public void load() throws AocLoadException {

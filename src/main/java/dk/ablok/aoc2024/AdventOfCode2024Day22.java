@@ -1,5 +1,6 @@
 package dk.ablok.aoc2024;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2024, day = 22)
 public class AdventOfCode2024Day22 implements NewAocPuzzle {
     private static final long PRUNING_NUMBER = 16777216L;
     private static final long ITERATIONS = 2000L;

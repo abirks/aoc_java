@@ -1,5 +1,6 @@
 package dk.ablok.aoc2024;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2024, day = 23)
 public class AdventOfCode2024Day23 implements NewAocPuzzle {
     private final Map<String, Set<String>> connections = new HashMap<>();
 

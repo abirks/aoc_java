@@ -1,5 +1,6 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2023, day = 19)
 public class AdventOfCode2023Day19 implements NewAocPuzzle {
     private static final Pattern WORKFLOW_PATTERN = Pattern.compile("^(?<name>.*)\\{(?<rules>.*)\\}$");
 

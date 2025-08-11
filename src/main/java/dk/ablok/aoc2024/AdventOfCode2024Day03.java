@@ -1,5 +1,6 @@
 package dk.ablok.aoc2024;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -18,6 +19,7 @@ import java.util.regex.Pattern;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2024, day = 3)
 public class AdventOfCode2024Day03 implements NewAocPuzzle {
 
     private String program;

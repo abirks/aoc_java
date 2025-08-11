@@ -1,5 +1,6 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -14,6 +15,7 @@ import dk.ablok.aoc.exceptions.AocSolveException;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2023, day = 22)
 public class AdventOfCode2023Day22 implements NewAocPuzzle {
     @Override
     public void load() throws AocLoadException {

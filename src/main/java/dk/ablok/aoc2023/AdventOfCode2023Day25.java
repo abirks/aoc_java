@@ -1,8 +1,10 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.graph.GraphNode;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
@@ -13,56 +15,51 @@ import java.util.stream.Stream;
  * Solution to the Advent of Code 2023 day 25 puzzle
  *
  * <p>
- * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by 
+ * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by
  * <a href="https://adventofcode.com/about">Eric Wastl</a>.
  * </p>
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2023, day = 25)
 public class AdventOfCode2023Day25 implements NewAocPuzzle {
-    private static final Random random = new Random();
-    private Map<String, Component> originalComponents;
-    private final Set<Connection> originalConnections = new HashSet<>();
+    private Set<Component> components;
 
     @Override
     public void load() throws AocLoadException {
         AocInput aocInput = new AocInput(2023, 25);
         List<String> input = aocInput.readInputAsList();
 
-        // Initialize sets for all nodes
-        originalComponents = input.stream()
+        // Initialize all nodes
+        components = input.stream()
                 .flatMap(line -> Arrays.stream(line.replace(":", "").split(" ")))
                 .distinct()
-                .collect(Collectors.toMap(String::toString, Component::new));
+                .map(Component::new)
+                .collect(Collectors.toSet());
 
+        // Add connections for all components
         for (String line : input) {
-            var from = originalComponents.get(line.split(": ")[0]);
-            var tos = Arrays.stream(line.split(": ")[1].split(" ")).map(originalComponents::get).toList();
+            var from = components.stream()
+                    .filter(c -> c.getName().equals(line.split(": ")[0]))
+                    .findFirst()
+                    .orElseThrow();
+            var tos = Arrays.stream(line.split(": ")[1].split(" "))
+                    .flatMap(t -> components.stream()
+                            .filter(c -> c.getName().equals(t)))
+                    .toList();
 
             for (Component to : tos) {
-                originalConnections.add(new Connection(from, to));
-                originalConnections.add(new Connection(to, from));
+                from.addConnections(to);
+                to.addConnections(from);
             }
         }
     }
 
     @Override
     public String part1() throws AocSolveException {
-        int attempts = 0;
-        KargerAlgorithm karger;
-        do {
-            attempts++;
-            karger = new KargerAlgorithm(originalComponents, originalConnections);
-            karger.kargerReduction();
-        } while (karger.connections.size() > 6);
 
-        System.out.println("AoC 2023 day 25 required " + attempts + " attempts to reach a solution");
 
-        var groups = karger.components.values().stream()
-                .mapToInt(c -> c.name.split(";").length)
-                .toArray();
-
-        return Integer.toString(groups[0] * groups[1]);
+        return null;
     }
 
     @Override
@@ -71,123 +68,30 @@ public class AdventOfCode2023Day25 implements NewAocPuzzle {
         return null;
     }
 
-    static class KargerAlgorithm {
-        private final Set<Connection> connections;
-        private final Map<String, Component> components;
-
-        public KargerAlgorithm(Map<String, Component> components, Set<Connection> connections) {
-            this.components = components.entrySet().stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, e -> new Component(e.getValue())));
-
-            this.connections = connections.stream()
-                    .map(c -> new Connection(this.components.get(c.from.name), this.components.get(c.to.name)))
-                    .collect(Collectors.toSet());
-        }
-
-        private void kargerReduction() {
-            while (components.size() > 2) {
-                var c = getRandomConnection();
-                contractConnection(c);
-                removeSelfLoops();
-            }
-        }
-
-        private void removeSelfLoops() {
-            var selfLoops = connections.stream()
-                    .filter(c -> c.from.equals(c.to))
-                    .toList();
-            selfLoops.forEach(connections::remove);
-        }
-
-        private Stream<Connection> getConnectionsFrom(Component from) {
-            return connections.stream().filter(c -> c.from.equals(from));
-        }
-
-        private Stream<Connection> getConnectionsTo(Component to) {
-            return connections.stream().filter(c -> c.to.equals(to));
-        }
-
-        private Connection getRandomConnection() {
-            var list = connections.stream().toList();
-            return list.get(random.nextInt(list.size()));
-        }
-
-        private void contractConnection(Connection connection) {
-            // Create new node ab
-            var a = connection.from;
-            var b = connection.to;
-            Component ab = new Component(a.name + ";" + b.name);
-
-            // Remove a from components
-            components.remove(a.name);
-
-            // Remove b from components
-            components.remove(b.name);
-
-            // Add ab to components
-            components.put(ab.name, ab);
-
-            // All connections to a should point to ab instead
-            getConnectionsTo(a).forEach(c -> c.setTo(ab));
-
-            // All connections from a should point from ab instead
-            getConnectionsFrom(a).forEach(c -> c.setFrom(ab));
-
-            // All connections to b should point to ab instead
-            getConnectionsTo(b).forEach(c -> c.setTo(ab));
-
-            // All connections from b should point from ab instead
-            getConnectionsFrom(b).forEach(c -> c.setFrom(ab));
-        }
-    }
-
-    static class Component {
+    static class Component implements GraphNode {
         private final String name;
+        private final Set<Component> connections = new HashSet<>();
 
         public Component(String name) {
             this.name = name;
         }
 
-        public Component(Component original) {
-            this.name = original.name;
-        }
-
-        @Override
-        public String toString() {
+        public String getName() {
             return name;
         }
-    }
 
-    static class Connection {
-        private Component from;
-        private Component to;
-
-        public Connection(Component from, Component to) {
-            this.from = from;
-            this.to = to;
+        public void addConnections(Component to) {
+            connections.add(to);
         }
 
-        public Component getFrom() {
-            return from;
-        }
-
-        public Connection setFrom(Component from) {
-            this.from = from;
-            return this;
-        }
-
-        public Component getTo() {
-            return to;
-        }
-
-        public Connection setTo(Component to) {
-            this.to = to;
-            return this;
+        public void removeConnection(Component to) {
+            connections.remove(to);
         }
 
         @Override
-        public String toString() {
-            return from + "-" + to;
+        public Stream<GraphNode> getConnectionsFrom() {
+            return connections.stream()
+                    .map(c -> (GraphNode) c);
         }
     }
 }

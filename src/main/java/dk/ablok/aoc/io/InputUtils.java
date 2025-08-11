@@ -3,64 +3,51 @@ package dk.ablok.aoc.io;
 import dk.ablok.aoc.exceptions.AocLoadException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 @Deprecated
 public class InputUtils {
+    private static final Pattern PATH_PATTERN = Pattern.compile("input/aoc(-?\\d+)/input(-?\\d+).txt$");
+
     private InputUtils() {
     }
 
+    private static AocInput getInput(String filename) throws AocLoadException {
+        var results = PATH_PATTERN.matcher(filename);
+
+        if (!results.find()) {
+            throw new AocLoadException("Filename does not match pattern!");
+        }
+
+        int year = Integer.parseInt(results.group(1));
+        int day = Integer.parseInt(results.group(2));
+        return new AocInput(year, day);
+    }
+
+
     @Deprecated
     public static List<String> readInputAsList(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            return stream.toList();
-        } catch (IOException e) {
-            throw new AocLoadException(e);
-        }
+        return getInput(filename).readInputAsList();
     }
 
     @Deprecated
     public static List<List<String>> readInputAsListSeparateByEmptyLine(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
-
-            List<List<String>> output = new ArrayList<>();
-            List<String> list = new ArrayList<>();
-
-            while (iter.hasNext()) {
-                String line = iter.next();
-
-                if (line.isEmpty()) {
-                    output.add(list);
-                    list = new ArrayList<>();
-                } else {
-                    list.add(line);
-                }
-            }
-
-            // Add last set as well
-            output.add(list);
-
-            return output;
-        } catch (IOException e) {
-            throw new AocLoadException(e);
-        }
+        return getInput(filename).readInputAsListSeparateByEmptyLine();
     }
 
     @Deprecated
     public static String readFirstLine(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            return stream.findFirst().orElseThrow();
-        } catch (IOException e) {
-            throw new AocLoadException(e);
-        }
+        return getInput(filename).readFirstLine();
     }
 
     @Deprecated

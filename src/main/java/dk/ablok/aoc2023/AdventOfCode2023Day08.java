@@ -1,5 +1,6 @@
 package dk.ablok.aoc2023;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.calculations.LeastCommonMultiple;
 import dk.ablok.aoc.exceptions.AocLoadException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
+@AocSolution(year = 2023, day = 8)
 public class AdventOfCode2023Day08 implements NewAocPuzzle {
     private byte[] directions;
     private Set<Node> nodes;
