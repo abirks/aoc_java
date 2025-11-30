@@ -1,20 +1,19 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.*;
 
-public class AdventOfCode2022Day19 implements AocPuzzle {
+@AocSolution(year = 2022, day = 19)
+public class AdventOfCode2022Day19 implements NewAocPuzzle {
 
     private static final int MINUTES = 24;
     private final List<Blueprint> input = new ArrayList<>();
@@ -52,28 +51,24 @@ public class AdventOfCode2022Day19 implements AocPuzzle {
             "Each geode robot costs (.*) ore and (.*) obsidian.$");
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 19);
 
-            while (iter.hasNext()) {
-                Matcher matcher = pattern.matcher(iter.next());
+        for (String line : aocInput.readInputAsList()) {
+            Matcher matcher = pattern.matcher(line);
 
-                if (matcher.find()) {
-                    input.add(new Blueprint(
-                            Integer.parseInt(matcher.group(2)),
-                            Integer.parseInt(matcher.group(3)),
-                            Integer.parseInt(matcher.group(4)),
-                            Integer.parseInt(matcher.group(5)),
-                            Integer.parseInt(matcher.group(6)),
-                            Integer.parseInt(matcher.group(7))
-                    ));
-                } else {
-                    throw new IllegalArgumentException("Unknown input!");
-                }
+            if (matcher.find()) {
+                input.add(new Blueprint(
+                        Integer.parseInt(matcher.group(2)),
+                        Integer.parseInt(matcher.group(3)),
+                        Integer.parseInt(matcher.group(4)),
+                        Integer.parseInt(matcher.group(5)),
+                        Integer.parseInt(matcher.group(6)),
+                        Integer.parseInt(matcher.group(7))
+                ));
+            } else {
+                throw new IllegalArgumentException("Unknown input!");
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
         }
     }
 

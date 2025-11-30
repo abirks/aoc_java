@@ -1,15 +1,18 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AdventOfCode2021Day21 implements AocPuzzle {
+@AocSolution(year = 2021, day = 21)
+public class AdventOfCode2021Day21 implements NewAocPuzzle {
 
     private long player1Wins = 0;
     private Map<Universe, AtomicLong> universes = new HashMap<>();
@@ -18,11 +21,12 @@ public class AdventOfCode2021Day21 implements AocPuzzle {
     private int startPlayer2;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO: Read these from file instead
-        // Starting positions
-        startPlayer1 = 10;
-        startPlayer2 = 1;
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 21);
+        var lines = aocInput.readInputAsList();
+
+        startPlayer1 = Integer.parseInt(lines.get(0).split(": ")[1]);
+        startPlayer2 = Integer.parseInt(lines.get(1).split(": ")[1]);
     }
 
     @Override

@@ -1,42 +1,39 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day20 implements AocPuzzle {
+@AocSolution(year = 2021, day = 20)
+public class AdventOfCode2021Day20 implements NewAocPuzzle {
 
     private final List<Boolean> pattern = new ArrayList<>();
     private Map<Position, Boolean> image = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO refactor to use AocInput
-        // Open file
-        File f = new File(filename);
-        try (Scanner sc = new Scanner(f)) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 20);
+        var section = aocInput.readInputAsListSeparateByEmptyLine();
 
-            // Read pattern
-            for (char c : sc.nextLine().toCharArray()) pattern.add(c == '#');
-            sc.nextLine(); // Skip empty line
+        // Read pattern
+        for (char c : section.get(0).get(0).toCharArray()) {
+            pattern.add(c == '#');
+        }
 
-            // Read image
-            int x = 0;
-            int y = 0;
-            while (sc.hasNext()) {
-                for (char c : sc.nextLine().toCharArray()) {
-                    image.put(new Position(x, y), c == '#');
-                    x++;
-                }
-                x = 0;
-                y++;
+        // Read image
+        int x = 0;
+        int y = 0;
+        for (var line : section.get(1)) {
+            for (char c : line.toCharArray()) {
+                image.put(new Position(x, y), c == '#');
+                x++;
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            x = 0;
+            y++;
         }
     }
 

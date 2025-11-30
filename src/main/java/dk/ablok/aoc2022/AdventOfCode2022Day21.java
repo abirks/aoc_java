@@ -1,15 +1,17 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.io.InputUtils;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class AdventOfCode2022Day21 implements AocPuzzle {
+@AocSolution(year = 2022, day = 21)
+public class AdventOfCode2022Day21 implements NewAocPuzzle {
 
     private final Map<String, Expression> part1expressions = new HashMap<>();
     private final Map<String, Long> part1values = new HashMap<>();
@@ -17,8 +19,10 @@ public class AdventOfCode2022Day21 implements AocPuzzle {
     private final Map<String, Long> part2values = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (String line : InputUtils.readInputAsList(filename)) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 21);
+
+        for (String line : aocInput.readInputAsList()) {
             String[] parts = line.split(" ");
             String monkey = parts[0].substring(0, parts[0].length() - 1);
 
@@ -50,7 +54,7 @@ public class AdventOfCode2022Day21 implements AocPuzzle {
     public String part2() throws AocSolveException {
         part2values.remove("humn");
 
-        while (reduceMaps(part2expressions, part2values) > 0);
+        while (reduceMaps(part2expressions, part2values) > 0) ;
 
         // Start at root.
         Expression root = part2expressions.get("root");

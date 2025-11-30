@@ -1,63 +1,50 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class AdventOfCode2022Day05 implements AocPuzzle {
+@AocSolution(year = 2022, day = 5)
+public class AdventOfCode2022Day05 implements NewAocPuzzle {
 
     private final Map<Character, List<Character>> crates = new HashMap<>();
-    private final List<String> moves = new ArrayList<>();
+    private List<String> moves;
 
     @Override
-    public void load(String filename) {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 5);
+        List<List<String>> input = aocInput.readInputAsListSeparateByEmptyLine();
 
-            // Read setup
-            List<String> setup = new ArrayList<>();
-            while (iter.hasNext()) {
-                String line = iter.next();
+        List<String> setup = input.get(0);
 
-                if (line.isEmpty()) {
-                    // Setup is done; move to instructions
-                    break;
-                } else {
-                    setup.add(line);
-                }
-            }
-
-            // Last line gives number of stacks
-            String numberString = setup.get(setup.size() - 1);
-            for (int i = 1; i < numberString.length(); i += 4) {
-                crates.put(numberString.charAt(i), new ArrayList<>());
-            }
-
-            // Read lines from the bottom (index 0 is the bottom crate)
-            for (int l = setup.size() - 2; l >= 0; l--) {
-                String line = setup.get(l);
-
-                // Fill crates into stacks
-                for (int i = 1; i < line.length(); i += 4) {
-                    Character c = (char) (line.charAt(i));
-                    if (!c.equals(' ')) {
-                        crates.get(numberString.charAt(i)).add(c);
-                    }
-                }
-            }
-
-            // Move instructions into array
-            while (iter.hasNext()) {
-                moves.add(iter.next());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Last line gives number of stacks
+        String numberString = setup.get(setup.size() - 1);
+        for (int i = 1; i < numberString.length(); i += 4) {
+            crates.put(numberString.charAt(i), new ArrayList<>());
         }
+
+        // Read lines from the bottom (index 0 is the bottom crate)
+        for (int l = setup.size() - 2; l >= 0; l--) {
+            String line = setup.get(l);
+
+            // Fill crates into stacks
+            for (int i = 1; i < line.length(); i += 4) {
+                Character c = (char) (line.charAt(i));
+                if (!c.equals(' ')) {
+                    crates.get(numberString.charAt(i)).add(c);
+                }
+            }
+        }
+
+        // Move instructions into array
+        moves = input.get(1);
     }
 
     @Override

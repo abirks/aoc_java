@@ -1,20 +1,22 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2021Day02 implements AocPuzzle {
+@AocSolution(year = 2021, day = 2)
+public class AdventOfCode2021Day02 implements NewAocPuzzle {
 
     private List<String> input;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 2);
+        this.input = aocInput.readInputAsList();
     }
 
     @Override

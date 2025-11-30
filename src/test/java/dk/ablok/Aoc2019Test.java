@@ -236,7 +236,7 @@ class Aoc2019Test {
 
     private void assertIntcodePuzzle(AocPuzzleWithDisplay puzzle, String expected1, String expected2)
             throws AocLoadException, AocSolveException {
-        puzzle.enableDisplay(true);
+        puzzle.enableDisplay(false);
         assertAocDay(puzzle, expected1, expected2);
     }
 

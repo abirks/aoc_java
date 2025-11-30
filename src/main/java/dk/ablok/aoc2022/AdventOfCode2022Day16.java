@@ -1,10 +1,10 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.graph.GraphNode;
-import dk.ablok.aoc.io.InputUtils;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -12,50 +12,48 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AdventOfCode2022Day16 implements AocPuzzle {
-    private Set<Tunnel> tunnels = new HashSet<>();
-    private Map<String, Integer> pressure = new HashMap<>();
+@AocSolution(year = 2022, day = 16)
+public class AdventOfCode2022Day16 implements NewAocPuzzle {
+
+    private static final int DURATION = 30;
+    private final Map<String, Integer> flowRates = new HashMap<>();
+    private final Map<String, Set<String>> tunnels = new HashMap<>();
+    private final State initialState = new State("AA", Collections.EMPTY_SET, 0, 0, new ArrayList<String>(), "Start");
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (String line : InputUtils.readInputAsList(filename)) {
-            Pattern pattern = Pattern.compile("Valve (?<name>[A-Z]+) has flow rate=(?<pressure>\\d+); tunnels? leads? to valves? (?<tunnels>[A-Z, ]+)");
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 16);
+
+        for (String line : aocInput.readInputAsList()) {
+            Pattern pattern = Pattern.compile("Valve (?<from>[A-Z]+) has flow rate=(?<flow>\\d+); tunnels? leads? to valves? (?<tos>[A-Z, ]+)");
             Matcher matcher = pattern.matcher(line);
 
             if (!matcher.find()) {
                 throw new IllegalArgumentException("No match!");
             }
 
-            for (String to : matcher.group("tunnels").split(", ")) {
-                tunnels.add(new Tunnel(matcher.group("name"), to, 1));
-            }
-            pressure.put(matcher.group("name"), Integer.parseInt(matcher.group("pressure")));
+            flowRates.put(matcher.group("from"), Integer.parseInt(matcher.group("flow")));
+            tunnels.put(matcher.group("from"), new HashSet<>(List.of(matcher.group("tos").split(", "))));
         }
-
-        //reduceTunnels();
-        //generateVisualization();
     }
-
-    Set<State> visited = new HashSet<>();
-    int bestTimeToAllOpen = 30;
 
     @Override
     public String part1() throws AocSolveException {
-        State initial = new State();
-        visited.add(initial);
-        visit(initial);
+        List<State> states = Collections.singletonList(initialState);
+        Set<State> visited = new HashSet<>();
 
-        return Integer.toString(visited.stream().mapToInt(s -> s.pressureReleased).max().orElseThrow());
-    }
+        while (!states.isEmpty()) {
+            List<State> newStates = states.stream()
+                    .flatMap(State::getPossibleMoves)
+                    .filter(s -> !visited.contains(s))
+                    .toList();
 
-    private void visit(State v) {
-        List<State> moves = v.getConnectionsFrom().map(State.class::cast).toList();
-
-        for (State move : moves) {
-            if (visited.contains(move)) continue;
-            visited.add(move);
-            visit(move);
+            visited.addAll(newStates);
+            states = newStates;
         }
+
+        var best = visited.stream().max(Comparator.comparingInt(State::getReleased)).orElseThrow();
+        return Integer.toString(best.released);
     }
 
     @Override
@@ -63,194 +61,90 @@ public class AdventOfCode2022Day16 implements AocPuzzle {
         return null;
     }
 
-    private void generateVisualization() {
-        // Print nodes
-        // { id: 1, label: "Node 1" },
-        System.out.println("Nodes:");
-        for (Map.Entry<String, Integer> entry : pressure.entrySet()) {
-            System.out.println("{ id: " + entry.getKey().hashCode() +
-                    ", value: " + entry.getValue() +
-                    ", label: \"" + entry.getKey() + "\"" +
-                    ", color: \"" + (entry.getValue() == 0 ? "#FF3333" : "#33FF33") +
-                    "\"},");
-        }
-
-        // Print edges
-        // { from: 1, to: 2 },
-        System.out.println("Edges:");
-        for (Tunnel tunnel : tunnels) {
-            System.out.println("{ from: " + tunnel.from.hashCode() +
-                    ", to: " + tunnel.to.hashCode() +
-                    ", value: " + tunnel.length +
-                    ", color: \"#333333\" },");
-        }
-    }
-
-    private void reduceTunnels() {
-        // Repeat while there are still tunnels with endpoints in a zero-pressure chamber
-        while (getZeroPressureChamber().isPresent()) {
-            // 1. Find a zero-pressure chamber
-            String chamber = getZeroPressureChamber().get();
-
-            // 2. For each tunnel leading to the chamber... (A,x,Z)
-            for (Tunnel to : getTunnelToDestination(chamber)) {
-
-                // 3. ... for each tunnel leading out of the chamber (Z,y,B)...
-                for (Tunnel from : getTunnelFromOrigin(chamber)) {
-                    // Skip tunnels leading back the same way
-                    if (from.to.equals(to.from)) continue;
-
-                    // 3. Create a new tunnel
-                    var var = new Tunnel(to.from, from.to, to.length + from.length);
-                    tunnels.add(var);
-                    //System.out.println("Added " + var);
-
-                    // 4. Remove the original exit tunnel
-                    tunnels.remove(from);
-                    //System.out.println("Removed " + from);
-                }
-
-                // 5. Remove the original entry tunnel
-                tunnels.remove(to);
-                //System.out.println("Removed " + to);
-            }
-            // 6. Remove the chamber
-            pressure.remove(chamber);
-            //System.out.println("Removed " + chamber);
-            //System.out.println();
-        }
-    }
-
-    private Optional<String> getZeroPressureChamber() {
-        return pressure.entrySet().stream()
-                .filter(e -> e.getValue() == 0)
-                .filter(e -> !e.getKey().equals("AA"))
-                .map(Map.Entry::getKey)
-                .findAny();
-    }
-
-    private List<Tunnel> getTunnelFromOrigin(String origin) {
-        return tunnels.stream()
-                .filter(t -> t.from.equals(origin))
-                .toList();
-    }
-
-    private List<Tunnel> getTunnelToDestination(String destination) {
-        return tunnels.stream()
-                .filter(t -> t.to.equals(destination))
-                .toList();
-    }
-
-    class State implements GraphNode {
+    class State {
         private final String position;
-        private int pressureReleased;
-        private final int timePassed;
-        private final Map<String, Boolean> open;
-        private final List<State> path;
+        private final Set<String> open;
+        private final int released;
+        private final int minute;
+        private List<String> log;
 
-        public State(State previous, String newPosition, int timePassed, boolean open) {
-            this.position = newPosition;
-            this.timePassed = previous.timePassed + timePassed;
-            this.open = new HashMap<>(previous.open);
-            this.path = new ArrayList<>(previous.path);
-            this.path.add(this);
-
-            this.pressureReleased = previous.pressureReleased + timePassed * release();
-
-            if (open) {
-                this.open.put(position, true);
-                this.pressureReleased += pressure.get(position);
-            }
+        public State(String position, Set<String> open, int released, int minute) {
+            this.position = position;
+            this.open = open;
+            this.released = released;
+            this.minute = minute;
         }
 
-        public State() {
-            this.position = "AA";
-            this.timePassed = 1;
-            this.open = pressure.keySet().stream().collect(Collectors.toMap(v -> v, v -> false));
-            this.path = new ArrayList<>();
-            this.path.add(this);
-            this.pressureReleased = 0;
+        public State(String position, Set<String> open, int released, int minute, List<String> startLog, String action) {
+            this(position, open, released, minute);
+            this.log = startLog;
+            log.add(action);
         }
 
-        @Override
-        public Stream<GraphNode> getConnectionsFrom() {
-            if (timePassed >= bestTimeToAllOpen) {
-                // bestTimeToAllOpen starts at 30, so the search is capped at 30 minutes
-                // This is further restricted as shorter paths to open all valves are found
-                return Stream.empty();
-            }
-
-            if (hasAllOpen()) {
-                bestTimeToAllOpen = timePassed;
-
-                // Stay put for the rest of the time
-                return Stream.of(new State(this, position, 30 - timePassed, false));
-            }
-
-            // Add options to move to other chambers
-            List<Tunnel> list = tunnels.stream()
-                    .filter(t -> t.from.equals(position))
-                    .filter(t -> t.length + timePassed <= 30)
-                    .toList();
-
-            String debug2 = list.stream().map(Tunnel::toString).collect(Collectors.joining("; "));
-
-            Set<GraphNode> output = list.stream()
-                    .map(t -> new State(this, t.to, t.length, false))
-                    .collect(Collectors.toSet());
-
-            // If the valve at this position is not open and pressure is not zero, add option to open it
-            if (Boolean.FALSE.equals(open.get(position)) && pressure.get(position) != 0) {
-                output.add(new State(this, position, 1, true));
-            }
-
-            return output.stream();
+        public int getReleased() {
+            return released;
         }
 
-        private boolean hasAllOpen() {
-            return open.entrySet().stream()
-                    .filter(e -> pressure.get(e.getKey()) > 0) // Only look at valves with non-zero pressure
-                    .allMatch(Map.Entry::getValue);
+        public Stream<State> getPossibleMoves() {
+            List<State> ret = new ArrayList<>();
+
+            if (canOpen()) {
+                ret.add(open());
+            }
+
+            if (canMove()) {
+                for (String to : tunnels.get(getPosition())) {
+                    ret.add(moveTo(to));
+                }
+            }
+
+            return ret.stream();
         }
 
-        private int release() {
-            return open.entrySet().stream()
-                    .filter(Map.Entry::getValue)
-                    .mapToInt(e -> pressure.get(e.getKey()))
-                    .sum();
+        private String getPosition() {
+            return position;
+        }
+
+        private boolean canOpen() {
+            return !open.contains(position) && flowRates.get(position) > 0 && minute < DURATION;
+        }
+
+        private boolean canMove() {
+            return minute < DURATION;
+        }
+
+        private State open() {
+            var newOpen = new HashSet<>(open);
+            newOpen.add(position);
+            return new State(position, newOpen, released + releasedPerMinute(), minute + 1, new ArrayList<>(log), writeLog("You open valve " + position + "."));
+        }
+
+        private State moveTo(String to) {
+            return new State(to, open, released + releasedPerMinute(), minute + 1, new ArrayList<>(log), writeLog("You move to valve " + to + "."));
+        }
+
+        private int releasedPerMinute() {
+            return open.stream().mapToInt(flowRates::get).sum();
+        }
+
+        private String writeLog(String action) {
+            var status = "Minute " + minute + ": Valves " + open.stream().sorted().collect(Collectors.joining(", ")) + " are open, releasing " + releasedPerMinute() + " pressure. Total is now " + (released + releasedPerMinute()) + ". ";
+            return status + action;
+        }
+
+        private int calculateEstimate() {
+            return released + (DURATION - minute) * releasedPerMinute();
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            State state = (State) o;
-            return pressureReleased == state.pressureReleased && timePassed == state.timePassed && Objects.equals(position, state.position) && Objects.equals(open, state.open);
+            if (!(o instanceof State state)) return false;
+            return Objects.equals(position, state.position) && Objects.equals(open, state.open) && Objects.equals(calculateEstimate(), state.calculateEstimate());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(position, pressureReleased, timePassed, open);
-        }
-
-        @Override
-        public String toString() {
-            return position + "(" + timePassed + " passed, " + pressureReleased + " released)";
-        }
-    }
-
-    record Tunnel(String from, String to, int length) {
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Tunnel tunnel = (Tunnel) o;
-            return length == tunnel.length && Objects.equals(from, tunnel.from) && Objects.equals(to, tunnel.to);
-        }
-
-        @Override
-        public String toString() {
-            return from + "," + length + "," + to;
+            return Objects.hash(position, open, calculateEstimate());
         }
     }
 }

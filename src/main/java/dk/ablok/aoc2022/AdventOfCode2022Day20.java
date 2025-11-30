@@ -1,24 +1,27 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2022Day20 implements AocPuzzle {
+@AocSolution(year = 2022, day = 20)
+public class AdventOfCode2022Day20 implements NewAocPuzzle {
 
     private static final long KEY = 811589153L;
     private final List<Number> inputWithoutKey = new ArrayList<>();
     private final List<Number> inputWithKey = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 20);
+
         // Create elements
-        for (String line : readInputAsList(filename)) {
+        for (String line : aocInput.readInputAsList()) {
             inputWithoutKey.add(new Number(Long.parseLong(line)));
             inputWithKey.add(new Number(Long.parseLong(line) * KEY));
         }

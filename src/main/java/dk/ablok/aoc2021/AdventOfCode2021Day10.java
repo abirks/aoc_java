@@ -1,17 +1,18 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2021Day10 implements AocPuzzle {
-    private static final Map<Character, Character> matches = new HashMap<>();
-    private static final Map<Character, Long> valuesA = new HashMap<>();
-    private static final Map<Character, Long> valuesB = new HashMap<>();
+@AocSolution(year = 2021, day = 10)
+public class AdventOfCode2021Day10 implements NewAocPuzzle {
+    private final Map<Character, Character> matches = new HashMap<>();
+    private final Map<Character, Long> valuesA = new HashMap<>();
+    private final Map<Character, Long> valuesB = new HashMap<>();
 
     private List<String> input;
     private final List<Deque<Character>> incomplete = new ArrayList<>();
@@ -32,8 +33,9 @@ public class AdventOfCode2021Day10 implements AocPuzzle {
     }
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 10);
+        input = aocInput.readInputAsList();
     }
 
     @Override

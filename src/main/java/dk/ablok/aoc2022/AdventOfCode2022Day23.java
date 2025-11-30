@@ -1,17 +1,16 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
-public class AdventOfCode2022Day23 implements AocPuzzle {
+@AocSolution(year = 2022, day = 23)
+public class AdventOfCode2022Day23 implements NewAocPuzzle {
 
     private static final Position NORTH = new Position(0, -1);
     private static final Position SOUTH = new Position(0, 1);
@@ -25,24 +24,19 @@ public class AdventOfCode2022Day23 implements AocPuzzle {
     private Map<Position, AtomicInteger> plannedMoves;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 23);
 
-            int y = 0;
-            while (iter.hasNext()) {
-                String line = iter.next();
-                int x = 0;
-                for (char c : line.toCharArray()) {
-                    if (c == '#') {
-                        new Elf(x, y);
-                    }
-                    x++;
+        int y = 0;
+        for (String line : aocInput.readInputAsList()) {
+            int x = 0;
+            for (char c : line.toCharArray()) {
+                if (c == '#') {
+                    new Elf(x, y);
                 }
-                y++;
+                x++;
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            y++;
         }
     }
 

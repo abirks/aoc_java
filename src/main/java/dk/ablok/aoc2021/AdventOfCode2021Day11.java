@@ -1,40 +1,32 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AdventOfCode2021Day11 implements AocPuzzle {
+@AocSolution(year = 2021, day = 11)
+public class AdventOfCode2021Day11 implements NewAocPuzzle {
 
-    private static final Map<Vect, AtomicInteger> map = new HashMap<>();
+    private final Map<Vect, AtomicInteger> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        File file = new File(filename);
-        // TODO refactor to use AocInput
-        try (FileReader fr = new FileReader(file);
-             BufferedReader br = new BufferedReader(fr)) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 11);
 
-            int x;
-            int y = 0;
-            String inline;
-            while ((inline = br.readLine()) != null) {
-                x = 0;
-                for (char c : inline.toCharArray()) {
-                    map.put(new Vect(x, y), new AtomicInteger(Integer.parseInt(String.valueOf(c))));
-                    x++;
-                }
-                y++;
+        int x;
+        int y = 0;
+        for (var line : aocInput.readInputAsList()) {
+            x = 0;
+            for (char c : line.toCharArray()) {
+                map.put(new Vect(x, y), new AtomicInteger(Integer.parseInt(String.valueOf(c))));
+                x++;
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            y++;
         }
     }
 

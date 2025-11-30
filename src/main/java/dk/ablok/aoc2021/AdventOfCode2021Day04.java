@@ -1,71 +1,58 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class AdventOfCode2021Day04 implements AocPuzzle {
-    private Map<Integer, Number> numbers = new HashMap<>();
-    private List<Integer> draws = new ArrayList<>();
-    private Set<Board> boards = new HashSet<>();
+@AocSolution(year = 2021, day = 4)
+public class AdventOfCode2021Day04 implements NewAocPuzzle {
+    private final Map<Integer, Number> numbers = new HashMap<>();
+    private final List<Integer> draws = new ArrayList<>();
+    private final Set<Board> boards = new HashSet<>();
     private Iterator<Integer> drawsIterator;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        File file = new File(filename);
-        // TODO refactor to use AocInput
-        try (FileReader fr = new FileReader(file);
-             BufferedReader br = new BufferedReader(fr)) {
-            // Init all numbers in map
-            for (int i = 0; i <= 99; i++) {
-                numbers.put(i, new Number(i));
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 4);
+        var sections = aocInput.readInputAsListSeparateByEmptyLine();
+
+        // Init all numbers in map
+        for (int i = 0; i <= 99; i++) {
+            numbers.put(i, new Number(i));
+        }
+
+        // Read draws from input
+        draws.addAll(Arrays.stream(sections.get(0).get(0).split(",")).map(Integer::parseInt).toList());
+
+        // Read boards
+        for (var board : sections) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (var line : board) {
+                stringBuilder.append(line);
+                stringBuilder.append(" ");
             }
 
-            // Read draws from input
-            draws.addAll(Arrays.stream(br.readLine().split(",")).map(Integer::parseInt).toList());
+            // Put board into data structure
+            List<Integer> boardNumbers = Arrays.stream(stringBuilder.toString().trim().replace("  ", " ").split(" ")).map(Integer::parseInt).toList();
+            Board newBoard = new Board();
+            for (int i = 0; i < 5; i++) { // Row/column counter
+                Line row = new Line();
+                Line column = new Line();
 
-            // Read boards
-            String line;
-            // TODO Refactor to use hasNext()
-            while (true) {
-                // Each board consists of five lines with an empty line between. Skip the empty line and keep the ones with numbers.
-                if ((line = br.readLine()) == null) {
-                    // EOF reached
-                    break;
+                for (int j = 0; j < 5; j++) { // Index
+                    row.add(numbers.get(boardNumbers.get(i * 5 + j)));
+                    column.add(numbers.get(boardNumbers.get(i + j * 5)));
                 }
 
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < 5; i++) {
-                    stringBuilder.append(br.readLine());
-                    stringBuilder.append(" ");
-                }
-
-                List<Integer> boardNumbers = Arrays.stream(stringBuilder.toString().trim().replace("  ", " ").split(" ")).map(Integer::parseInt).collect(Collectors.toList());
-                Board newBoard = new Board();
-                for (int i = 0; i < 5; i++) { // Row/column counter
-                    Line row = new Line();
-                    Line column = new Line();
-
-                    for (int j = 0; j < 5; j++) { // Index
-                        row.add(numbers.get(boardNumbers.get(i * 5 + j)));
-                        column.add(numbers.get(boardNumbers.get(i + j * 5)));
-                    }
-
-                    newBoard.add(row);
-                    newBoard.add(column);
-                }
-
-                boards.add(newBoard);
+                newBoard.add(row);
+                newBoard.add(column);
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+
+            boards.add(newBoard);
         }
     }
 

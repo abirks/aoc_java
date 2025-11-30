@@ -1,17 +1,16 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class AdventOfCode2022Day07 implements AocPuzzle {
+@AocSolution(year = 2022, day = 7)
+public class AdventOfCode2022Day07 implements NewAocPuzzle {
 
     public static final int PART1_LIMIT = 100_000;
     public static final int PART2_NEEDED = 30_000_000;
@@ -21,39 +20,34 @@ public class AdventOfCode2022Day07 implements AocPuzzle {
     private final List<Long> sizes = new ArrayList<>();
 
     @Override
-    public void load(String filename) {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 7);
 
-            Node here = root;
+        Node here = root;
 
-            Iterator<String> iter = stream.iterator();
-            while (iter.hasNext()) {
-                String line = iter.next();
-                if (line.startsWith("$ cd")) {
-                    // Change dir
-                    String arg = line.substring(5);
-                    switch (arg) {
-                        case "/" -> here = root;
-                        case ".." -> here = here.parent;
-                        default -> here = here.contents.stream()
-                                .filter(d -> d.name.equals(arg))
-                                .findFirst()
-                                .orElseThrow();
-                    }
-                } else if(line.startsWith("$ ls")) {
-                    // Do nothing for ls
-                } else if (line.startsWith("dir")) {
-                    // Add dir
-                    String[] parts = line.split(" ");
-                    new Node(here, parts[1], 0);
-                } else {
-                    // Add file
-                    String[] parts = line.split(" ");
-                    new Node(here, parts[1], Long.parseLong(parts[0]));
+        for (String line : aocInput.readInputAsList()) {
+            if (line.startsWith("$ cd")) {
+                // Change dir
+                String arg = line.substring(5);
+                switch (arg) {
+                    case "/" -> here = root;
+                    case ".." -> here = here.parent;
+                    default -> here = here.contents.stream()
+                            .filter(d -> d.name.equals(arg))
+                            .findFirst()
+                            .orElseThrow();
                 }
+            } else if (line.startsWith("$ ls")) {
+                // Do nothing for ls
+            } else if (line.startsWith("dir")) {
+                // Add dir
+                String[] parts = line.split(" ");
+                new Node(here, parts[1], 0);
+            } else {
+                // Add file
+                String[] parts = line.split(" ");
+                new Node(here, parts[1], Long.parseLong(parts[0]));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

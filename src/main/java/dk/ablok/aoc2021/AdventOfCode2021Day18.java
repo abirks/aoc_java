@@ -1,37 +1,25 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AdventOfCode2021Day18 implements AocPuzzle {
+@AocSolution(year = 2021, day = 18)
+public class AdventOfCode2021Day18 implements NewAocPuzzle {
     private final List<Number> numbers = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO refactor to use AocInput
-        File file = new File(filename);
-        try (FileReader fr = new FileReader(file);
-             BufferedReader br = new BufferedReader(fr)) {
-            // Read numbers
-            String inline;
-            while ((inline = br.readLine()) != null) {
-                if (inline.isBlank()) {
-                    break;
-                }
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 18);
 
-                numbers.add(new SnailFishNumber(inline));
-            }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+        for (var line : aocInput.readInputAsList()) {
+            numbers.add(new SnailFishNumber(line));
         }
     }
 

@@ -1,16 +1,17 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2022Day10 implements AocPuzzle {
+@AocSolution(year = 2022, day = 10)
+public class AdventOfCode2022Day10 implements NewAocPuzzle {
 
     private List<String> input;
 
@@ -19,8 +20,9 @@ public class AdventOfCode2022Day10 implements AocPuzzle {
     private final List<Integer> reg = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 10);
+        input = aocInput.readInputAsList();
         reg.add(1);
     }
 

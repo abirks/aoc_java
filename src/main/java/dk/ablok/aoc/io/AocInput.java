@@ -1,6 +1,8 @@
 package dk.ablok.aoc.io;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -13,6 +15,9 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class AocInput {
+
+    private static final Logger logger = LoggerFactory.getLogger(AocInput.class);
+
     private final int year;
     private final int day;
     private final Properties properties;
@@ -142,6 +147,7 @@ public class AocInput {
             }
             return path;
         } catch (IOException e) {
+            logger.error("Exception while reading input for day {}-{}\n", year, day);
             throw new AocLoadException(e);
         }
     }
@@ -157,7 +163,8 @@ public class AocInput {
             }
             return content.toString();
         } catch (IOException e) {
-            throw new AocLoadException("Exception while reading input stream from AoC website", e);
+            logger.error("Exception while reading input stream from AoC website", e);
+            throw new AocLoadException(e);
         }
 
     }
@@ -181,7 +188,8 @@ public class AocInput {
 
             return connection;
         } catch (IOException e) {
-            throw new AocLoadException("Exception while connecting to AoC website", e);
+            logger.error("Error while opening connection", e);
+            throw new AocLoadException(e);
         }
     }
 
@@ -194,12 +202,13 @@ public class AocInput {
             prop.load(input);
             return prop;
         } catch (IOException e) {
+            logger.error("Error while reading properties", e);
             throw new AocLoadException(e);
         }
     }
 
     private void saveToFile(String content, String filePath) throws IOException {
         Files.writeString(Path.of(filePath), content, StandardOpenOption.CREATE);
-        System.out.printf("Downloaded input for day %d-%d%n", year, day);
+        logger.info("Downloaded input for day {}-{}\n", year, day);
     }
 }

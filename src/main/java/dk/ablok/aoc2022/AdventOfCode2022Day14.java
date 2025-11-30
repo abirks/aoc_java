@@ -1,55 +1,46 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AnsiColorConstants;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.stream.Stream;
 
-public class AdventOfCode2022Day14 implements AocPuzzle {
+@AocSolution(year = 2022, day = 14)
+public class AdventOfCode2022Day14 implements NewAocPuzzle {
 
     private static final Position SAND_START = new Position(500, 0);
     private int mapLowerBound = 0;
     private final Map<Position, Unit> map = new HashMap<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO Use utils class
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 14);
 
-            // For each line
-            while (iter.hasNext()) {
-                String line = iter.next();
-                String[] parts = line.split(" -> ");
+        for (String line : aocInput.readInputAsList()) {
+            String[] parts = line.split(" -> ");
 
-                Position pointer = Position.fromString(parts[0]);
-                map.put(pointer, new Unit(pointer));
-                // For each line segment
-                for (int i = 1; i < parts.length; i++) {
-                    Position target = Position.fromString(parts[i]);
-                    Position unit = target.subtract(pointer).unit();
+            Position pointer = Position.fromString(parts[0]);
+            map.put(pointer, new Unit(pointer));
+            // For each line segment
+            for (int i = 1; i < parts.length; i++) {
+                Position target = Position.fromString(parts[i]);
+                Position unit = target.subtract(pointer).unit();
 
-                    // For each point on the segment
-                    while (!pointer.equals(target)) {
-                        pointer = pointer.add(unit);
-                        map.put(pointer, new Unit(pointer));
+                // For each point on the segment
+                while (!pointer.equals(target)) {
+                    pointer = pointer.add(unit);
+                    map.put(pointer, new Unit(pointer));
 
-                        if (pointer.y > mapLowerBound) {
-                            mapLowerBound = pointer.y;
-                        }
+                    if (pointer.y > mapLowerBound) {
+                        mapLowerBound = pointer.y;
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
         }
     }
 

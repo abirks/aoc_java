@@ -1,45 +1,40 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-public class AdventOfCode2021Day16 implements AocPuzzle {
+@AocSolution(year = 2021, day = 16)
+public class AdventOfCode2021Day16 implements NewAocPuzzle {
     private Packet top;
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
         BitSet input = new BitSet();
-        // TODO refactor to use AocInput
+
+        var aocInput = new AocInput(2021, 16);
         int i = 0;
 
-        try (FileInputStream fileInput = new FileInputStream(filename)) {
-            int r;
-            while ((r = fileInput.read()) != -1) {
-                if (r == '\n') break;
+        for (char r : aocInput.read1dArray()) {
+            int x = Character.digit(r, 16);
 
-                int x = Character.digit((char) r, 16);
-
-                if (x > 15 || x < 0) {
-                    throw new NumberFormatException();
-                } else {
-                    for (char c : Integer.toBinaryString(x + 16).substring(1).toCharArray()) {
-                        input.set(i, c == '1');
-                        i++;
-                    }
+            if (x > 15 || x < 0) {
+                throw new NumberFormatException();
+            } else {
+                for (char c : Integer.toBinaryString(x + 16).substring(1).toCharArray()) {
+                    input.set(i, c == '1');
+                    i++;
                 }
             }
-
-            top = new Packet(input);
-        } catch (IOException e) {
-            throw new AocLoadException(e);
         }
+
+        top = new Packet(input);
     }
 
     @Override

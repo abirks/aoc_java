@@ -1,16 +1,17 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AdventOfCode2021Day22 implements AocPuzzle {
+@AocSolution(year = 2021, day = 22)
+public class AdventOfCode2021Day22 implements NewAocPuzzle {
 
     private static final Pattern pattern = Pattern.compile("(?<op>\\D+) " +
             "x=(?<xmin>[\\d-]+)..(?<xmax>[\\d-]+)," +
@@ -21,31 +22,24 @@ public class AdventOfCode2021Day22 implements AocPuzzle {
     private static Set<Vector> active = new HashSet<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // Load file
-        File f = new File(filename);
-        // TODO use utils class
-        try (Scanner sc = new Scanner(f)) {
-            // Parse each instruction
-            while (sc.hasNext()) {
-                String line = sc.nextLine();
-                Matcher matcher = pattern.matcher(line);
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 22);
 
-                if (!matcher.find()) {
-                    throw new IllegalArgumentException("No match!");
-                }
+        for (var line : aocInput.readInputAsList()) {
+            Matcher matcher = pattern.matcher(line);
 
-                instructions.add(new CubeInstruction(
-                        matcher.group("op").equals("on"),
-                        Integer.parseInt(matcher.group("xmin")),
-                        Integer.parseInt(matcher.group("xmax")),
-                        Integer.parseInt(matcher.group("ymin")),
-                        Integer.parseInt(matcher.group("ymax")),
-                        Integer.parseInt(matcher.group("zmin")),
-                        Integer.parseInt(matcher.group("zmax"))));
+            if (!matcher.find()) {
+                throw new IllegalArgumentException("No match!");
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+
+            instructions.add(new CubeInstruction(
+                    matcher.group("op").equals("on"),
+                    Integer.parseInt(matcher.group("xmin")),
+                    Integer.parseInt(matcher.group("xmax")),
+                    Integer.parseInt(matcher.group("ymin")),
+                    Integer.parseInt(matcher.group("ymax")),
+                    Integer.parseInt(matcher.group("zmin")),
+                    Integer.parseInt(matcher.group("zmax"))));
         }
     }
 

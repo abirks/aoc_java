@@ -1,51 +1,46 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day25 implements AocPuzzle {
+@AocSolution(year = 2021, day = 25)
+public class AdventOfCode2021Day25 implements NewAocPuzzle {
     private Map<Vect, State> map = new HashMap<>();
     private int xSize;
     private int ySize;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO refactor to use AocInput
-        // Open file
-        File f = new File(filename);
-        try (Scanner sc = new Scanner(f)) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 25);
 
-            // Load map
-            int y = 0;
-            int x = 0;
-            while (sc.hasNext()) {
-                x = 0;
-                for (char c : sc.nextLine().toCharArray()) {
-                    Vect position = new Vect(x, y);
-                    State state = switch (c) {
-                        case '>' -> State.EAST;
-                        case 'v' -> State.SOUTH;
-                        case '.' -> State.EMPTY;
-                        default -> throw new IllegalArgumentException("Unknown character: " + c);
-                    };
+        // Load map
+        int y = 0;
+        int x;
+        for (var line : aocInput.readInputAsList()) {
+            x = 0;
+            for (char c : line.toCharArray()) {
+                Vect position = new Vect(x, y);
+                State state = switch (c) {
+                    case '>' -> State.EAST;
+                    case 'v' -> State.SOUTH;
+                    case '.' -> State.EMPTY;
+                    default -> throw new IllegalArgumentException("Unknown character: " + c);
+                };
 
-                    map.put(position, state);
-                    x++;
-                }
-                y++;
+                map.put(position, state);
+                x++;
             }
-
-            // Keep max values
-            xSize = map.keySet().stream().map(v -> v.x).max(Integer::compare).orElseThrow() + 1;
-            ySize = map.keySet().stream().map(v -> v.y).max(Integer::compare).orElseThrow() + 1;
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            y++;
         }
+
+        // Keep max values
+        xSize = map.keySet().stream().map(v -> v.x).max(Integer::compare).orElseThrow() + 1;
+        ySize = map.keySet().stream().map(v -> v.y).max(Integer::compare).orElseThrow() + 1;
     }
 
     @Override

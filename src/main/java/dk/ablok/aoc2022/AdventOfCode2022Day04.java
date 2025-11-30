@@ -1,18 +1,22 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.io.InputUtils;
+import dk.ablok.aoc.io.AocInput;
 
-public class AdventOfCode2022Day04 implements AocPuzzle {
+@AocSolution(year = 2022, day = 4)
+public class AdventOfCode2022Day04 implements NewAocPuzzle {
 
     private int count1 = 0;
     private int count2 = 0;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (String line : InputUtils.readInputAsList(filename)) {
+    public void load() throws AocLoadException {
+        var input = new AocInput(2022, 4);
+
+        for (String line : input.readInputAsList()) {
             String[] parts = line.split(",");
             var left = new Interval(parts[0]);
             var right = new Interval(parts[1]);

@@ -1,23 +1,26 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2022Day18 implements AocPuzzle {
+@AocSolution(year = 2022, day = 18)
+public class AdventOfCode2022Day18 implements NewAocPuzzle {
 
     private final Set<Cube> lava = new HashSet<>();
     private final Set<Cube> air = new HashSet<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (String line : readInputAsList(filename)) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 18);
+
+        for (String line : aocInput.readInputAsList()) {
             lava.add(new Cube(line));
         }
     }

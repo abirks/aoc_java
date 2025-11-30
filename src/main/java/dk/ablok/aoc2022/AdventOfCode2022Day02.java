@@ -1,12 +1,13 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2022Day02 implements AocPuzzle {
+@AocSolution(year = 2022, day = 2)
+public class AdventOfCode2022Day02 implements NewAocPuzzle {
 
     private static final int WIN = 6;
     private static final int LOSE = 0;
@@ -19,8 +20,10 @@ public class AdventOfCode2022Day02 implements AocPuzzle {
     private int sum2 = 0;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        for (String line : readInputAsList(filename)) {
+    public void load() throws AocLoadException {
+        var input = new AocInput(2022, 2);
+
+        for (String line : input.readInputAsList()) {
             int opponent = parseShape(line.charAt(0));
             int me = parseShape(line.charAt(2));
             int me2 = myMove(opponent, parseDesired(line.charAt(2)));

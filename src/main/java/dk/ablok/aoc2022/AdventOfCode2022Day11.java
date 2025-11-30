@@ -1,16 +1,15 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 
-public class AdventOfCode2022Day11 implements AocPuzzle {
+@AocSolution(year = 2022, day = 11)
+public class AdventOfCode2022Day11 implements NewAocPuzzle {
 
     private static final int ROUNDS_PART1 = 20;
     private static final int ROUNDS_PART2 = 10000;
@@ -21,32 +20,26 @@ public class AdventOfCode2022Day11 implements AocPuzzle {
     private Long divisors = 1L;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
-            while (iter.hasNext()) {
-                String monkey = iter.next().replace("Monkey ", "").replace(":", "");
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 11);
+        List<List<String>> input = aocInput.readInputAsListSeparateByEmptyLine();
 
-                String itemString = iter.next().replace("  Starting items: ", "");
-                String operationString = iter.next().replace("  Operation: new = old ", "");
+        for (List<String> monkey : input) {
+            String monkeyId = monkey.get(0).replace("Monkey ", "").replace(":", "");
 
-                String testString = iter.next().replace("  Test: divisible by ", "");
-                divisors *= Long.parseLong(testString);
+            String itemString = monkey.get(1).replace("  Starting items: ", "");
+            String operationString = monkey.get(2).replace("  Operation: new = old ", "");
 
-                String ifTrueString = iter.next().replace("    If true: throw to monkey ", "");
-                String ifFalseString = iter.next().replace("    If false: throw to monkey ", "");
+            String testString = monkey.get(3).replace("  Test: divisible by ", "");
+            divisors *= Long.parseLong(testString);
 
-                Monkey newMonkey = new Monkey(itemString, operationString, testString, ifTrueString, ifFalseString);
+            String ifTrueString = monkey.get(4).replace("    If true: throw to monkey ", "");
+            String ifFalseString = monkey.get(5).replace("    If false: throw to monkey ", "");
 
-                monkeys.put(Integer.parseInt(monkey), newMonkey);
-                part2Monkeys.put(Integer.parseInt(monkey), new Monkey(newMonkey));
+            Monkey newMonkey = new Monkey(itemString, operationString, testString, ifTrueString, ifFalseString);
 
-                if (iter.hasNext()) {
-                    iter.next(); // Empty line between monkeys
-                }
-            }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            monkeys.put(Integer.parseInt(monkeyId), newMonkey);
+            part2Monkeys.put(Integer.parseInt(monkeyId), new Monkey(newMonkey));
         }
     }
 

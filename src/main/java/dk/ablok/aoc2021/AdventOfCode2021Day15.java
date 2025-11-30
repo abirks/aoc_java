@@ -1,42 +1,39 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2021Day15 implements AocPuzzle {
+@AocSolution(year = 2021, day = 15)
+public class AdventOfCode2021Day15 implements NewAocPuzzle {
     private HashMap<Position, Integer> map;
     private int yMax;
     private int xMax;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO refactor to use AocInput
-        File f = new File(filename);
-        try (Scanner sc = new Scanner(f)) {
-            map = new HashMap<>();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 15);
 
-            int y = 0;
-            int x = 0;
-            while (sc.hasNext()) {
-                x = 0;
-                for (String c : sc.next().split("")) {
-                    map.put(new Position(x, y), Integer.parseInt(c));
-                    x++;
-                }
-                y++;
+        map = new HashMap<>();
+
+        int y = 0;
+        int x = 0;
+        for (var line : aocInput.readInputAsList()) {
+            x = 0;
+            for (String c : line.split("")) {
+                map.put(new Position(x, y), Integer.parseInt(c));
+                x++;
             }
-
-            xMax = x;
-            yMax = y;
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            y++;
         }
+
+        xMax = x;
+        yMax = y;
     }
 
     @Override

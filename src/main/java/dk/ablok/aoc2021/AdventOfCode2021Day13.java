@@ -1,43 +1,30 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day13 implements AocPuzzle {
+@AocSolution(year = 2021, day = 13)
+public class AdventOfCode2021Day13 implements NewAocPuzzle {
 
     private Set<Vect> points = new HashSet<>();
     private final List<String> instructions = new ArrayList<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        File file = new File(filename);
-        // TODO refactor to use AocInput
-        try (FileReader fr = new FileReader(file);
-             BufferedReader br = new BufferedReader(fr)) {
-            String inline;
-            while ((inline = br.readLine()) != null) {
-                if (inline.isEmpty()) {
-                    // Keep reading until we hit an empty line
-                    break;
-                }
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 13);
+        var sections = aocInput.readInputAsListSeparateByEmptyLine();
 
-                String[] parts = inline.split(",");
-                points.add(new Vect(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])));
-            }
-
-            while ((inline = br.readLine()) != null) {
-                instructions.add(inline);
-            }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+        for (var line : sections.get(0)) {
+            String[] parts = line.split(",");
+            points.add(new Vect(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])));
         }
+
+        instructions.addAll(sections.get(1));
     }
 
     @Override

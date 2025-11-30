@@ -2,18 +2,10 @@ package dk.ablok.aoc.io;
 
 import dk.ablok.aoc.exceptions.AocLoadException;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 @Deprecated
 public class InputUtils {
@@ -33,7 +25,6 @@ public class InputUtils {
         int day = Integer.parseInt(results.group(2));
         return new AocInput(year, day);
     }
-
 
     @Deprecated
     public static List<String> readInputAsList(String filename) throws AocLoadException {

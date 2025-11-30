@@ -1,49 +1,42 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AdventOfCode2021Day14 implements AocPuzzle {
+@AocSolution(year = 2021, day = 14)
+public class AdventOfCode2021Day14 implements NewAocPuzzle {
 
     private final Map<String, String> patterns = new HashMap<>();
     private Map<String, AtomicLong> pairs = new HashMap<>();
     private String template;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        File file = new File(filename);
-        //TODO Use utils class
-        try (FileReader fr = new FileReader(file);
-             BufferedReader br = new BufferedReader(fr)) {
-            // Read template
-            template = br.readLine();
-            br.readLine();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 14);
+        var sections = aocInput.readInputAsListSeparateByEmptyLine();
 
-            // Read patterns
-            String inline;
-            while ((inline = br.readLine()) != null) {
-                String[] parts = inline.split(" -> ");
-                patterns.put(parts[0], parts[1]);
-            }
+        // Read template
+        template = sections.get(0).get(0);
 
-            for (String k : patterns.keySet()) {
-                pairs.put(k, new AtomicLong(0L));
-            }
+        // Read patterns
+        for (var line : sections.get(1)) {
+            String[] parts = line.split(" -> ");
+            patterns.put(parts[0], parts[1]);
+        }
 
-            for (int i = 1; i < template.length(); i++) {
-                pairs.get(template.substring(i - 1, i + 1)).incrementAndGet();
-            }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+        for (String k : patterns.keySet()) {
+            pairs.put(k, new AtomicLong(0L));
+        }
+
+        for (int i = 1; i < template.length(); i++) {
+            pairs.get(template.substring(i - 1, i + 1)).incrementAndGet();
         }
     }
 

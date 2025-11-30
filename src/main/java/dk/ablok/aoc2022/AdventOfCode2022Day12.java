@@ -1,17 +1,16 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AnsiColorConstants;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 
-public class AdventOfCode2022Day12 implements AocPuzzle {
+@AocSolution(year = 2022, day = 12)
+public class AdventOfCode2022Day12 implements NewAocPuzzle {
 
     private final Set<Position> directions = new HashSet<>();
 
@@ -30,29 +29,26 @@ public class AdventOfCode2022Day12 implements AocPuzzle {
     }
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
-            int y = 0;
-            while (iter.hasNext()) {
-                char[] chars = iter.next().toCharArray();
-                for (int x = 0; x < chars.length; x++) {
-                    int value = chars[x];
-                    Position position = new Position(x, y);
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 12);
 
-                    map.put(position, value);
+        int y = 0;
+        for (String line : aocInput.readInputAsList()) {
+            char[] chars = line.toCharArray();
+            for (int x = 0; x < chars.length; x++) {
+                int value = chars[x];
+                Position position = new Position(x, y);
 
-                    if (value == 'S') start = position;
-                    if (value == 'E') end = position;
-                }
-                y++;
+                map.put(position, value);
+
+                if (value == 'S') start = position;
+                if (value == 'E') end = position;
             }
-
-            map.put(start, (int) 'a');
-            map.put(end, (int) 'z');
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+            y++;
         }
+
+        map.put(start, (int) 'a');
+        map.put(end, (int) 'z');
     }
 
     @Override

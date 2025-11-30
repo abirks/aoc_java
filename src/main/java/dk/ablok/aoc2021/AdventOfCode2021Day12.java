@@ -1,35 +1,25 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
-public class AdventOfCode2021Day12 implements AocPuzzle {
+@AocSolution(year = 2021, day = 12)
+public class AdventOfCode2021Day12 implements NewAocPuzzle {
 
-    static Set<Edge> edges = new HashSet<>();
+    private final Set<Edge> edges = new HashSet<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        // TODO refactor to use AocInput
-        File file = new File(filename);
-        try (FileReader fr = new FileReader(file);
-             BufferedReader br = new BufferedReader(fr)) {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 12);
 
-            String inline;
-            while ((inline = br.readLine()) != null) {
-                if (inline.isEmpty()) continue;
-
-                String[] parts = inline.split("-");
-                edges.add(new Edge(parts[0], parts[1]));
-            }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
+        for (var line : aocInput.readInputAsList()) {
+            String[] parts = line.split("-");
+            edges.add(new Edge(parts[0], parts[1]));
         }
     }
 
@@ -43,7 +33,7 @@ public class AdventOfCode2021Day12 implements AocPuzzle {
         return Integer.toString(countPaths(true));
     }
 
-    static int countPaths(boolean partB) {
+    int countPaths(boolean partB) {
         int paths = 0;
 
         // Create a pathfinder at start
@@ -74,7 +64,8 @@ public class AdventOfCode2021Day12 implements AocPuzzle {
         return paths;
     }
 
-    static class Pathfinder {
+    // TODO: Refactor to use pathfinder library
+    class Pathfinder {
         String position;
         List<String> previous;
         boolean smallrevisited = false;

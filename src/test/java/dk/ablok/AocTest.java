@@ -4,6 +4,7 @@ import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.reflections.Reflections;
@@ -16,6 +17,107 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AocTest {
+    @ParameterizedTest
+    @CsvSource(value = {
+            "2021, 1, 1288, 1311",
+            "2021, 2, 1580000, 1251263225",
+            "2021, 3, 3813416, 2990784",
+            "2021, 4, 28082, 8224",
+            "2021, 5, 7674, 20898",
+            "2021, 6, 396210, 1770823541496",
+            "2021, 7, 355764, 99634572",
+            "2021, 8, 440, 1046281",
+            "2021, 9, 560, 959136",
+            "2021, 10, 215229, 1105996483",
+            "2021, 11, 1642, 320",
+            "2021, 12, 3779, 96988",
+            "2021, 14, 3048, 3288891573057",
+            "2021, 15, 361, 2838",
+            "2021, 16, 1007, 834151779165",
+            "2021, 17, 10296, 2371",
+            "2021, 18, 4347, 4721",
+            "2021, 19, null",
+            "2021, 20, 5475, 17548",
+            "2021, 21, 920079, 56852759190649",
+            "2021, 22, 542711, null",
+            "2021, 23, null",
+            "2021, 24, null",
+            "2021, 25, 384, null"
+    }, nullValues = {"null"})
+    void test2021except13(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+        var puzzle = getSolution(year, day);
+        puzzle.load();
+        assertEquals(expected1, puzzle.part1());
+        assertEquals(expected2, puzzle.part2());
+    }
+
+    @Test
+    @AocCoverage(year = 2021, day = 13)
+    void test2021Day13() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+        final String CJCKBAPB = """
+                 ##    ##  ##  #  # ###   ##  ###  ###\s
+                #  #    # #  # # #  #  # #  # #  # #  #
+                #       # #    ##   ###  #  # #  # ###\s
+                #       # #    # #  #  # #### ###  #  #
+                #  # #  # #  # # #  #  # #  # #    #  #
+                 ##   ##   ##  #  # ###  #  # #    ###\s
+                """;
+        var puzzle = getSolution(2021, 13);
+        puzzle.load();
+        assertEquals("638", puzzle.part1());
+        assertEquals(CJCKBAPB, puzzle.part2());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "2022, 1, 74198, 209914",
+            "2022, 2, 10624, 14060",
+            "2022, 3, 8394, 2413",
+            "2022, 4, 562, 924",
+            "2022, 5, QPJPLMNNR, BQDNWJPVJ",
+            "2022, 6, 1647, 2447",
+            "2022, 7, 1182909, 2832508",
+            "2022, 8, 1688, 410400",
+            "2022, 9, 5779, 2331",
+            "2022, 11, 100345, 28537348205",
+            "2022, 12, 484, 478",
+            "2022, 13, 6046, 21423",
+            "2022, 14, 994, 26283",
+            "2022, 15, 4717631, 13197439355220",
+            "2022, 16, 1488, null",
+            "2022, 17, 3100, 1540634005751",
+            "2022, 18, 4300, 2490",
+            "2022, 19, null, null",
+            "2022, 20, 6640, 11893839037215",
+            "2022, 21, 232974643455000, 3740214169961",
+            "2022, 22, null, null",
+            "2022, 23, 4116, 984",
+            "2022, 24, null, null",
+            "2022, 25, 2=10---0===-1--01-20, null"
+    }, nullValues = {"null"})
+    void test2022except10(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+        var puzzle = getSolution(year, day);
+        puzzle.load();
+        assertEquals(expected1, puzzle.part1());
+        assertEquals(expected2, puzzle.part2());
+    }
+
+    @Test
+    void test2022Day10() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+        final String FZBPBFZF = """
+                #### #### ###  ###  ###  #### #### ####\s
+                #       # #  # #  # #  # #       # #   \s
+                ###    #  ###  #  # ###  ###    #  ### \s
+                #     #   #  # ###  #  # #     #   #   \s
+                #    #    #  # #    #  # #    #    #   \s
+                #    #### ###  #    ###  #    #### #   \s
+                """;
+        var puzzle = getSolution(2022, 10);
+        puzzle.load();
+        assertEquals("14720", puzzle.part1());
+        assertEquals(FZBPBFZF, puzzle.part2());
+    }
+
     @ParameterizedTest
     @CsvSource(value = {
             "2023, 1, 55029, 55686",
@@ -99,20 +201,7 @@ class AocTest {
             "2025, 9, incomplete, incomplete",
             "2025, 10, incomplete, incomplete",
             "2025, 11, incomplete, incomplete",
-            "2025, 12, incomplete, incomplete",
-            "2025, 13, incomplete, incomplete",
-            "2025, 14, incomplete, incomplete",
-            "2025, 15, incomplete, incomplete",
-            "2025, 16, incomplete, incomplete",
-            "2025, 17, incomplete, incomplete",
-            "2025, 18, incomplete, incomplete",
-            "2025, 19, incomplete, incomplete",
-            "2025, 20, incomplete, incomplete",
-            "2025, 21, incomplete, incomplete",
-            "2025, 22, incomplete, incomplete",
-            "2025, 23, incomplete, incomplete",
-            "2025, 24, incomplete, incomplete",
-            "2025, 25, incomplete, incomplete"
+            "2025, 12, incomplete, incomplete"
     }, nullValues = {"null"})
     void test2025(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
         var puzzle = getSolution(year, day);

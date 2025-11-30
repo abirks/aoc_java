@@ -1,14 +1,15 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
-public class AdventOfCode2022Day08 implements AocPuzzle {
+@AocSolution(year = 2022, day = 8)
+public class AdventOfCode2022Day08 implements NewAocPuzzle {
 
     private static final int DIM_X = 99;
     private static final int DIM_Y = 99;
@@ -16,9 +17,11 @@ public class AdventOfCode2022Day08 implements AocPuzzle {
     private final int[][] map = new int[DIM_X][DIM_Y];
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 8);
+
         int y = 0;
-        for (String line : readInputAsList(filename)) {
+        for (String line : aocInput.readInputAsList()) {
             map[y] = Arrays.stream(line.split("")).mapToInt(Integer::parseInt).toArray();
             y++;
         }

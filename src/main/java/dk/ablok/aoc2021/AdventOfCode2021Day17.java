@@ -1,16 +1,18 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.io.InputUtils;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AdventOfCode2021Day17 implements AocPuzzle {
+@AocSolution(year = 2021, day = 17)
+public class AdventOfCode2021Day17 implements NewAocPuzzle {
 
     private final Set<Integer> records = new HashSet<>();
     private final Set<Integer> succesful = new HashSet<>();
@@ -21,9 +23,11 @@ public class AdventOfCode2021Day17 implements AocPuzzle {
     private int ymax;
 
     @Override
-    public void load(String filename) throws AocLoadException {
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2021, 17);
+
         Pattern pattern = Pattern.compile("target area: x=(?<xmin>[0-9-]+)..(?<xmax>[0-9-]+), y=(?<ymin>[0-9-]+)..(?<ymax>[0-9-]+)");
-        Matcher matcher = pattern.matcher(InputUtils.readFirstLine(filename));
+        Matcher matcher = pattern.matcher(aocInput.readFirstLine());
         if (!matcher.find()) {
             throw new IllegalArgumentException("No match!");
         }

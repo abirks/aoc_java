@@ -1,21 +1,19 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.NewAocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
-public class AdventOfCode2022Day15 implements AocPuzzle {
+@AocSolution(year = 2022, day = 15)
+public class AdventOfCode2022Day15 implements NewAocPuzzle {
 
     private static final Pattern pattern = Pattern.compile(
             "^Sensor at x=(.*), y=(.*): closest beacon is at x=(.*), y=(.*)$");
@@ -27,22 +25,18 @@ public class AdventOfCode2022Day15 implements AocPuzzle {
     private static final Set<Sensor> sensors = new HashSet<>();
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-            Iterator<String> iter = stream.iterator();
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2022, 15);
 
-            while (iter.hasNext()) {
-                Matcher matcher = pattern.matcher(iter.next());
+        for (String line : aocInput.readInputAsList()) {
+            Matcher matcher = pattern.matcher(line);
 
-                if (matcher.find()) {
-                    sensors.add(new Sensor(Position.fromStrings(matcher.group(1), matcher.group(2)),
-                            Position.fromStrings(matcher.group(3), matcher.group(4))));
-                } else {
-                    throw new IllegalArgumentException("Unknown input!");
-                }
+            if (matcher.find()) {
+                sensors.add(new Sensor(Position.fromStrings(matcher.group(1), matcher.group(2)),
+                        Position.fromStrings(matcher.group(3), matcher.group(4))));
+            } else {
+                throw new IllegalArgumentException("Unknown input!");
             }
-        } catch (IOException e) {
-            throw new AocLoadException(e);
         }
     }
 
