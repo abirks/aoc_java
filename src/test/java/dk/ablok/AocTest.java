@@ -190,8 +190,8 @@ class AocTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "2025, 1, incomplete, incomplete",
-            "2025, 2, incomplete, incomplete",
+            "2025, 1, 1021, 5933",
+            "2025, 2, 35367539282, 45814076230",
             "2025, 3, incomplete, incomplete",
             "2025, 4, incomplete, incomplete",
             "2025, 5, incomplete, incomplete",
