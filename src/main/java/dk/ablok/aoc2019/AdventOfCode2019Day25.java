@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AnsiColorConstants;
@@ -17,6 +18,7 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@AocSolution(year = 2019, day = 25)
 public class AdventOfCode2019Day25 implements AocPuzzleWithDisplay {
 
     public static final String COMMAND = "Command?\n";

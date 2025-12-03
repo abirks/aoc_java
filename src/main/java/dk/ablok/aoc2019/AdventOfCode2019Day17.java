@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -11,6 +12,7 @@ import dk.ablok.aoc2019.intcode.display.IntCodeDisplay;
 
 import java.util.*;
 
+@AocSolution(year = 2019, day = 17)
 public class AdventOfCode2019Day17 implements AocPuzzleWithDisplay {
     private static final int NEWLINE = '\n';
     private static final int WALKWAY = '#';

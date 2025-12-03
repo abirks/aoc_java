@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import static dk.ablok.aoc2022.AdventOfCode2022Day19.TYPE.*;
 
 @AocSolution(year = 2022, day = 19)
-public class AdventOfCode2022Day19 implements NewAocPuzzle {
+public class AdventOfCode2022Day19 implements AocPuzzle {
 
     private static final int MINUTES = 24;
     private final List<Blueprint> input = new ArrayList<>();

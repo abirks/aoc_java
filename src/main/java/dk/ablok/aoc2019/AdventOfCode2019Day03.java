@@ -1,13 +1,15 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
 import java.util.*;
 
-public class AdventOfCode2019Day03 implements NewAocPuzzle {
+@AocSolution(year = 2019, day = 3)
+public class AdventOfCode2019Day03 implements AocPuzzle {
     private final List<List<Position>> wires = new ArrayList<>();
     private final HashSet<Position> intersections = new HashSet<>();
 

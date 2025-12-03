@@ -1,20 +1,25 @@
 package dk.ablok;
 
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc2025.AdventOfCode2025Day03;
+import dk.ablok.aoc2025.AdventOfCode2025Day04;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws AocLoadException {
-        NewAocPuzzle puzzle = new AdventOfCode2025Day03();
+        AocPuzzle puzzle = new AdventOfCode2025Day04();
         puzzle.load();
 
         try {
             System.out.println("Part 1: " + puzzle.part1());
             System.out.println("Part 2: " + puzzle.part2());
         } catch (AocSolveException e) {
-            e.printStackTrace();
+            logger.error("Exception: ", e);
         }
     }
 }

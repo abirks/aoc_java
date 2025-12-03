@@ -1,7 +1,7 @@
 package dk.ablok.aoc2024;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2024, day = 14)
-public class AdventOfCode2024Day14 implements NewAocPuzzle {
+public class AdventOfCode2024Day14 implements AocPuzzle {
     private static final Pattern PATTERN = Pattern.compile("p=(?<x>\\d*),(?<y>\\d*) v=(?<vx>[-\\d]*),(?<vy>[-\\d]*)");
     private static final int DIMENSION_X = 101;
     private static final int DIMENSION_Y = 103;

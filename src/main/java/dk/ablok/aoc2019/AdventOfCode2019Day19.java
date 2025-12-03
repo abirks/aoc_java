@@ -1,9 +1,11 @@
 package dk.ablok.aoc2019;
 
 import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 
+@AocSolution(year = 2019, day = 19)
 public class AdventOfCode2019Day19 implements AocPuzzleWithDisplay {
 
     private boolean enableDisplay;

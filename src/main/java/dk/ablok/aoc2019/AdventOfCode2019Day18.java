@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.graph.*;
@@ -10,7 +11,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AdventOfCode2019Day18 implements NewAocPuzzle {
+@AocSolution(year = 2019, day = 18)
+public class AdventOfCode2019Day18 implements AocPuzzle {
     private static final char WALL = '#';
     private static final char START = '@';
     private final Set<Position> positions = new HashSet<>();

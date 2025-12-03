@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 @AocSolution(year = 2021, day = 21)
-public class AdventOfCode2021Day21 implements NewAocPuzzle {
+public class AdventOfCode2021Day21 implements AocPuzzle {
 
     private long player1Wins = 0;
     private Map<Universe, AtomicLong> universes = new HashMap<>();

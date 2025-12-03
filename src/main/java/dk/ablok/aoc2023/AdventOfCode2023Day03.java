@@ -1,7 +1,7 @@
 package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2023, day = 3)
-public class AdventOfCode2023Day03 implements NewAocPuzzle {
+public class AdventOfCode2023Day03 implements AocPuzzle {
     private List<Integer> presentParts = new ArrayList<>();
     private Map<Gear, List<Integer>> gears = new HashMap<>();
     private char[][] input;

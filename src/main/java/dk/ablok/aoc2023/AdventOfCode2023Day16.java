@@ -1,7 +1,7 @@
 package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -25,7 +25,7 @@ import java.util.stream.LongStream;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2023, day = 16)
-public class AdventOfCode2023Day16 implements NewAocPuzzle {
+public class AdventOfCode2023Day16 implements AocPuzzle {
     private char[][] input;
 
     @Override

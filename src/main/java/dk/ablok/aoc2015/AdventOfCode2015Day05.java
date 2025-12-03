@@ -1,24 +1,26 @@
 package dk.ablok.aoc2015;
 
+import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static dk.ablok.aoc.io.InputUtils.readInputAsList;
-
+@AocSolution(year = 2015, day = 5)
 public class AdventOfCode2015Day05 implements AocPuzzle {
     private static final Set<Character> VOWELS = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
     private static final Set<String> FORBIDDEN = new HashSet<>(Arrays.asList("ab", "cd", "pq", "xy"));
     private List<String> input;
 
     @Override
-    public void load(String filename) throws AocLoadException {
-        input = readInputAsList(filename);
+    public void load() throws AocLoadException {
+        var aocInput = new AocInput(2015, 5);
+        input = aocInput.readInputAsList();
     }
 
     @Override

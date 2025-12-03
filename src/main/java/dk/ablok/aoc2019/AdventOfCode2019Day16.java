@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2019Day16 implements NewAocPuzzle {
+@AocSolution(year = 2019, day = 16)
+public class AdventOfCode2019Day16 implements AocPuzzle {
     private static final int NUM_PHASES = 100;
     private static final int NUM_REPEATS = 10_000;
     private static final int[] BASE_PATTERN = new int[]{0, 1, 0, -1};

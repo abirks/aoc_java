@@ -1,7 +1,7 @@
 package dk.ablok.aoc2023;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2023, day = 15)
-public class AdventOfCode2023Day15 implements NewAocPuzzle {
+public class AdventOfCode2023Day15 implements AocPuzzle {
     private static final Pattern OPERATION_PATTERN = Pattern.compile("^(?<label>[a-z]+)(?<operation>[=-])(?<focalLength>\\d*)$");
     private String[] input;
     private Map<Integer, List<Lens>> boxes = new HashMap<>();

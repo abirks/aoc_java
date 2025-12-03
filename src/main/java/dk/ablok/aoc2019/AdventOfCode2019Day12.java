@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -12,7 +13,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AdventOfCode2019Day12 implements NewAocPuzzle {
+@AocSolution(year = 2019, day = 12)
+public class AdventOfCode2019Day12 implements AocPuzzle {
     private static final Pattern pattern = Pattern.compile("^<x=(-?\\d+), y=(-?\\d+), z=(-?\\d+)>$");
     private final long[][] positions = new long[4][3];
     private final long[][] velocities = new long[4][3];

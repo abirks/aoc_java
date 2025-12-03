@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @AocSolution(year = 2022, day = 18)
-public class AdventOfCode2022Day18 implements NewAocPuzzle {
+public class AdventOfCode2022Day18 implements AocPuzzle {
 
     private final Set<Cube> lava = new HashSet<>();
     private final Set<Cube> air = new HashSet<>();

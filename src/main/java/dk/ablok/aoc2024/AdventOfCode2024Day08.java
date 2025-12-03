@@ -1,7 +1,7 @@
 package dk.ablok.aoc2024;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2024, day = 8)
-public class AdventOfCode2024Day08 implements NewAocPuzzle {
+public class AdventOfCode2024Day08 implements AocPuzzle {
     private static final char BLANK = '.';
     private char[][] map;
     private final Set<Antenna> antennas = new HashSet<>();

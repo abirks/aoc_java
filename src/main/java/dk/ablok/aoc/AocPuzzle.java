@@ -4,8 +4,7 @@ import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 
 public interface AocPuzzle {
-    @Deprecated
-    void load(String filename) throws AocLoadException;
+    void load() throws AocLoadException;
 
     String part1() throws AocSolveException;
 

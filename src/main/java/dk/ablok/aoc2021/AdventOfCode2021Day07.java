@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @AocSolution(year = 2021, day = 7)
-public class AdventOfCode2021Day07 implements NewAocPuzzle {
+public class AdventOfCode2021Day07 implements AocPuzzle {
     private List<Integer> subs;
     private Integer min;
     private Integer max;

@@ -1,5 +1,5 @@
 package dk.ablok.aoc;
 
-public interface AocPuzzleWithDisplay extends NewAocPuzzle {
+public interface AocPuzzleWithDisplay extends AocPuzzle {
     void enableDisplay(boolean enableDisplay);
 }

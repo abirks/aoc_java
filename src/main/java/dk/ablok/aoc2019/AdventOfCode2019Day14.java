@@ -1,6 +1,7 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -8,7 +9,8 @@ import dk.ablok.aoc.io.AocInput;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AdventOfCode2019Day14 implements NewAocPuzzle {
+@AocSolution(year = 2019, day = 14)
+public class AdventOfCode2019Day14 implements AocPuzzle {
 
     private static final long ONE_TRILLION = 1_000_000_000_000L;
     public static final String ORE = "ORE";

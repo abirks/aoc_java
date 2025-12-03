@@ -1,7 +1,7 @@
 package dk.ablok.aoc2025;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2025, day = 2)
-public class AdventOfCode2025Day02 implements NewAocPuzzle {
+public class AdventOfCode2025Day02 implements AocPuzzle {
 
     private static final Pattern REPEAT_TWICE = Pattern.compile("^(\\d+)\\1$");
     private static final Pattern REPEAT_MULTIPLE = Pattern.compile("^(\\d+)\\1+$");

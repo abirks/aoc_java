@@ -1,7 +1,7 @@
 package dk.ablok.aoc2021;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @AocSolution(year = 2021, day = 5)
-public class AdventOfCode2021Day05 implements NewAocPuzzle {
+public class AdventOfCode2021Day05 implements AocPuzzle {
 
     private final String regex = "^(?<x1>\\d+),(?<y1>\\d+) -> (?<x2>\\d+),(?<y2>\\d+)$";
     private final Pattern pattern = Pattern.compile(regex);

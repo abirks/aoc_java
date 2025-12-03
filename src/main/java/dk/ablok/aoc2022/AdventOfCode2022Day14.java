@@ -1,7 +1,7 @@
 package dk.ablok.aoc2022;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AnsiColorConstants;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @AocSolution(year = 2022, day = 14)
-public class AdventOfCode2022Day14 implements NewAocPuzzle {
+public class AdventOfCode2022Day14 implements AocPuzzle {
 
     private static final Position SAND_START = new Position(500, 0);
     private int mapLowerBound = 0;

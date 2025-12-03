@@ -1,7 +1,7 @@
 package dk.ablok.aoc2024;
 
 import dk.ablok.aoc.AocSolution;
-import dk.ablok.aoc.NewAocPuzzle;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.graph.*;
@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
 @AocSolution(year = 2024, day = 18)
-public class AdventOfCode2024Day18 implements NewAocPuzzle {
+public class AdventOfCode2024Day18 implements AocPuzzle {
     private static final int[][] DIRECTIONS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     private static final int MAX_DIMENSION = 70;
     private static final int PART1_BYTES = 1024;
