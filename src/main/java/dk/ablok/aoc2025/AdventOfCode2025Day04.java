@@ -19,6 +19,8 @@ import dk.ablok.aoc.io.AocInput;
 @AocSolution(year = 2025, day = 4)
 public class AdventOfCode2025Day04 implements AocPuzzle {
 
+    private static final char ROLL = '@';
+    private static final char FLOOR = '.';
     private char[][] map;
 
     @Override
@@ -30,6 +32,7 @@ public class AdventOfCode2025Day04 implements AocPuzzle {
     @Override
     public String part1() throws AocSolveException {
         int count = 0;
+
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 if (isRoll(x, y) && count(x, y) < 4) {
@@ -37,6 +40,7 @@ public class AdventOfCode2025Day04 implements AocPuzzle {
                 }
             }
         }
+
         return Integer.toString(count);
     }
 
@@ -51,7 +55,7 @@ public class AdventOfCode2025Day04 implements AocPuzzle {
                 for (int x = 0; x < map[y].length; x++) {
                     if (isRoll(x, y) && count(x, y) < 4) {
                         removed++;
-                        map[y][x] = '.';
+                        map[y][x] = FLOOR;
                     }
                 }
             }
@@ -74,7 +78,7 @@ public class AdventOfCode2025Day04 implements AocPuzzle {
 
     private boolean isRoll(int x, int y) {
         try {
-            return map[y][x] == '@';
+            return map[y][x] == ROLL;
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
