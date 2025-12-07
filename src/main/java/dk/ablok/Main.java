@@ -3,7 +3,7 @@ package dk.ablok;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc2025.AdventOfCode2025Day07;
+import dk.ablok.aoc2025.AdventOfCode2025Day08;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws AocLoadException {
-        AocPuzzle puzzle = new AdventOfCode2025Day07();
+        AocPuzzle puzzle = new AdventOfCode2025Day08();
         puzzle.load();
 
         try {

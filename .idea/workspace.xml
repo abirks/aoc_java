@@ -4,36 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="Solve 2025-03">
+    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="Solve 2025-05 and 2025-06">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2015/AdventOfCode2015Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2015/AdventOfCode2015Day05.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day01.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day02.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day03.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day04.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day04.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day05.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day05.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day06.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day06.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day07.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day08.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day09.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day09.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day10.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day11.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day12.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day13.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day14.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day14.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day15.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day15.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day16.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day16.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day17.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day17.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day18.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day18.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day19.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day19.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day20.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day20.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day21.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day21.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day22.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day22.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day23.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day23.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day24.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day24.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day25.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2019/AdventOfCode2019Day25.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2019Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/Aoc2019Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day07.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/dk/ablok/AocTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/AocTest.java" afterDir="false" />
     </list>
     <list id="1518a724-dc34-4f3d-aeaa-b080ce6c3cef" name="Config" comment="" />
@@ -67,6 +40,9 @@
 }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -156,7 +132,7 @@
       <recent name="dk.ablok.aoc2024" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AocTest">
+  <component name="RunManager" selected="JUnit.AocTest.test2025">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dk.ablok.Main" />
       <module name="aoc" />
@@ -201,7 +177,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AocTest.test2019.[11] 2019, 13, 318, 16309" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AocTest.test2024" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="aoc" />
       <extension name="coverage">
         <pattern>
@@ -211,10 +187,8 @@
       </extension>
       <option name="PACKAGE_NAME" value="dk.ablok" />
       <option name="MAIN_CLASS_NAME" value="dk.ablok.AocTest" />
-      <option name="TEST_OBJECT" value="uniqueId" />
-      <uniqueIds>
-        <uniqueId value="[engine:junit-jupiter]/[class:dk.ablok.AocTest]/[test-template:test2019(int, int, java.lang.String, java.lang.String)]/[test-template-invocation:#11]" />
-      </uniqueIds>
+      <option name="METHOD_NAME" value="test2024(int,int,java.lang.String,java.lang.String)" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -250,11 +224,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AocTest" />
-        <item itemvalue="JUnit.AocTest.test2019" />
-        <item itemvalue="JUnit.AocTest.test2019.[11] 2019, 13, 318, 16309" />
         <item itemvalue="JUnit.AocTest.test2025" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.AocTest.test2024" />
+        <item itemvalue="JUnit.AocTest" />
+        <item itemvalue="JUnit.AocTest.test2019" />
       </list>
     </recent_temporary>
   </component>
@@ -316,7 +290,39 @@
       <option name="project" value="LOCAL" />
       <updated>1764784927080</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Remove old AocPuzzle interface. Rename NewAocPuzzle. Move 2019 tests to new class">
+      <option name="closed" value="true" />
+      <created>1764805933193</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1764805933193</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Solve 2025-04">
+      <option name="closed" value="true" />
+      <created>1764834213238</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1764834213238</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Cleanup 2025-04">
+      <option name="closed" value="true" />
+      <created>1764834307619</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1764834307619</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Solve 2025-05 and 2025-06">
+      <option name="closed" value="true" />
+      <created>1765042726307</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1765042726307</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -326,7 +332,11 @@
     <MESSAGE value="Refactor 2021 and 2022 for new test setup. Add logger. Prepare for 2025" />
     <MESSAGE value="Solve 2025-01 and 2025-02" />
     <MESSAGE value="Solve 2025-03" />
-    <option name="LAST_COMMIT_MESSAGE" value="Solve 2025-03" />
+    <MESSAGE value="Remove old AocPuzzle interface. Rename NewAocPuzzle. Move 2019 tests to new class" />
+    <MESSAGE value="Solve 2025-04" />
+    <MESSAGE value="Cleanup 2025-04" />
+    <MESSAGE value="Solve 2025-05 and 2025-06" />
+    <option name="LAST_COMMIT_MESSAGE" value="Solve 2025-05 and 2025-06" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -340,6 +350,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/dk/ablok/aoc2022/AdventOfCode2022Day16.java</url>
           <line>55</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day05.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
