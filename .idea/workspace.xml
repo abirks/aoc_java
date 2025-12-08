@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="Solve 2025-05 and 2025-06">
+    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="Solve 2025-07">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day07.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day07.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/io/InputUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day08.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/dk/ablok/AocTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/AocTest.java" afterDir="false" />
     </list>
     <list id="1518a724-dc34-4f3d-aeaa-b080ce6c3cef" name="Config" comment="" />
@@ -322,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765042726307</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Solve 2025-07">
+      <option name="closed" value="true" />
+      <created>1765113280035</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765113280035</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -336,7 +345,8 @@
     <MESSAGE value="Solve 2025-04" />
     <MESSAGE value="Cleanup 2025-04" />
     <MESSAGE value="Solve 2025-05 and 2025-06" />
-    <option name="LAST_COMMIT_MESSAGE" value="Solve 2025-05 and 2025-06" />
+    <MESSAGE value="Solve 2025-07" />
+    <option name="LAST_COMMIT_MESSAGE" value="Solve 2025-07" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
