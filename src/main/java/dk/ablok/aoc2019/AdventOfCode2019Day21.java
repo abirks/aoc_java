@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -10,7 +10,7 @@ import dk.ablok.aoc2019.intcode.IntCodeVM;
 import java.util.List;
 import java.util.Optional;
 
-@AocSolution(year = 2019, day = 21)
+@AocDay(year = 2019, day = 21)
 public class AdventOfCode2019Day21 implements AocPuzzle {
     private List<Long> program;
     private IntCodeVM vm;

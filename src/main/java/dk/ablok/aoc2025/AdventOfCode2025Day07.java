@@ -1,7 +1,7 @@
 package dk.ablok.aoc2025;
 
 import dk.ablok.aoc.AocPuzzle;
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
@@ -21,7 +21,7 @@ import java.util.function.BiPredicate;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
-@AocSolution(year = 2025, day = 7)
+@AocDay(year = 2025, day = 7)
 public class AdventOfCode2025Day07 implements AocPuzzle {
 
     private static final char RAY = 'S';

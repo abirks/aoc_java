@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -9,7 +9,7 @@ import dk.ablok.aoc.io.AocInput;
 import java.math.BigInteger;
 import java.util.List;
 
-@AocSolution(year = 2019, day = 22)
+@AocDay(year = 2019, day = 22)
 public class AdventOfCode2019Day22 implements AocPuzzle {
 
     private static final String DEAL_INTO_NEW_STACK = "deal into new stack";

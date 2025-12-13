@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AocSolution(year = 2021, day = 18)
+@AocDay(year = 2021, day = 18)
 public class AdventOfCode2021Day18 implements AocPuzzle {
     private final List<Number> numbers = new ArrayList<>();
 

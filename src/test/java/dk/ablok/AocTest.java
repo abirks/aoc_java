@@ -1,8 +1,8 @@
 package dk.ablok;
 
-import dk.ablok.aoc.AocPuzzleWithDisplay;
-import dk.ablok.aoc.AocSolution;
 import dk.ablok.aoc.AocPuzzle;
+import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc2019.*;
@@ -162,7 +162,6 @@ class AocTest {
         assertEquals(expected1, puzzle.part1());
         assertEquals(expected2, puzzle.part2());
     }
-
 
     @ParameterizedTest
     @CsvSource(value = {
@@ -344,10 +343,10 @@ class AocTest {
             "2025, 6, 3785892992137, 7669802156452",
             "2025, 7, 1499, 24743903847942",
             "2025, 8, 121770, 7893123992",
-            "2025, 9, incomplete, incomplete",
+            "2025, 9, 4774877510, incomplete",
             "2025, 10, incomplete, incomplete",
-            "2025, 11, incomplete, incomplete",
-            "2025, 12, incomplete, incomplete"
+            "2025, 11, 500, 287039700129600",
+            "2025, 12, 408, null"
     }, nullValues = {"null"})
     void test2025(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
         var puzzle = getSolution(year, day);
@@ -359,11 +358,11 @@ class AocTest {
     private AocPuzzle getSolution(int year, int day) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Reflections reflections = new Reflections("dk.ablok");
 
-        Set<Class<?>> classes = reflections.get(Scanners.TypesAnnotated.with(AocSolution.class).asClass());
+        Set<Class<?>> classes = reflections.get(Scanners.TypesAnnotated.with(AocDay.class).asClass());
 
         var solutions = classes.stream()
                 .filter(c -> {
-                    AocSolution ann = c.getAnnotation(AocSolution.class);
+                    AocDay ann = c.getAnnotation(AocDay.class);
                     return ann.year() == year && ann.day() == day;
                 })
                 .toList();

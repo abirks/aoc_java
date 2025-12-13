@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -8,7 +8,7 @@ import dk.ablok.aoc.io.AocInput;
 
 import java.util.Arrays;
 
-@AocSolution(year = 2019, day = 8)
+@AocDay(year = 2019, day = 8)
 public class AdventOfCode2019Day08 implements AocPuzzle {
     private static final int WHITE = 1;
     private static final int TRANSPARENT = 2;

@@ -1,6 +1,6 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -18,7 +18,7 @@ import java.util.*;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
-@AocSolution(year = 2023, day = 10)
+@AocDay(year = 2023, day = 10)
 public class AdventOfCode2023Day10 implements AocPuzzle {
     public static final String SOMETHING_IS_WRONG = "Something's wrong :(";
     public static final String INCORRECT_DIRECTION = "That's not a proper direction!";

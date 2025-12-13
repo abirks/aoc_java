@@ -1,6 +1,6 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AocSolution(year = 2022, day = 5)
+@AocDay(year = 2022, day = 5)
 public class AdventOfCode2022Day05 implements AocPuzzle {
 
     private final Map<Character, List<Character>> crates = new HashMap<>();

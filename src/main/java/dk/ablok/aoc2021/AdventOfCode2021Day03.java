@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -9,7 +9,7 @@ import dk.ablok.aoc.io.AocInput;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@AocSolution(year = 2021, day = 3)
+@AocDay(year = 2021, day = 3)
 public class AdventOfCode2021Day03 implements AocPuzzle {
     private List<String> input;
     private int length;

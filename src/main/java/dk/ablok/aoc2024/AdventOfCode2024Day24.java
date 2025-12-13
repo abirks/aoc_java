@@ -1,6 +1,6 @@
 package dk.ablok.aoc2024;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
-@AocSolution(year = 2024, day = 24)
+@AocDay(year = 2024, day = 24)
 public class AdventOfCode2024Day24 implements AocPuzzle {
     private static final Pattern GATE_PATTERN = Pattern.compile("^(?<a>[a-z0-9]+) (?<op>AND|OR|XOR) (?<b>[a-z0-9]+) -> (?<c>[a-z0-9]+)$");
     private final Map<String, Boolean> initialValues = new ConcurrentHashMap<>();

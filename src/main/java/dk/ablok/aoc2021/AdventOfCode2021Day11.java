@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -9,7 +9,7 @@ import dk.ablok.aoc.io.AocInput;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@AocSolution(year = 2021, day = 11)
+@AocDay(year = 2021, day = 11)
 public class AdventOfCode2021Day11 implements AocPuzzle {
 
     private final Map<Vect, AtomicInteger> map = new HashMap<>();

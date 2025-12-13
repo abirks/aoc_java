@@ -1,6 +1,6 @@
 package dk.ablok.aoc2022;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -9,7 +9,7 @@ import dk.ablok.aoc.io.AocInput;
 import java.util.ArrayList;
 import java.util.List;
 
-@AocSolution(year = 2022, day = 20)
+@AocDay(year = 2022, day = 20)
 public class AdventOfCode2022Day20 implements AocPuzzle {
 
     private static final long KEY = 811589153L;

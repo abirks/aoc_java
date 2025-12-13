@@ -1,6 +1,6 @@
 package dk.ablok.aoc2024;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -18,7 +18,7 @@ import java.util.*;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
-@AocSolution(year = 2024, day = 7)
+@AocDay(year = 2024, day = 7)
 public class AdventOfCode2024Day07 implements AocPuzzle {
     private final Set<Equation> equations = new HashSet<>();
     private final Set<Equation> validEquations = new HashSet<>();

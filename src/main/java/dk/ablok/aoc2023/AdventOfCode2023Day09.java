@@ -1,6 +1,6 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
-@AocSolution(year = 2023, day = 9)
+@AocDay(year = 2023, day = 9)
 public class AdventOfCode2023Day09 implements AocPuzzle {
     private List<OasisSeries> input;
 

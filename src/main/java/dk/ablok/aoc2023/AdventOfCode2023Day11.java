@@ -1,6 +1,6 @@
 package dk.ablok.aoc2023;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -20,7 +20,7 @@ import java.util.stream.LongStream;
  *
  * @author Anders Birk Sørensen <a href="anders@ablok.dk">anders@ablok.dk</a>;
  */
-@AocSolution(year = 2023, day = 11)
+@AocDay(year = 2023, day = 11)
 public class AdventOfCode2023Day11 implements AocPuzzle {
     private final Set<Galaxy> galaxies1 = new HashSet<>();
     private final Set<Galaxy> galaxies2 = new HashSet<>();

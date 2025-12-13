@@ -1,6 +1,6 @@
 package dk.ablok.aoc2021;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@AocSolution(year = 2021, day = 22)
+@AocDay(year = 2021, day = 22)
 public class AdventOfCode2021Day22 implements AocPuzzle {
 
     private static final Pattern pattern = Pattern.compile("(?<op>\\D+) " +

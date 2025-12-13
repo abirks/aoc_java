@@ -1,6 +1,6 @@
 package dk.ablok.aoc2019;
 
-import dk.ablok.aoc.AocSolution;
+import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AocSolution(year = 2019, day = 6)
+@AocDay(year = 2019, day = 6)
 public class AdventOfCode2019Day06 implements AocPuzzle {
     public static final String COM = "COM";
     public static final String SAN = "SAN";
