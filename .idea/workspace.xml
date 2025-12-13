@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="Solve 2025-07">
+    <list default="true" id="599672b5-8ae0-401b-b76a-97dfa527dd3b" name="Changes" comment="Rename annotation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc/io/InputUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day08.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025/AdventOfCode2025Day08.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dk/ablok/AocTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dk/ablok/AocTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dk/ablok/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/ablok/Main.java" afterDir="false" />
     </list>
-    <list id="1518a724-dc34-4f3d-aeaa-b080ce6c3cef" name="Config" comment="" />
+    <list id="1518a724-dc34-4f3d-aeaa-b080ce6c3cef" name="Config" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,6 +87,7 @@
     "JUnit.AocTest.test2025.[14] 2024, 14 229632480, 7051.executor": "Run",
     "JUnit.AocTest.test2025.[1] 2025, 1, expectedPart1Value, \\null.executor": "Run",
     "JUnit.AocTest.test2025.[25] 2024, 25, 2854, null.executor": "Run",
+    "JUnit.AocTest.test2025.[9] 2025, 9, incomplete, incomplete.executor": "Run",
     "JUnit.AocTest.test2025.executor": "Run",
     "JUnit.AocTest.testDay10.executor": "Run",
     "JUnit.AocTest.testDay13.executor": "Run",
@@ -106,7 +109,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/abirks/code/abirks.github.io",
+    "last_opened_file_path": "/home/abirks/code/aoc_java/src/main/java/dk/ablok/aoc2025",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2566719",
@@ -120,6 +123,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/dk/ablok/aoc2025" />
       <recent name="C:\code\aoc_java\input\aoc2024" />
       <recent name="C:\code\aoc_java\src\test" />
     </key>
@@ -133,7 +137,7 @@
       <recent name="dk.ablok.aoc2024" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AocTest.test2025">
+  <component name="RunManager" selected="JUnit.AocTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dk.ablok.Main" />
       <module name="aoc" />
@@ -158,22 +162,6 @@
       <option name="PACKAGE_NAME" value="dk.ablok" />
       <option name="MAIN_CLASS_NAME" value="dk.ablok.AocTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AocTest.test2019" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="aoc" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dk.ablok.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="dk.ablok" />
-      <option name="MAIN_CLASS_NAME" value="dk.ablok.AocTest" />
-      <option name="METHOD_NAME" value="test2019(int,int,java.lang.String,java.lang.String)" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -210,6 +198,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AocTest.test2025.[9] 2025, 9, incomplete, incomplete" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aoc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.ablok.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dk.ablok" />
+      <option name="MAIN_CLASS_NAME" value="dk.ablok.AocTest" />
+      <option name="METHOD_NAME" value="test2025(int,int,java.lang.String,java.lang.String)" />
+      <option name="TEST_OBJECT" value="uniqueId" />
+      <uniqueIds>
+        <uniqueId value="[engine:junit-jupiter]/[class:dk.ablok.AocTest]/[test-template:test2025(int, int, java.lang.String, java.lang.String)]/[test-template-invocation:#9]" />
+      </uniqueIds>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="aoc_java" />
       <method v="2">
@@ -225,11 +232,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AocTest" />
+        <item itemvalue="JUnit.AocTest.test2025.[9] 2025, 9, incomplete, incomplete" />
         <item itemvalue="JUnit.AocTest.test2025" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.AocTest.test2024" />
-        <item itemvalue="JUnit.AocTest" />
-        <item itemvalue="JUnit.AocTest.test2019" />
       </list>
     </recent_temporary>
   </component>
@@ -331,7 +338,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765113280035</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Solve 2025-08. Remove deprecated InputUtils">
+      <option name="closed" value="true" />
+      <created>1765177110017</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1765177110017</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Rename annotation">
+      <option name="closed" value="true" />
+      <created>1765659885395</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765659885395</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -346,7 +369,9 @@
     <MESSAGE value="Cleanup 2025-04" />
     <MESSAGE value="Solve 2025-05 and 2025-06" />
     <MESSAGE value="Solve 2025-07" />
-    <option name="LAST_COMMIT_MESSAGE" value="Solve 2025-07" />
+    <MESSAGE value="Solve 2025-08. Remove deprecated InputUtils" />
+    <MESSAGE value="Rename annotation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename annotation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

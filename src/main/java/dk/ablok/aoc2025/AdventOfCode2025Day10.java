@@ -1,7 +1,7 @@
 package dk.ablok.aoc2025;
 
-import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.AocDay;
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
