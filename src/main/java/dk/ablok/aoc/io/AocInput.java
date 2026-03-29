@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -166,20 +168,22 @@ public class AocInput {
             logger.error("Exception while reading input stream from AoC website", e);
             throw new AocLoadException(e);
         }
-
     }
 
     private HttpURLConnection getConnection(String url) throws AocLoadException {
         String sessionCookie = (String) properties.get("sessionCookie");
+        String userAgent = (String) properties.get("userAgent");
         if (sessionCookie == null || sessionCookie.isEmpty()) {
             throw new AocLoadException("SessionCookie is not set in config.properties");
         }
 
         try {
-            URL resourceUrl = new URL(url);
+            URI uri = new URI(url);
+            URL resourceUrl = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) resourceUrl.openConnection();
 
             connection.setRequestProperty("Cookie", "session=" + sessionCookie);
+            connection.setRequestProperty("User-Agent", userAgent);
 
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -187,7 +191,7 @@ public class AocInput {
             }
 
             return connection;
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException e) {
             logger.error("Error while opening connection", e);
             throw new AocLoadException(e);
         }
