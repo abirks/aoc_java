@@ -26,10 +26,11 @@ public class AdventOfCode2021Day04 implements AocPuzzle {
         }
 
         // Read draws from input
-        draws.addAll(Arrays.stream(sections.get(0).get(0).split(",")).map(Integer::parseInt).toList());
+        draws.addAll(Arrays.stream(sections.getFirst().getFirst().split(",")).map(Integer::parseInt).toList());
 
         // Read boards
-        for (var board : sections) {
+        for (int i = 1; i < sections.size(); i++) {
+            var board = sections.get(i);
             StringBuilder stringBuilder = new StringBuilder();
             for (var line : board) {
                 stringBuilder.append(line);
@@ -37,15 +38,22 @@ public class AdventOfCode2021Day04 implements AocPuzzle {
             }
 
             // Put board into data structure
-            List<Integer> boardNumbers = Arrays.stream(stringBuilder.toString().trim().replace("  ", " ").split(" ")).map(Integer::parseInt).toList();
+            List<Integer> boardNumbers = Arrays.stream(
+                            stringBuilder
+                                    .toString()
+                                    .trim().replace("  ", " ")
+                                    .split(" "))
+                    .map(Integer::parseInt)
+                    .toList();
+
             Board newBoard = new Board();
-            for (int i = 0; i < 5; i++) { // Row/column counter
+            for (int j = 0; j < 5; j++) { // Row
                 Line row = new Line();
                 Line column = new Line();
 
-                for (int j = 0; j < 5; j++) { // Index
-                    row.add(numbers.get(boardNumbers.get(i * 5 + j)));
-                    column.add(numbers.get(boardNumbers.get(i + j * 5)));
+                for (int k = 0; k < 5; k++) { // Column
+                    row.add(numbers.get(boardNumbers.get(j * 5 + k)));
+                    column.add(numbers.get(boardNumbers.get(j + k * 5)));
                 }
 
                 newBoard.add(row);
@@ -92,7 +100,7 @@ public class AdventOfCode2021Day04 implements AocPuzzle {
 
             if (boards.isEmpty()) {
                 // Assumes that only one board is removed by the last draw
-                return Integer.toString(toRemove.get(0).getSum() * drawn);
+                return Integer.toString(toRemove.getFirst().getSum() * drawn);
             }
         }
 
