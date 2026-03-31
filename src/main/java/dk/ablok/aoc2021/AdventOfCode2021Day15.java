@@ -4,14 +4,18 @@ import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.graph.*;
 import dk.ablok.aoc.io.AocInput;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @AocDay(year = 2021, day = 15)
 public class AdventOfCode2021Day15 implements AocPuzzle {
-    private HashMap<Position, Integer> map;
+    private int[][] map1;
+    private int[][] map2;
     private int yMax;
     private int xMax;
 
@@ -19,113 +23,100 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
     public void load() throws AocLoadException {
         var aocInput = new AocInput(2021, 15);
 
-        map = new HashMap<>();
+        char[][] input = aocInput.read2dArray();
+        xMax = input[0].length;
+        yMax = input.length;
 
-        int y = 0;
-        int x = 0;
-        for (var line : aocInput.readInputAsList()) {
-            x = 0;
-            for (String c : line.split("")) {
-                map.put(new Position(x, y), Integer.parseInt(c));
-                x++;
+        map1 = new int[yMax][xMax];
+        for (int y = 0; y < yMax; y++) {
+            for (int x = 0; x < xMax; x++) {
+                map1[y][x] = input[y][x] - '0';
             }
-            y++;
         }
 
-        xMax = x;
-        yMax = y;
+        map2 = new int[5 * yMax][5 * xMax];
+        for (int sy = 0; sy < 5; sy++) {
+            for (int sx = 0; sx < 5; sx++) {
+                for (int y = 0; y < yMax; y++) {
+                    for (int x = 0; x < xMax; x++) {
+                        map2[y + sy * yMax][x + sx * xMax] = reduceDangerLevel(map1[y][x] + sx + sy);
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public String part1() throws AocSolveException {
-        Position start = new Position(0, 0);
+        Position start = new Position(0, 0, 0, map1);
         Position destination = new Position(xMax - 1, yMax - 1);
-        return Integer.toString(fillSearch(map, start, destination));
+        return Integer.toString(findPath(start, destination));
     }
 
     @Override
     public String part2() throws AocSolveException {
-        Position start = new Position(0, 0);
-
-        // Expand map
-        Map<Position, Integer> map2 = new HashMap<>();
-
-        // For each position
-        for (Map.Entry<Position, Integer> p : map.entrySet()) {
-            // Calculate new, duplicate coordinates
-            for (int sx = 0; sx < 5; sx++) {
-                for (int sy = 0; sy < 5; sy++) {
-                    map2.put(new Position(p.getKey().x + xMax * sx, p.getKey().y + yMax * sy),
-                            reduceDangerLevel(p.getValue() + sx + sy));
-                }
-            }
-        }
-
-        Position destination2 = new Position(xMax * 5 - 1, yMax * 5 - 1);
-        return Integer.toString(fillSearch(map2, start, destination2));
+        Position start = new Position(0, 0, 0, map2);
+        Position destination = new Position(xMax * 5 - 1, yMax * 5 - 1);
+        return Integer.toString(findPath(start, destination));
     }
 
     int reduceDangerLevel(int input) {
         return input > 9 ? input - 9 : input;
     }
 
-    //TODO replace with utils implementation
-    int fillSearch(Map<Position, Integer> map, Position origin, Position destination) {
-        Set<Position> visited = new HashSet<>(); // We're done with these
-        Map<Position, Integer> dangerLevel = new HashMap<>(); // Current best value for each position
-
-        dangerLevel.put(origin, 0);
-
-        while (!visited.contains(destination)) {
-            for (Position p : new ArrayList<>(dangerLevel.keySet())) {
-                for (Position n : p.getNeighbors(map)) {
-                    int thisValue = map.get(n) + dangerLevel.get(p);
-                    if (dangerLevel.getOrDefault(n, Integer.MAX_VALUE) > thisValue) {
-                        dangerLevel.put(n, thisValue);
-                    }
-                }
-                visited.add(p);
-            }
-        }
-        return dangerLevel.get(destination);
+    int findPath(Position origin, Position destination) {
+        PathFinder<Position, LongWeight> pathFinder = new PathFinder<>(
+                new PathMetric(),
+                new DijkstraMetric<>(new LongWeight(0L)),
+                new LongWeight.LongZeroSupplier(),
+                new LongWeight.LongInfinitySupplier());
+        return pathFinder.findRoute(origin, destination).reversed().getFirst().risk();
     }
 
-    static class Position {
-        private final int x;
-        private final int y;
-        private final int hash;
+    static class PathMetric implements Metric<Position, LongWeight> {
+        @Override
+        public LongWeight computeCost(Position from, Position to) {
+            return new LongWeight(to.map[to.y()][to.x()]);
+        }
+    }
 
-        public Position(int x, int y) {
-            this.x = x;
-            this.y = y;
-            this.hash = Objects.hash(x, y);
+    record Position(int x, int y, int risk, int[][] map) implements GraphNode {
+        Position(int x, int y) {
+            this(x, y, 0, null);
         }
 
         @Override
         public String toString() {
-            return "(" + x + ", " + y + ")";
+            return "(" + x + ", " + y + ", " + risk + ")";
         }
 
-        public Set<Position> getNeighbors(Map<Position, Integer> map) {
-            Set<Position> ret = new HashSet<>();
-            ret.add(new Position(x - 1, y));
-            ret.add(new Position(x + 1, y));
-            ret.add(new Position(x, y - 1));
-            ret.add(new Position(x, y + 1));
-            return ret.stream().filter(map::containsKey).collect(Collectors.toSet());
+        @Override
+        public Stream<GraphNode> getConnectionsFrom() {
+            List<GraphNode> neighbors = new ArrayList<>();
+            if (x > 0) {
+                neighbors.add(new Position(x - 1, y, risk + map[y][x - 1], map));
+            }
+            if (x < map[0].length - 1) {
+                neighbors.add(new Position(x + 1, y, risk + map[y][x + 1], map));
+            }
+            if (y > 0) {
+                neighbors.add(new Position(x, y - 1, risk + map[y - 1][x], map));
+            }
+            if (y < map.length - 1) {
+                neighbors.add(new Position(x, y + 1, risk + map[y + 1][x], map));
+            }
+            return neighbors.stream();
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Position position = (Position) o;
+            if (!(o instanceof Position position)) return false;
             return x == position.x && y == position.y;
         }
 
         @Override
         public int hashCode() {
-            return hash;
+            return Objects.hash(x, y);
         }
     }
 }
