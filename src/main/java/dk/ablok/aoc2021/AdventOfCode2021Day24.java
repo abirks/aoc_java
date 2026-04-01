@@ -21,6 +21,130 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
 
     @Override
     public String part1() throws AocSolveException {
+        Collection<Long> previousInputs = Collections.singletonList(0L);
+
+        // Increase input one digit at a time
+        Map<Map<String, Long>, Long> resultStates = new HashMap<>();
+        for (int d = 0; d < 14; d++) {
+            resultStates = new HashMap<>();
+
+            // Calculate all candidates for the input by adding all possible new digits
+            List<Long> newInputs = new ArrayList<>();
+            for (Long previous : previousInputs) {
+                for (int i = 1; i <= 9; i++) {
+                    newInputs.add(previous * 10 + i);
+                }
+            }
+
+            // Calculate the end state of MONAD with each input
+            System.out.println("d=" + d + ", testing " + newInputs.size() + " inputs");
+            for (Long input : newInputs) {
+                var monad = new Monad(input);
+                var result = monad.execute();
+                if (input > resultStates.getOrDefault(result, 0L)) {
+                    // Keep the highest digit that resulted in each state
+                    resultStates.put(result, input);
+                }
+            }
+
+            previousInputs = resultStates.values();
+        }
+
+        return Long.toString(resultStates.entrySet().stream()
+                .filter(e -> e.getKey().get("z") == 0L)
+                .mapToLong(Map.Entry::getValue)
+                .max()
+                .orElseThrow());
+    }
+
+    @Override
+    public String part2() throws AocSolveException {
+        return null;
+    }
+
+    class Monad {
+
+        private Map<String, Long> state = new HashMap<>();
+        private int[] inputs = new int[14];
+
+        public Monad(long input) throws AocSolveException {
+            if (input >= 100_000_000_000_000L) {
+                throw new AocSolveException("Input too large");
+            }
+
+            state.put("w", 0L);
+            state.put("x", 0L);
+            state.put("y", 0L);
+            state.put("z", 0L);
+
+            for (int i = 0; i < 14; i++) {
+                inputs[i] = (int) (input % 10);
+                input = input / 10;
+            }
+        }
+
+        public Map<String, Long> execute() throws AocSolveException {
+            int inputIndex = 0;
+
+            for (var instruction : instructions) {
+                String[] parts = instruction.split(" ");
+                switch (parts[0]) {
+                    case "inp" -> {
+                        int input = inputs[inputIndex++];
+                        if (input == 0) {
+                            // Return early if we reached an input digit not yet filled
+                            return state;
+                        }
+                        executeInp(parts[1], input);
+                    }
+                    case "add" -> executeAdd(parts[1], parts[2]);
+                    case "mul" -> executeMul(parts[1], parts[2]);
+                    case "div" -> executeDiv(parts[1], parts[2]);
+                    case "mod" -> executeMod(parts[1], parts[2]);
+                    case "eql" -> executeEql(parts[1], parts[2]);
+                    default -> throw new AocSolveException("Unknown operation: " + parts[0]);
+                }
+            }
+
+            return state;
+        }
+
+        private void executeInp(String argA, long input) {
+            state.put(argA, input);
+        }
+
+        private void executeAdd(String argA, String argB) {
+            var valA = state.containsKey(argA) ? state.get(argA) : Integer.parseInt(argA);
+            var valB = state.containsKey(argB) ? state.get(argB) : Integer.parseInt(argB);
+            state.put(argA, valA + valB);
+        }
+
+        private void executeMul(String argA, String argB) {
+            var valA = state.containsKey(argA) ? state.get(argA) : Integer.parseInt(argA);
+            var valB = state.containsKey(argB) ? state.get(argB) : Integer.parseInt(argB);
+            state.put(argA, valA * valB);
+        }
+
+        private void executeDiv(String argA, String argB) {
+            var valA = state.containsKey(argA) ? state.get(argA) : Integer.parseInt(argA);
+            var valB = state.containsKey(argB) ? state.get(argB) : Integer.parseInt(argB);
+            state.put(argA, valA / valB);
+        }
+
+        private void executeMod(String argA, String argB) {
+            var valA = state.containsKey(argA) ? state.get(argA) : Integer.parseInt(argA);
+            var valB = state.containsKey(argB) ? state.get(argB) : Integer.parseInt(argB);
+            state.put(argA, valA % valB);
+        }
+
+        private void executeEql(String argA, String argB) {
+            var valA = state.containsKey(argA) ? state.get(argA) : Integer.parseInt(argA);
+            var valB = state.containsKey(argB) ? state.get(argB) : Integer.parseInt(argB);
+            state.put(argA, valA == valB ? 1L : 0L);
+        }
+    }
+
+    private Node buildGraph() throws AocSolveException {
         List<Node> inputs = new ArrayList<>();
         Map<String, Node> currentOutputs = new HashMap<>();
         currentOutputs.put("w", new Node(0));
@@ -53,27 +177,7 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
             }
         }
 
-        var reduced = reduceNode(currentOutputs.get("z"));
-
-        System.out.println(reduced);
-
-        return null;
-    }
-
-    @Override
-    public String part2() throws AocSolveException {
-        return null;
-    }
-
-    private List<Node> collectNodes(Node node) {
-        if (node == null) {
-            return Collections.EMPTY_LIST;
-        }
-        List<Node> found = new ArrayList<>();
-        found.add(node);
-        found.addAll(collectNodes(node.getA()));
-        found.addAll(collectNodes(node.getB()));
-        return found;
+        return reduceNode(currentOutputs.get("z"));
     }
 
     private Node reduceNode(Node node) throws AocSolveException {
@@ -152,7 +256,7 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
         if (a.getOp() == Op.ADD && a.getA().getOp() == Op.MUL) {
             // (DIV (ADD (MUL aaa b) ab) b)
             // (aaa * b + ab) / b = aaa, if ab < b
-        if (nodeMax(a.getB()) < nodeMax(b)) {
+            if (nodeMax(a.getB()) < nodeMax(b)) {
                 return a.getA().getA();
             }
         }
@@ -205,9 +309,25 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
         if (a.getOp() == Op.CONST && b.getOp() == Op.CONST) {
             return new Node(a.getValue() == b.getValue() ? 1 : 0);
         }
-        if (a.getOp() == Op.ADD && a.getA().getOp() == Op.INP && a.getB().getOp() == Op.CONST && a.getB().getValue() != 0 && b.getOp() == Op.INP) {
+        if (a.getOp() == Op.ADD && a.getA().getOp() == Op.INP && a.getB().getOp() == Op.CONST && b.getOp() == Op.INP) {
             // (EQL (ADD INP CONST) INP)
-            return new Node(0);
+            var index1 = a.getA().getValue();
+            var index2 = b.getValue();
+            var offset = a.getB().getValue();
+
+            // If the inputs are from the same digit, ude the offset for the logic
+            if (index1 == index2) {
+                if (offset == 0) {
+                    return new Node(1);
+                } else {
+                    return new Node(0);
+                }
+            }
+
+            // if the added constant is >=9, the inputs are never equal
+            if (offset >= 9) {
+                return new Node(0);
+            }
         }
 
         return node;
@@ -220,15 +340,20 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
         if (node.getOp() == Op.ADD) {
             return nodeMax(a) + nodeMax(b);
         }
+        if (node.getOp() == Op.MUL) {
+            return nodeMax(a) * nodeMax(b);
+        }
         if (node.getOp() == Op.CONST) {
             return node.getValue();
         }
         if (node.getOp() == Op.INP) {
             return 9;
         }
+        if (node.getOp() == Op.EQL) {
+            return 1;
+        }
         throw new AocSolveException("Unsupported operation: " + node.getOp());
     }
-
 
     static class Node {
         private final Op op;
