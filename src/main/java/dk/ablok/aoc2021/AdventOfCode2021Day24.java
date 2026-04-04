@@ -6,7 +6,10 @@ import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import dk.ablok.aoc.io.AocInput;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @AocDay(year = 2021, day = 24)
 public class AdventOfCode2021Day24 implements AocPuzzle {
@@ -21,36 +24,49 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
 
     @Override
     public String part1() throws AocSolveException {
-        Collection<Long> previousInputs = Collections.singletonList(0L);
+        Map<String, Long> initialState = new HashMap<>();
+        initialState.put("w", 0L);
+        initialState.put("x", 0L);
+        initialState.put("y", 0L);
+        initialState.put("z", 0L);
+        initialState.put("p", 0L); // Execution pointer
+        initialState.put("i", 0L); // Number of input digits already processed
+        Map<Map<String, Long>, Long> previousStates = new HashMap<>();
+        previousStates.put(initialState, 0L);
 
         // Increase input one digit at a time
-        Map<Map<String, Long>, Long> resultStates = new HashMap<>();
         for (int d = 0; d < 14; d++) {
-            resultStates = new HashMap<>();
+            Map<Map<String, Long>, Long> resultStates = new HashMap<>();
+            System.out.println("d=" + d + ", testing " + previousStates.size() * 9 + " inputs");
 
             // Calculate all candidates for the input by adding all possible new digits
-            List<Long> newInputs = new ArrayList<>();
-            for (Long previous : previousInputs) {
-                for (int i = 1; i <= 9; i++) {
-                    newInputs.add(previous * 10 + i);
+            for (Map.Entry<Map<String, Long>, Long> previous : previousStates.entrySet()) {
+
+                for (long i = 1; i <= 9; i++) {
+                    long newInput = previous.getValue() + (long) (Math.pow(10L, d)) * i;
+
+                    // Calculate the end state of MONAD with each input
+                    var monad = new Monad(newInput, previous.getKey());
+                    var result = monad.execute();
+
+                    // Assumption for reducing the number of end states: Only the z register affects what comes after
+                    // each input instruction; the z, x and y registers are overwritten in each step.
+                    // This is based on a cursory inspection of my own input
+                    result.put("w", 0L);
+                    result.put("x", 0L);
+                    result.put("y", 0L);
+
+                    if (newInput > resultStates.getOrDefault(result, 0L)) {
+                        // Keep the highest digit that resulted in each state
+                        resultStates.put(result, newInput);
+                    }
                 }
             }
 
-            // Calculate the end state of MONAD with each input
-            System.out.println("d=" + d + ", testing " + newInputs.size() + " inputs");
-            for (Long input : newInputs) {
-                var monad = new Monad(input);
-                var result = monad.execute();
-                if (input > resultStates.getOrDefault(result, 0L)) {
-                    // Keep the highest digit that resulted in each state
-                    resultStates.put(result, input);
-                }
-            }
-
-            previousInputs = resultStates.values();
+            previousStates = resultStates;
         }
 
-        return Long.toString(resultStates.entrySet().stream()
+        return Long.toString(previousStates.entrySet().stream()
                 .filter(e -> e.getKey().get("z") == 0L)
                 .mapToLong(Map.Entry::getValue)
                 .max()
@@ -64,18 +80,15 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
 
     class Monad {
 
-        private Map<String, Long> state = new HashMap<>();
+        private final Map<String, Long> state;
         private int[] inputs = new int[14];
 
-        public Monad(long input) throws AocSolveException {
+        public Monad(long input, Map<String, Long> state) throws AocSolveException {
             if (input >= 100_000_000_000_000L) {
                 throw new AocSolveException("Input too large");
             }
 
-            state.put("w", 0L);
-            state.put("x", 0L);
-            state.put("y", 0L);
-            state.put("z", 0L);
+            this.state = new HashMap<>(state);
 
             for (int i = 0; i < 14; i++) {
                 inputs[i] = (int) (input % 10);
@@ -84,17 +97,20 @@ public class AdventOfCode2021Day24 implements AocPuzzle {
         }
 
         public Map<String, Long> execute() throws AocSolveException {
-            int inputIndex = 0;
+            for (long p = state.get("p"); p < instructions.size(); p++) {
+                state.put("p", p);
 
-            for (var instruction : instructions) {
-                String[] parts = instruction.split(" ");
+                String[] parts = instructions.get((int) p).split(" ");
                 switch (parts[0]) {
                     case "inp" -> {
-                        int input = inputs[inputIndex++];
+                        int inputIndex = state.get("i").intValue();
+                        //System.out.println("Read input " + inputIndex + " on instruction " + p);
+                        int input = inputs[inputIndex];
                         if (input == 0) {
                             // Return early if we reached an input digit not yet filled
                             return state;
                         }
+                        state.put("i", (long) ++inputIndex); // Increment input counter
                         executeInp(parts[1], input);
                     }
                     case "add" -> executeAdd(parts[1], parts[2]);
