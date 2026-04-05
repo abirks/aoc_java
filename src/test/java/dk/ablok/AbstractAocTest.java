@@ -2,25 +2,17 @@ package dk.ablok;
 
 import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
-import dk.ablok.aoc.exceptions.AocLoadException;
-import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.exceptions.AocFrameworkException;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractAocTest {
-    protected void assertAocDay(AocPuzzle puzzle, String expected1, String expected2)
-            throws AocLoadException, AocSolveException {
-        puzzle.load();
-        assertEquals(expected1, puzzle.part1());
-        assertEquals(expected2, puzzle.part2());
-    }
 
-    protected AocPuzzle getSolution(int year, int day) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    protected AocPuzzle getSolution(int year, int day) throws AocFrameworkException {
         Reflections reflections = new Reflections("dk.ablok");
 
         Set<Class<?>> classes = reflections.get(Scanners.TypesAnnotated.with(AocDay.class).asClass());
@@ -39,10 +31,14 @@ abstract class AbstractAocTest {
             fail("The solution implementation does not implement NewAocPuzzle.class");
         }
 
-        return (AocPuzzle) solutions.stream()
-                .findFirst()
-                .orElseThrow()
-                .getDeclaredConstructor()
-                .newInstance();
+        try {
+            return (AocPuzzle) solutions.stream()
+                    .findFirst()
+                    .orElseThrow()
+                    .getDeclaredConstructor()
+                    .newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new AocFrameworkException(String.format("Couldn't find puzzle solution for AoC day %04d-%d02d", year, day), e);
+        }
     }
 }

@@ -1,12 +1,11 @@
 package dk.ablok;
 
+import dk.ablok.aoc.exceptions.AocFrameworkException;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,11 +34,11 @@ class Aoc2021Test extends AbstractAocTest {
             "2021, 20, 5475, 17548",
             "2021, 21, 920079, 56852759190649",
             "2021, 22, 542711, 1160303042684776",
-            "2021, 23, null",
-            "2021, 24, null",
+            "2021, 23, null, null",
+            "2021, 24, 91897399498995, 51121176121391",
             "2021, 25, 384, null"
     }, nullValues = {"null"})
-    void test2021(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+    void test2021(int year, int day, String expected1, String expected2) throws AocFrameworkException, AocLoadException, AocSolveException {
         var puzzle = getSolution(year, day);
         puzzle.load();
         assertEquals(expected1, puzzle.part1());
@@ -47,7 +46,7 @@ class Aoc2021Test extends AbstractAocTest {
     }
 
     @Test
-    void test2021Day13() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+    void test2021Day13() throws AocFrameworkException, AocLoadException, AocSolveException {
         final String CJCKBAPB = """
                  ##    ##  ##  #  # ###   ##  ###  ###\s
                 #  #    # #  # # #  #  # #  # #  # #  #

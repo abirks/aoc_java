@@ -1,14 +1,17 @@
 package dk.ablok;
 
+import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.AocPuzzleWithDisplay;
+import dk.ablok.aoc.exceptions.AocFrameworkException;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc2019.*;
+import dk.ablok.aoc2019.AdventOfCode2019Day17;
+import dk.ablok.aoc2019.AdventOfCode2019Day21;
+import dk.ablok.aoc2019.AdventOfCode2019Day25;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,20 +43,16 @@ class Aoc2019Test extends AbstractAocTest {
             "2019, 23, null, null",
             "2019, 24, 17863711, 1937"
     }, nullValues = {"null"})
-    void test2019(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+    void test2019(int year, int day, String expected1, String expected2) throws AocFrameworkException, AocLoadException, AocSolveException {
         var puzzle = getSolution(year, day);
+        disableGraphics(puzzle);
         puzzle.load();
-
-        if (AocPuzzleWithDisplay.class.isAssignableFrom(puzzle.getClass())) {
-            ((AocPuzzleWithDisplay) puzzle).enableDisplay(false);
-        }
-
         assertEquals(expected1, puzzle.part1());
         assertEquals(expected2, puzzle.part2());
     }
 
     @Test
-    void test2019Day08() throws AocLoadException, AocSolveException {
+    void test2019Day08() throws AocFrameworkException, AocLoadException, AocSolveException {
         final String ACKPZ = """
                  ##   ##  #  # ###  ####\s
                 #  # #  # # #  #  #    #\s
@@ -62,11 +61,15 @@ class Aoc2019Test extends AbstractAocTest {
                 #  # #  # # #  #    #   \s
                 #  #  ##  #  # #    ####\s
                 """;
-        assertAocDay(new AdventOfCode2019Day08(), "1905", ACKPZ);
+        var puzzle = getSolution(2019, 8);
+        disableGraphics(puzzle);
+        puzzle.load();
+        assertEquals("1905", puzzle.part1());
+        assertEquals(ACKPZ, puzzle.part2());
     }
 
     @Test
-    void test2019Day11() throws AocLoadException, AocSolveException {
+    void test2019Day11() throws AocFrameworkException, AocLoadException, AocSolveException {
         final String KRZEAJHB = """
                  #  # ###  #### ####  ##    ## #  # ###   \s
                  # #  #  #    # #    #  #    # #  # #  #  \s
@@ -75,7 +78,11 @@ class Aoc2019Test extends AbstractAocTest {
                  # #  # #  #    #    #  # #  # #  # #  #  \s
                  #  # #  # #### #### #  #  ##  #  # ###   \s
                 """;
-        assertAocDay(new AdventOfCode2019Day11(), "2054", KRZEAJHB);
+        var puzzle = getSolution(2019, 11);
+        disableGraphics(puzzle);
+        puzzle.load();
+        assertEquals("2054", puzzle.part1());
+        assertEquals(KRZEAJHB, puzzle.part2());
     }
 
     @Test
@@ -86,12 +93,15 @@ class Aoc2019Test extends AbstractAocTest {
         final String sequenceC = "R,6,L,12,L,12";
 
         AdventOfCode2019Day17 puzzle = new AdventOfCode2019Day17();
+        disableGraphics(puzzle);
+        puzzle.load();
         puzzle.inputSequences(mainSequence, sequenceA, sequenceB, sequenceC);
-        assertAocDay(puzzle, "5724", "732985");
+        assertEquals("5724", puzzle.part1());
+        assertEquals("732985", puzzle.part2());
     }
 
     @Test
-    void test2019Day21() throws AocLoadException, AocSolveException {
+    void test2019Day21() throws AocFrameworkException, AocLoadException, AocSolveException {
         final String PART1_SCRIPT = """
                 NOT A J
                 NOT B T
@@ -116,12 +126,15 @@ class Aoc2019Test extends AbstractAocTest {
                 """;
 
         AdventOfCode2019Day21 puzzle = new AdventOfCode2019Day21();
+        disableGraphics(puzzle);
+        puzzle.load();
         puzzle.setScripts(PART1_SCRIPT, PART2_SCRIPT);
-        assertAocDay(puzzle, "19354464", "1143198454");
+        assertEquals("19354464", puzzle.part1());
+        assertEquals("1143198454", puzzle.part2());
     }
 
     @Test
-    void test2019Day25() throws AocLoadException, AocSolveException {
+    void test2019Day25() throws AocFrameworkException, AocLoadException, AocSolveException {
         final List<String> steps = new ArrayList<>(Arrays.asList(
                 "north",
                 "east",
@@ -142,12 +155,15 @@ class Aoc2019Test extends AbstractAocTest {
         ));
 
         AdventOfCode2019Day25 puzzle = new AdventOfCode2019Day25();
+        disableGraphics(puzzle);
+        puzzle.load();
         puzzle.setAutoplay(steps);
-        assertAocDay(puzzle, "229384", null);
+        assertEquals("229384", puzzle.part1());
     }
 
-    protected void assertAocDay(AocPuzzleWithDisplay puzzle, String expected1, String expected2) throws AocLoadException, AocSolveException {
-        puzzle.enableDisplay(false);
-        super.assertAocDay(puzzle, expected1, expected2);
+    private void disableGraphics(AocPuzzle puzzle) {
+        if (AocPuzzleWithDisplay.class.isAssignableFrom(puzzle.getClass())) {
+            ((AocPuzzleWithDisplay) puzzle).enableDisplay(false);
+        }
     }
 }

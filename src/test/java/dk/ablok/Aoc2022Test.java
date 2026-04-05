@@ -1,5 +1,6 @@
 package dk.ablok;
 
+import dk.ablok.aoc.exceptions.AocFrameworkException;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class Aoc2022Test extends AbstractAocTest {
             "2022, 24, null, null",
             "2022, 25, 2=10---0===-1--01-20, null"
     }, nullValues = {"null"})
-    void test2022(int year, int day, String expected1, String expected2) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+    void test2022(int year, int day, String expected1, String expected2) throws AocFrameworkException, AocLoadException, AocSolveException {
         var puzzle = getSolution(year, day);
         puzzle.load();
         assertEquals(expected1, puzzle.part1());
@@ -47,7 +48,7 @@ class Aoc2022Test extends AbstractAocTest {
     }
 
     @Test
-    void test2022Day10() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, AocLoadException, AocSolveException {
+    void test2022Day10() throws AocFrameworkException, AocLoadException, AocSolveException {
         final String FZBPBFZF = """
                 #### #### ###  ###  ###  #### #### ####\s
                 #       # #  # #  # #  # #       # #   \s
