@@ -4,10 +4,12 @@ import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.io.AnsiColorConstants;
 import dk.ablok.aoc.io.AocInput;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Solution to the Advent of Code 2024 day 6 puzzle
@@ -23,10 +25,13 @@ import java.util.*;
 public class AdventOfCode2024Day06 implements AocPuzzle {
     private static final char START = '^';
     private static final char OBSTACLE = '#';
+
     private char[][] map;
     private Position start;
-    private final List<Visited> visited = new ArrayList<>();
-    private final List<Visited> turns = new ArrayList<>();
+
+    private final List<State> visited = new ArrayList<>();
+
+    private final Set<Position> loopObstacles = new HashSet<>();
 
     @Override
     public void load() throws AocLoadException {
@@ -44,29 +49,23 @@ public class AdventOfCode2024Day06 implements AocPuzzle {
 
     @Override
     public String part1() throws AocSolveException {
-        Guard guard = new Guard(start, new Direction(0, -1));
-        visited.add(Visited.fromGuard(guard));
+        Position position = start;
+        Direction direction = new Direction(0, -1);
+        visited.add(new State(position, direction));
 
-        while (true) {
-            Position nextPosition = guard.nextPosition();
+        while (isWithinBounds(position)) {
+            Position nextPosition = position.add(direction);
 
-            if (!nextPosition.isWithinBounds(map)) {
-                break;
-            }
-
-            if (map[nextPosition.y()][nextPosition.x()] == OBSTACLE) {
-                guard.rotate();
-                turns.add(Visited.fromGuard(guard));
+            if (isObstacle(nextPosition)) {
+                direction = direction.rotate();
             } else {
-                guard.move();
-                visited.add(Visited.fromGuard(guard));
-                setMap(guard.position, 'x');
-                //print();
+                visited.add(new State(position, direction));
+                position = nextPosition;
             }
         }
 
         long positionsVisited = visited.stream()
-                .map(Visited::position)
+                .map(State::position)
                 .distinct()
                 .count();
 
@@ -75,118 +74,70 @@ public class AdventOfCode2024Day06 implements AocPuzzle {
 
     @Override
     public String part2() throws AocSolveException {
-        // For each position visited, extend it backwards as well to mark positions that could lead into an infinite loop
-        Set<Visited> virtualVisited = new HashSet<>(visited);
-        for (Visited visit : turns) {
-            Guard virtualGuard = new Guard(visit.position, visit.direction);
-
-            while (true) {
-                Position backwardsPosition = virtualGuard.backwardsPosition();
-
-                if (!backwardsPosition.isWithinBounds(map)) {
-                    break;
-                }
-
-                if (getMap(backwardsPosition) == OBSTACLE) {
-                    break;
-                } else {
-                    virtualGuard.goBackwards();
-                    virtualVisited.add(Visited.fromGuard(virtualGuard));
-                    setMap(virtualGuard.position, 'x');
-                    //print();
-                }
-            }
-        }
-
-        Set<Position> possibleObstacles = new HashSet<>();
-        List<Visited> loop = new ArrayList<>();
-
-        for (Visited visit : virtualVisited) {
-            // Find previous positions that intersect this position
-            List<Visited> intersects = loop.stream()
-                    .filter(l -> l.position().equals(visit.position()))
+        // Go through the path of visited positions and check if each position can lead to a loop is an obstacle is placed in front
+        for (int i = 0; i < visited.size(); i++) {
+            var toAccess = visited.subList(0, i)
+                    .stream()
+                    .map(State::position)
                     .toList();
+            var visitedState = visited.get(i);
+            var entryState = new State(visitedState.position(), visitedState.direction().rotate());
+            var obstacleCandidate = visitedState.position().add(visitedState.direction());
 
-            for (Visited intersect : intersects) {
-                System.out.println(visit + " intersects " + intersect);
-                // If placing an obstacle here causes the guard to turn in the same direction as the intersection, mark it as a possible obstacle
-                if (intersect.direction().equals(visit.direction().rotate())) {
-                    possibleObstacles.add(visit.position().add(visit.direction()));
-                }
+            if (!isWithinBounds(obstacleCandidate)
+                    || isObstacle(obstacleCandidate)
+                    || obstacleCandidate.equals(start)
+                    || toAccess.contains(obstacleCandidate)) {
+                continue;
             }
 
-            loop.add(visit);
+            loopChecker(entryState, obstacleCandidate);
         }
-        return Integer.toString(possibleObstacles.size());
+
+        return Integer.toString(loopObstacles.size());
     }
 
-    private void print() {
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++) {
-                char c = map[y][x];
-                String color = switch (c) {
-                    case '.' -> AnsiColorConstants.ANSI_WHITE;
-                    case 'x', '^' -> AnsiColorConstants.ANSI_BLUE;
-                    case '#' -> AnsiColorConstants.ANSI_PURPLE;
-                    default -> throw new IllegalStateException("Unexpected value: " + c);
-                };
-                System.out.print(color + c);
+    private boolean isObstacle(Position position) {
+        if (!isWithinBounds(position)) {
+            return false;
+        }
+
+        return map[position.y()][position.x()] == OBSTACLE;
+    }
+
+    private boolean isWithinBounds(Position position) {
+        return 0 <= position.y() && position.y() < map.length
+                && 0 <= position.x() && position.x() < map[position.y()].length;
+    }
+
+    private void loopChecker(State entryCandidate, Position newObstacle) {
+        Set<State> possibleLoopStates = new HashSet<>();
+
+        Position position = entryCandidate.position();
+        Direction direction = entryCandidate.direction();
+
+        while (isWithinBounds(position)) {
+            Position nextPosition = position.add(direction);
+
+            if (isObstacle(nextPosition) || nextPosition.equals(newObstacle)) {
+                direction = direction.rotate();
+            } else {
+                possibleLoopStates.add(new State(position, direction));
+                position = nextPosition;
             }
-            System.out.println();
-        }
-        System.out.println();
-    }
 
-    private void setMap(Position position, char c) {
-        map[position.y()][position.x()] = c;
-    }
-
-    private char getMap(Position position) {
-        return map[position.y()][position.x()];
-    }
-
-    static class Guard {
-        Position position;
-        Direction direction;
-
-        public Guard(Position position, Direction direction) {
-            this.position = position;
-            this.direction = direction;
-        }
-
-        void move() {
-            position = nextPosition();
-        }
-
-        void goBackwards() {
-            position = backwardsPosition();
-        }
-
-        void rotate() {
-            direction = direction.rotate();
-        }
-
-        Position nextPosition() {
-            return position.add(direction);
-        }
-
-        Position backwardsPosition() {
-            return position.subtract(direction);
+            State loopStateCandidate = new State(position, direction);
+            if (possibleLoopStates.contains(loopStateCandidate)) {
+                // The guard has entered a state that is known to be a loop
+                loopObstacles.add(newObstacle);
+                return;
+            }
         }
     }
 
     record Position(int x, int y) {
         Position add(Direction direction) {
             return new Position(x + direction.vx(), y + direction.vy());
-        }
-
-        Position subtract(Direction direction) {
-            return new Position(x - direction.vx(), y - direction.vy());
-        }
-
-        boolean isWithinBounds(char[][] map) {
-            return 0 <= y && y < map.length
-                    && 0 <= x && x < map[y].length;
         }
     }
 
@@ -196,9 +147,6 @@ public class AdventOfCode2024Day06 implements AocPuzzle {
         }
     }
 
-    record Visited(Position position, Direction direction) {
-        static Visited fromGuard(Guard guard) {
-            return new Visited(guard.position, guard.direction);
-        }
+    record State(Position position, Direction direction) {
     }
 }
