@@ -106,13 +106,21 @@ public class AocInput {
     }
 
     public char[][] read2dArray(char defaultValue) throws AocLoadException {
-        List<String> lines = readInputAsList();
+        List<String> lines = readInputAsList().stream()
+                .filter(line -> !line.isEmpty()) // Skip empty lines; assuming these are at the end;
+                .toList();
 
-        int maxLineLength = lines.stream().mapToInt(String::length).max().orElseThrow();
+        int maxLineLength = lines.stream()
+                .mapToInt(String::length).max().orElseThrow();
         char[][] output = new char[lines.size()][maxLineLength];
 
         for (int y = 0; y < lines.size(); y++) {
             byte[] line = lines.get(y).getBytes(StandardCharsets.UTF_8);
+
+            // Skip empty lines
+            if (line.length == 0) {
+                break;
+            }
 
             for (int x = 0; x < line.length; x++) {
                 output[y][x] = (char) line[x];
