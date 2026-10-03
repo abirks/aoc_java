@@ -4,11 +4,17 @@ import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
-import dk.ablok.aoc.graph.*;
-import dk.ablok.aoc.io.AnsiColorConstants;
+import dk.ablok.aoc.graph.GraphNode;
 import dk.ablok.aoc.io.AocInput;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -23,13 +29,17 @@ import java.util.stream.Stream;
  */
 @AocDay(year = 2024, day = 16)
 public class AdventOfCode2024Day16 implements AocPuzzle {
+
     private static final char WALL = '#';
     private static final char START = 'S';
     private static final char END = 'E';
+
     private char[][] map;
-    private List<Reindeer> path;
-    private Reindeer startPosition;
-    private Reindeer endPosition;
+    private Position start;
+    private Position end;
+
+    private Map<Reindeer, Long> fillFromStart;
+    private long minCost;
 
     @Override
     public void load() throws AocLoadException {
@@ -39,102 +49,114 @@ public class AdventOfCode2024Day16 implements AocPuzzle {
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 if (map[y][x] == START) {
-                    startPosition = new Reindeer(x, y, 1, 0, 0, 0);
+                    start = new Position(x, y);
                 }
                 if (map[y][x] == END) {
-                    endPosition = new Reindeer(x, y, 0, 0, 0, 0);
+                    end = new Position(x, y);
                 }
             }
         }
 
-        if (startPosition == null) {
+        if (start == null) {
             throw new AocLoadException("Start position not found!");
         }
 
-        if (endPosition == null) {
+        if (end == null) {
             throw new AocLoadException("End position not found!");
         }
     }
 
     @Override
     public String part1() throws AocSolveException {
-        PathFinder<Reindeer, LongWeight> pathfinder = new PathFinder<>(
-                new ReindeerMetric(), new DijkstraMetric<>(new LongWeight(0L)),
-                new LongWeight.LongZeroSupplier(), new LongWeight.LongInfinitySupplier());
+        // Fill outwards from start, storing the lowest cost to get to each position/direction
+        fillFromStart = floodFill(Collections.singleton(new Reindeer(start, new Direction(1, 0), 0)));
 
-        path = pathfinder.findRoute(startPosition, endPosition);
-        System.out.println(path.get(224).cost);
-        System.out.println(path.get(224).accCost);
-        print(path, path.get(224));
+        minCost = fillFromStart.entrySet().stream()
+                .filter(r -> r.getKey().position.equals(end))
+                .mapToLong(Map.Entry::getValue)
+                .min()
+                .orElseThrow();
 
-
-        // Real: 134588
-        // Mine: 135587
-        long totalCost = path.stream()
-                .mapToLong(Reindeer::getCost)
-                .sum();
-        return Long.toString(totalCost);
+        return Long.toString(minCost);
     }
 
     @Override
     public String part2() throws AocSolveException {
-        throw new AocSolveException("Not solved yet!");
+        // Fill outwards from end, storing the lowest cost to get to each position/direction
+        var possibleEnds = Stream.of(
+                        new Reindeer(end, new Direction(-1, 0), 0),
+                        new Reindeer(end, new Direction(0, 1), 0))
+                .collect(Collectors.toSet());
+        var fillFromEnd = floodFill(possibleEnds);
+
+        // Count distinct positions where the minimal distance to start plus the minimal distance to the end equals the result from part 1
+        // Reverse one of the states to ensure all turning costs are counted too
+        var positions = fillFromEnd.keySet().stream()
+                .filter(r -> fillFromStart.containsKey(r) && fillFromEnd.containsKey(r.reverseDirection()))
+                .filter(r -> fillFromStart.get(r) + fillFromEnd.get(r.reverseDirection()) == minCost)
+                .map(r -> r.position)
+                .distinct()
+                .count();
+
+        return Long.toString(positions);
     }
 
-    private void print(List<Reindeer> path, Reindeer... marked) {
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++) {
-                int finalX = x;
-                int finalY = y;
-                if (Arrays.stream(marked).anyMatch(p -> p.x == finalX && p.y == finalY)) {
-                    System.out.print(AnsiColorConstants.ANSI_RED_BACKGROUND);
-                } else if (path.stream().anyMatch(p -> p.x == finalX && p.y == finalY)) {
-                    System.out.print(AnsiColorConstants.ANSI_BLUE_BACKGROUND);
-                } else {
-                    System.out.print(AnsiColorConstants.ANSI_BLACK_BACKGROUND);
-                }
-                if (map[y][x] == START) {
-                    System.out.print(AnsiColorConstants.ANSI_RED + START);
-                } else if (map[y][x] == END) {
-                    System.out.print(AnsiColorConstants.ANSI_RED + END);
-                } else {
-                    System.out.print(AnsiColorConstants.ANSI_WHITE + map[y][x]);
-                }
-            }
-            System.out.println();
+    private Map<Reindeer, Long> floodFill(Collection<Reindeer> openPositions) {
+        Map<Reindeer, Long> minimalCost = new HashMap<>();
+
+        Set<Reindeer> iterationSet = new HashSet<>(openPositions);
+        iterationSet.forEach(n -> minimalCost.put(n, 0L));
+
+        while (!iterationSet.isEmpty()) {
+            iterationSet = iterationSet.stream()
+                    .flatMap(r -> r.getConnectionsFrom()
+                            .filter(n -> minimalCost.getOrDefault(n, Long.MAX_VALUE) > n.getCost()))
+                    .collect(Collectors.toSet());
+            iterationSet.forEach(n -> minimalCost.put(n, n.getCost()));
         }
-        System.out.println();
+
+        return minimalCost;
     }
 
-    public class Reindeer implements GraphNode {
-        private final int x;
-        private final int y;
-        private final int vx;
-        private final int vy;
-        private final long cost;
-        private final long accCost;
+    private char mapLookup(Position position) {
+        return map[position.y()][position.x()];
+    }
 
-        public Reindeer(int x, int y, int vx, int vy, long cost, long accCost) {
-            this.x = x;
-            this.y = y;
-            this.vx = vx;
-            this.vy = vy;
+    private class Reindeer implements GraphNode<Reindeer> {
+        private final Position position;
+        private final Direction direction;
+        private final long cost;
+
+        public Reindeer(Position position, Direction direction, long cost) {
+            this.position = position;
+            this.direction = direction;
             this.cost = cost;
-            this.accCost = accCost;
         }
 
         public long getCost() {
             return cost;
         }
 
+        public Reindeer reverseDirection() {
+            return new Reindeer(position, direction.reverse(), cost);
+        }
+
         @Override
-        public Stream<GraphNode> getConnectionsFrom() {
-            Set<GraphNode> output = new HashSet<>();
-            if (map[y + vy][x + vx] != WALL) {
-                output.add(new Reindeer(x + vx, y + vy, vx, vy, 1, accCost + 1));
+        public Stream<Reindeer> getConnectionsFrom() {
+            Set<Reindeer> output = new HashSet<>();
+
+            if (mapLookup(position.add(direction)) != WALL) {
+                output.add(new Reindeer(position.add(direction), direction, cost + 1));
             }
-            output.add(new Reindeer(x, y, vy, -vx, 1000, accCost + 1000));
-            output.add(new Reindeer(x, y, -vy, vx, 1000, accCost + 1000));
+
+            if (mapLookup(position.add(direction.rotateRight())) != WALL) {
+                output.add(new Reindeer(position, direction.rotateRight(), cost + 1000));
+            }
+
+            if (mapLookup(position.add(direction.rotateLeft())) != WALL) {
+                output.add(new Reindeer(position, direction.rotateLeft(), cost + 1000));
+            }
+
             return output.stream();
         }
 
@@ -143,28 +165,32 @@ public class AdventOfCode2024Day16 implements AocPuzzle {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Reindeer reindeer = (Reindeer) o;
-            if (this == endPosition || reindeer == endPosition) {
-                return x == reindeer.x && y == reindeer.y;
-            } else {
-                return x == reindeer.x && y == reindeer.y && vx == reindeer.vx && vy == reindeer.vy && cost == reindeer.cost;
-            }
+            return position.equals(reindeer.position) && direction.equals(reindeer.direction);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(x, y);
-        }
-
-        @Override
-        public String toString() {
-            return "(" + x + ", " + y + "), v=(" + vx + ", " + vy + "), accCost=" + accCost;
+            return Objects.hash(position, direction);
         }
     }
 
-    private class ReindeerMetric implements Metric<Reindeer, LongWeight> {
-        @Override
-        public LongWeight computeCost(Reindeer from, Reindeer to) {
-            return new LongWeight(to.getCost());
+    record Position(int x, int y) {
+        Position add(Direction direction) {
+            return new Position(x + direction.vx(), y + direction.vy());
+        }
+    }
+
+    record Direction(int vx, int vy) {
+        Direction rotateLeft() {
+            return new Direction(-vy, vx);
+        }
+
+        Direction rotateRight() {
+            return new Direction(vy, -vx);
+        }
+
+        Direction reverse() {
+            return new Direction(-vx, -vy);
         }
     }
 }

@@ -37,6 +37,6 @@ for finding the implementation for each day.
 * Fix all TODOs
 * A common, general purpose 2D vector class with methods for adding, subtracting and rotating.
 * Flood-fill algorithm with functional interfaces to calculate information along the way and predicate for stop
-  condition
+  condition and when to overwrite older values with new, better results
     * Refactor previous puzzles to use this for flood-fill and BFS
 * Use LeastCommonMultiple class for previous years' puzzles that require it
