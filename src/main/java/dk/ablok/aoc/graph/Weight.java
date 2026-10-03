@@ -1,5 +1,5 @@
 package dk.ablok.aoc.graph;
 
-public interface Weight extends Comparable<Weight> {
-    Weight add(Weight other);
+public interface Weight<V> extends Comparable<Weight<V>> {
+    Weight<V> add(Weight<V> other);
 }

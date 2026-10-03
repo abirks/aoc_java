@@ -80,7 +80,7 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
         }
     }
 
-    record Position(int x, int y, int risk, int[][] map) implements GraphNode {
+    record Position(int x, int y, int risk, int[][] map) implements GraphNode<Position> {
         Position(int x, int y) {
             this(x, y, 0, null);
         }
@@ -91,8 +91,8 @@ public class AdventOfCode2021Day15 implements AocPuzzle {
         }
 
         @Override
-        public Stream<GraphNode> getConnectionsFrom() {
-            List<GraphNode> neighbors = new ArrayList<>();
+        public Stream<Position> getConnectionsFrom() {
+            List<Position> neighbors = new ArrayList<>();
             if (x > 0) {
                 neighbors.add(new Position(x - 1, y, risk + map[y][x - 1], map));
             }

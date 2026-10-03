@@ -1,6 +1,8 @@
 package dk.ablok.aoc.graph;
 
-public class NodeData<T extends GraphNode, V extends Weight> implements Comparable<NodeData<T, V>> {
+import javax.annotation.Nonnull;
+
+public class NodeData<T extends GraphNode<?>, V extends Weight<?>> implements Comparable<NodeData<T, V>> {
     private final T current;
     private T previous;
     private V actualScore;
@@ -38,18 +40,18 @@ public class NodeData<T extends GraphNode, V extends Weight> implements Comparab
         this.estimatedScore = estimatedScore;
     }
 
-    public V getEstimatedScore() {
+    public Weight<?> getEstimatedScore() {
         return estimatedScore;
     }
 
     @Override
-    public int compareTo(NodeData<T, V> other) {
+    public int compareTo(@Nonnull NodeData<T, V> other) {
         if (this.estimatedScore == null) {
             return 1;
         } else if (other.estimatedScore == null) {
             return -1;
         } else {
-            return this.estimatedScore.compareTo(other.getEstimatedScore());
+            return this.estimatedScore.compareTo((Weight) other.getEstimatedScore());
         }
     }
 

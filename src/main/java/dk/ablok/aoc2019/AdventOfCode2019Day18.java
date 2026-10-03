@@ -102,7 +102,7 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
                 .collect(Collectors.toSet());
     }
 
-    public class GraphState implements GraphNode {
+    public class GraphState implements GraphNode<GraphState> {
         private final Set<Character> keys;
         private final Set<Position> positions;
         private long weight = 0L;
@@ -124,8 +124,8 @@ public class AdventOfCode2019Day18 implements AocPuzzle {
         }
 
         @Override
-        public Stream<GraphNode> getConnectionsFrom() {
-            Set<GraphNode> output = new HashSet<>();
+        public Stream<GraphState> getConnectionsFrom() {
+            Set<GraphState> output = new HashSet<>();
 
             for (Position position : positions) {
                 Set<Position> otherBots = positions.stream().filter(p -> p != position).collect(Collectors.toSet());

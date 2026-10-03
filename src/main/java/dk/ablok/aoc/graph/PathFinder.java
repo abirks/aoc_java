@@ -3,7 +3,7 @@ package dk.ablok.aoc.graph;
 import java.util.*;
 import java.util.function.Supplier;
 
-public class PathFinder<T extends GraphNode, V extends Weight> {
+public class PathFinder<T extends GraphNode<?>, V extends Weight<?>> {
     private final Metric<T, V> nextNodeMetric;
     private final Metric<T, V> targetMetric;
     private final Supplier<V> zeroSupplier;
@@ -29,25 +29,32 @@ public class PathFinder<T extends GraphNode, V extends Weight> {
         nodeData.put(from, start);
 
         while (!unvisited.isEmpty()) {
-            NodeData<T, V> next = unvisited.poll();
+            NodeData<T, V> current = unvisited.poll();
+            T currentNode = current.getCurrent();
 
-            if (next.getCurrent().equals(to)) {
-                return backtrack(nodeData, next);
+            // Skip stale entries
+            NodeData<T, V> bestKnown = nodeData.get(currentNode);
+            if (bestKnown != null && current.getActualScore().compareTo((Weight) bestKnown.getActualScore()) > 0) {
+                continue;
             }
 
-            next.getCurrent().getConnectionsFrom().forEach(endpoint -> {
+            if (currentNode.equals(to)) {
+                return backtrack(nodeData, current);
+            }
+
+            currentNode.getConnectionsFrom().forEach(endpoint -> {
                 NodeData<T, V> nextNode = nodeData.getOrDefault(endpoint,
                         new NodeData<>((T) endpoint, null,
                                 infinitySupplier.get(), infinitySupplier.get()));
                 nodeData.put((T) endpoint, nextNode);
 
-                V newScore = (V) next.getActualScore()
-                        .add(nextNodeMetric.computeCost(next.getCurrent(), (T) endpoint));
-                if (newScore.compareTo(nextNode.getActualScore()) < 0) {
-                    nextNode.setPrevious(next.getCurrent());
+                V newScore = (V) current.getActualScore()
+                        .add((Weight) nextNodeMetric.computeCost((T) current.getCurrent(), (T) endpoint));
+                if (newScore.compareTo((Weight) nextNode.getActualScore()) < 0) {
+                    nextNode.setPrevious(currentNode);
                     nextNode.setActualScore(newScore);
                     nextNode.setEstimatedScore((V) newScore
-                            .add(targetMetric.computeCost((T) endpoint, to)));
+                            .add((Weight) targetMetric.computeCost((T) endpoint, to)));
                     unvisited.add(nextNode);
                 }
             });

@@ -1,8 +1,9 @@
 package dk.ablok.aoc.graph;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class LongWeight implements Weight {
+public class LongWeight implements Weight<Long> {
     private final long value;
 
     public LongWeight(long value) {
@@ -14,7 +15,7 @@ public class LongWeight implements Weight {
     }
 
     @Override
-    public Weight add(Weight other) {
+    public Weight<Long> add(Weight<Long> other) {
         if (other instanceof LongWeight longWeight) {
             return new LongWeight(value + longWeight.value);
         }
@@ -22,7 +23,7 @@ public class LongWeight implements Weight {
     }
 
     @Override
-    public int compareTo(Weight o) {
+    public int compareTo(@Nonnull Weight o) {
         if (o instanceof LongWeight longWeight) {
             return Long.compare(value, longWeight.value);
         }

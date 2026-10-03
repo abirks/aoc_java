@@ -92,7 +92,7 @@ public class AdventOfCode2024Day18 implements AocPuzzle {
         }
     }
 
-    class PathNode implements GraphNode {
+    class PathNode implements GraphNode<PathNode> {
         private final Position position;
         private final int bytesToFall;
 
@@ -102,7 +102,7 @@ public class AdventOfCode2024Day18 implements AocPuzzle {
         }
 
         @Override
-        public Stream<GraphNode> getConnectionsFrom() {
+        public Stream<PathNode> getConnectionsFrom() {
             return Arrays.stream(DIRECTIONS)
                     .map(direction -> position.add(direction[0], direction[1]))
                     .filter(n -> 0 <= n.x() && n.x() <= MAX_DIMENSION && 0 <= n.y() && n.y() <= MAX_DIMENSION)

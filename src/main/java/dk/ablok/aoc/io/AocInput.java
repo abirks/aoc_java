@@ -144,7 +144,7 @@ public class AocInput {
         return output;
     }
 
-    public Path getFile() throws AocLoadException {
+    private Path getFile() throws AocLoadException {
         String inputUrl = String.format((String) properties.get("inputUrlFormat"), year, day);
         String localPath = String.format((String) properties.get("localPathFormat"), year, day);
 

@@ -119,7 +119,7 @@ public class AdventOfCode2024Day20 implements AocPuzzle {
                 .sum();
     }
 
-    class ProgramPosition implements GraphNode {
+    class ProgramPosition implements GraphNode<ProgramPosition> {
         int x;
         int y;
 
@@ -129,7 +129,7 @@ public class AdventOfCode2024Day20 implements AocPuzzle {
         }
 
         @Override
-        public Stream<GraphNode> getConnectionsFrom() {
+        public Stream<ProgramPosition> getConnectionsFrom() {
             return DIRECTIONS.stream()
                     .flatMap(this::mapConnection);
         }

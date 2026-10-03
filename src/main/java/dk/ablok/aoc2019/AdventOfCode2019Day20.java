@@ -183,7 +183,7 @@ public class AdventOfCode2019Day20 implements AocPuzzle {
         paths.put(from.position, foundPaths);
     }
 
-    class Portal implements GraphNode {
+    class Portal implements GraphNode<Portal> {
         private final String name;
         private final Position position;
         private final boolean inside;
@@ -211,8 +211,8 @@ public class AdventOfCode2019Day20 implements AocPuzzle {
         }
 
         @Override
-        public Stream<GraphNode> getConnectionsFrom() {
-            Set<GraphNode> output = new HashSet<>();
+        public Stream<Portal> getConnectionsFrom() {
+            Set<Portal> output = new HashSet<>();
 
             // Add an edge to the other portal
             // Determine level based on recursive boolean field
