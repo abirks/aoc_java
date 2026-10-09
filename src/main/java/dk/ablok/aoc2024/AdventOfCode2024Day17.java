@@ -4,16 +4,23 @@ import dk.ablok.aoc.AocDay;
 import dk.ablok.aoc.AocPuzzle;
 import dk.ablok.aoc.exceptions.AocLoadException;
 import dk.ablok.aoc.exceptions.AocSolveException;
+import dk.ablok.aoc.io.AocInput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 /**
  * Solution to the Advent of Code 2024 day 17 puzzle
- *
+ * <p>
+ * Observation: The A register loses its last digit (in base 8) with each full execution of the program. The remaining
+ * digits are carried over to the next execution unchanged. The last digit in the output is determined by the first
+ * digit in register A alone. The second-to-last output digit is determined by the first two digits and so on.
+ * <p>
+ * Strategy for part 2: Input numbers 0-7 and determine the first (lowest) that result in the last digit of the program
+ * bring output. Then repeat the process for more input digits moving left to right.
  * <p>
  * <a href="https://adventofcode.com">Advent of code</a> is an annual programming challenge created by
  * <a href="https://adventofcode.com/about">Eric Wastl</a>.
@@ -24,61 +31,70 @@ import java.util.stream.Collectors;
 @AocDay(year = 2024, day = 17)
 public class AdventOfCode2024Day17 implements AocPuzzle {
 
+    private List<Long> program;
+    private long initialA;
+    private long initialB;
+    private long initialC;
+
     @Override
     public void load() throws AocLoadException {
-        //throw new RuntimeException("Not solved yet!");
+        var aocInput = new AocInput(2024, 17);
+        var lines = aocInput.readInputAsList();
+
+        initialA = Long.parseLong(lines.get(0).substring(12));
+        initialB = Long.parseLong(lines.get(1).substring(12));
+        initialC = Long.parseLong(lines.get(2).substring(12));
+        program = Arrays.stream(lines.get(4).substring(9).split(","))
+                .map(Long::parseLong)
+                .toList();
+
+        System.out.println(lines);
     }
 
     @Override
     public String part1() throws AocSolveException {
-        var program = Arrays.asList(2,4,1,2,7,5,4,5,0,3,1,7,5,5,3,0);
+        Computer computer = new Computer(initialA, initialB, initialC, program);
 
-        Computer computer = new Computer(22817223, 0, 0, program);
-
-        while (computer.execute());
+        while (computer.execute()) ;
 
         return computer.getOutput().stream()
-                .map(i -> Integer.toString(i))
+                .map(i -> Long.toString(i))
                 .collect(Collectors.joining(","));
     }
 
     @Override
     public String part2() throws AocSolveException {
-        throw new AocSolveException("Not solved yet!");
-    }
+        long result = 0L;
 
-    static private void checkAllA(List<Integer> program, int digits) {
-        int a = 0;
+        for (int digit = 0; digit < program.size(); digit++) {
 
-        while (a < 1_000_000) {
-            if (isValidToNDigits(a, program, digits)) {
-                System.out.println("Value a=" + a + " is correct to " + digits + " digits");
-            }
-            a += 1;
-            if (isValidToNDigits(a, program, digits)) {
-                System.out.println("Value a=" + a + " is correct to " + digits + " digits");
-            }
-            a += 15;
-        }
-    }
+            long finalResult = result;
+            List<Long> candidates = LongStream.range(0, 8L)
+                    .map(n -> finalResult * 8L + n)
+                    .boxed()
+                    .toList();
 
-    static private boolean isValidToNDigits(int a, List<Integer> program, int digits) {
-        Computer c = new Computer(a, 0, 0, program);
-        while (true) {
-            c.execute();
+            for (Long a : candidates) {
+                Computer computer = new Computer(a, 0, 0, program);
 
-            var out = c.getOutput();
-            for (int d = 0; d < out.size(); d++) {
-                if (!Objects.equals(out.get(d), program.get(d))) {
-                    return false;
+                while (computer.execute()) ;
+
+                var output = computer.getOutput();
+                if (output.size() > digit && output.getFirst().equals(program.get(program.size() - digit - 1))) {
+                    result = a;
+                    break;
                 }
             }
-
-            if (out.size() == digits) {
-                // We have made it to N digits and they are all correct so far
-                return true;
-            }
         }
+
+        // Verify
+        Computer computer = new Computer(result, 0, 0, program);
+        while (computer.execute()) ;
+        if (!computer.getOutput().equals(program)) {
+            throw new AocSolveException("Calculated solution is not valid!");
+        }
+
+        return Long.toString(result);
     }
 
     static class Computer {
@@ -95,40 +111,36 @@ public class AdventOfCode2024Day17 implements AocPuzzle {
         private static final int MODAL_REG_C = 6;
         private static final int MODAL_RESERVED = 7;
 
-        private final List<Integer> program;
-        private final List<Integer> output = new ArrayList<>();
+        private final List<Long> program;
+        private final List<Long> output = new ArrayList<>();
 
-        private int a;
-        private int b;
-        private int c;
+        private long a;
+        private long b;
+        private long c;
 
         private int pointer = 0;
 
-        public Computer(int a, int b, int c, List<Integer> program) {
+        public Computer(long a, long b, long c, List<Long> program) {
             this.program = program;
             this.a = a;
             this.b = b;
             this.c = c;
         }
 
-        public List<Integer> getOutput() {
+        public List<Long> getOutput() {
             return output;
         }
 
         public boolean execute() {
-            if (pointer >= program.size()) {
+            if (pointer >= program.size() - 1) {
                 return false;
             }
 
-            int op = program.get(pointer++);
+            long op = program.get(pointer++);
 
-            if (pointer >= program.size()) {
-                return false;
-            }
-
-            switch (op) {
+            switch ((int) op) {
                 case OP_ADV -> {
-                    a = a / (1 << getCombo());
+                    a = a / (1L << getCombo());
                 }
                 case OP_BXL -> {
                     b = b ^ getLiteral();
@@ -138,7 +150,7 @@ public class AdventOfCode2024Day17 implements AocPuzzle {
                 }
                 case OP_JNZ -> {
                     if (a != 0) {
-                        pointer = getLiteral();
+                        pointer = (int) getLiteral();
                     }
                 }
                 case OP_BXC -> {
@@ -149,10 +161,10 @@ public class AdventOfCode2024Day17 implements AocPuzzle {
                     output.add(getCombo() % 8);
                 }
                 case OP_BDV -> {
-                    b = a / (1 << getCombo());
+                    b = a / (1L << getCombo());
                 }
                 case OP_CDV -> {
-                    c = a / (1 << getCombo());
+                    c = a / (1L << getCombo());
                 }
                 default -> throw new RuntimeException("Unknown operation: " + op);
             }
@@ -160,12 +172,12 @@ public class AdventOfCode2024Day17 implements AocPuzzle {
             return true;
         }
 
-        private int getLiteral() {
+        private long getLiteral() {
             return program.get(pointer++);
         }
 
-        private int getCombo() {
-            int value = program.get(pointer++);
+        private long getCombo() {
+            long value = program.get(pointer++);
             if (value == MODAL_REG_A) {
                 return a;
             } else if (value == MODAL_REG_B) {
